@@ -1,0 +1,114 @@
+name: al_murafiq
+description: A new Flutter application.
+version: 1.1.1+22
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  cupertino_icons: ^1.0.4
+  # connectivity_plus: ^2.3.0
+  rxdart: ^0.27.3
+  get_it: ^7.2.0
+  http: ^0.13.4
+  dynamic_themes: ^1.1.0
+  flutter_swiper_null_safety: ^1.0.2
+  shared_preferences: ^2.0.13
+  flutter_phoenix: ^1.0.0
+  cached_network_image: ^3.2.0
+  photo_view: ^0.13.0
+  font_awesome_flutter: ^10.1.0
+  curved_navigation_bar: any
+  flutter_rating_bar: ^4.0.0
+  url_launcher: any
+  intl_phone_number_input: ^0.7.0+2
+  auto_size_text: any
+  dio: any
+  flutter_advanced_networkimage_2: ^2.0.1
+  rounded_loading_button: any
+  carousel_slider: any
+  multiselect_formfield: any
+  awesome_dialog: any
+  animator: any
+  intl: ^0.17.0
+  flutter_swiper_tv: ^1.1.6-nullsafety
+  readmore: any
+  smooth_star_rating_nsafe: ^1.0.0+1
+  map: any
+  google_maps_controller: ^1.2.0
+  flutter_dropdown: any
+  easy_rich_text: any
+  marquee: any
+  rflutter_alert: any
+  material_design_icons_flutter: any
+  flutter_login_facebook: ^1.4.1
+  date_time_picker: any
+  google_maps_flutter: ^2.1.3
+  file_picker: any
+  image_picker: any
+  map_launcher: any
+  firebase_messaging: any
+  flutter_local_notifications: any
+  google_sign_in: any
+  flutter_share: any
+  flutter_pdfview: any
+  path_provider: ^2.0.9
+  get: ^4.6.1
+  geolocator: ^8.2.0
+  dropdown_search: ^2.0.1
+  flutter_datetime_picker: any
+  animate_do: any
+  flutter_webview_plugin: any
+  date_field: any
+  flutter_downloader: any
+  permission_handler: any
+  flutter_full_pdf_viewer_null_safe: ^1.0.0
+  flare_flutter: any
+  rive_loading: any
+  android_intent: any
+  new_version: any
+  sign_in_with_apple: any
+
+  flutter_localizations:
+    sdk: flutter
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+
+dependency_overrides:
+  flutter_svg: ^1.0.3
+
+
+#  to add icon for app
+#  to run => flutter pub run flutter_launcher_icons:main
+
+#    to add icon and color to splash screen
+#    to run => flutter pub pub run flutter_native_splash:create
+
+flutter:
+  assets:
+    - assets/images/
+    - assets/languages/
+
+  fonts:
+    - family: ProductSans
+      fonts:
+        - asset: fonts/ProductSans-Regular.ttf
+        - asset: fonts/ProductSans-Bold.ttf
+    - family: IBMPlexSansArabic
+      fonts:
+        - asset: fonts/IBMPlexSansArabic-Light.ttf
+    - family: ltbukra
+      fonts:
+        - asset: fonts/ltbukra-Regular.ttf
+        - asset: fonts/ltbukra-Bold.ttf
+          weight: 200
+
+  uses-material-design: true
