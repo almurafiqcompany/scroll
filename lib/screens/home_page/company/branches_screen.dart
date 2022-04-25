@@ -26,6 +26,7 @@ import 'package:al_murafiq/models/branch.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
 
 import 'edit_company/map_teat.dart';
+
 class BranchesScreen extends StatefulWidget {
   @override
   _BranchesScreenState createState() => _BranchesScreenState();
@@ -40,9 +41,10 @@ class _BranchesScreenState extends State<BranchesScreen> {
     // TODO: implement initState
     super.initState();
   }
+
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
-  dynamic lng=0.0;
-  dynamic lat=0.0;
+  dynamic lng = 0.0;
+  dynamic lat = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,52 +53,54 @@ class _BranchesScreenState extends State<BranchesScreen> {
         title: const Text(''),
         actions: [
           StreamBuilder<String?>(
-              stream: Stream.fromFuture(
-                  getIsLogIn()),
-              builder: (context,
-                  snapshotToken) {
-
-                if (snapshotToken
-                    .hasData ) {
-
-                  return  GestureDetector(
+              stream: Stream.fromFuture(getIsLogIn()),
+              builder: (context, snapshotToken) {
+                if (snapshotToken.hasData) {
+                  return GestureDetector(
                     onTap: () {
-
                       Get.to(NotificationScreen());
                     },
                     child: Stack(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 8),
                           child: const Icon(
                             Icons.notifications,
                             size: 30,
                           ),
                         ),
                         StreamBuilder<int?>(
-                            stream: Stream.fromFuture( getNumberOfNotfiction()),
+                            stream: Stream.fromFuture(getNumberOfNotfiction()),
                             builder: (context, snapshotNumNotif) {
-                              if(snapshotNumNotif.hasData && snapshotNumNotif.data != 0){
+                              if (snapshotNumNotif.hasData &&
+                                  snapshotNumNotif.data != 0) {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 2),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 2),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: Colors.red.withOpacity(0.8),
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal:3,vertical: 0),
-                                      child: Text('${snapshotNumNotif.data}',style: TextStyle(fontSize: 12),textAlign: TextAlign.center,),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 3, vertical: 0),
+                                      child: Text(
+                                        '${snapshotNumNotif.data}',
+                                        style: TextStyle(fontSize: 12),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                 );
                               }
                               return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
                                 child: Container(),
                               );
-                            }
-                        ),
+                            }),
                       ],
                     ),
                   );
@@ -111,14 +115,13 @@ class _BranchesScreenState extends State<BranchesScreen> {
                       );
                     },
                     child: const Padding(
-                      padding:  EdgeInsets.symmetric(horizontal: 8),
-                      child:  Icon(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(
                         Icons.notifications,
                         size: 30,
                       ),
                     ),
                   );
-
                 }
               }),
         ],
@@ -159,9 +162,12 @@ class _BranchesScreenState extends State<BranchesScreen> {
             //   lat = location.latitude;
             // });
 
-
             // await Get.to(AddBranchOfCompanyScreen(lng: lng,lat: lat,beCompany: false,));
-            await Get.to(AddBranchOfCompanyScreen(lng:await _helper.getLng(),lat: await _helper.getLat(),beCompany: false,));
+            await Get.to(AddBranchOfCompanyScreen(
+              lng: await _helper.getLng(),
+              lat: await _helper.getLat(),
+              beCompany: false,
+            ));
             // await Get.to(MapTest());
           }),
       body: SingleChildScrollView(
@@ -258,8 +264,8 @@ class _BranchesScreenState extends State<BranchesScreen> {
                       image: snapshot.data!.image,
                       desc: snapshot.data!.desc,
                       total_rating: snapshot.data!.total_rating,
-                      visit_count:  snapshot.data!.visit_count,
-                      active:  snapshot.data!.active,
+                      visit_count: snapshot.data!.visit_count,
+                      active: snapshot.data!.active,
                     ),
                     const SizedBox(
                       height: 5,
@@ -272,18 +278,18 @@ class _BranchesScreenState extends State<BranchesScreen> {
                             itemCount: snapshot.data!.branch!.length,
                             itemBuilder: (BuildContext context, int index) =>
                                 ZoomIn(
-                                  duration: Duration(milliseconds: 600),
-                                  delay: Duration(
-                                      milliseconds:
+                              duration: Duration(milliseconds: 600),
+                              delay: Duration(
+                                  milliseconds:
                                       index * 100 > 1000 ? 600 : index * 120),
-
-                                  child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 0),
-                              child: BuildCardBranch(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 0),
+                                child: BuildCardBranch(
                                   branches: snapshot.data!.branch![index],
+                                ),
                               ),
                             ),
-                                ),
                           )
                         : SizedBox(),
                     // StreamBuilder<String>(
@@ -382,12 +388,13 @@ class _BranchesScreenState extends State<BranchesScreen> {
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
   Future<String?> getIsLogIn() async {
-
     return await helper.getToken();
   }
+
   Future<int?> getNumberOfNotfiction() async {
     return await helper.getNumberOfNotfiction();
   }
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -476,11 +483,12 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(ResturantPageScreen(compaine_id: widget.favourate!.company_id,
-            //snapshot.data.latest_companies[index].id,
+        Get.to(ResturantPageScreen(
+          compaine_id: widget.favourate!.company_id,
+          //snapshot.data.latest_companies[index].id,
           flagBranch: false,
           ad_id: 0,
-            ));
+        ));
       },
       child: Container(
         decoration: const BoxDecoration(
@@ -548,8 +556,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                                       physics: BouncingScrollPhysics(),
                                       child: Text(
                                         widget.favourate!.company!.name!,
-                                        style:
-                                            const TextStyle(fontSize: 18.0),
+                                        style: const TextStyle(fontSize: 18.0),
                                       ),
                                     ),
                                   ),
@@ -565,8 +572,8 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -600,10 +607,9 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                           height: 7,
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: ReadMoreText(
-                            widget.favourate!.company!.desc,
+                            widget.favourate!.company!.desc!,
                             trimLines: 3,
                             colorClickableText: Colors.black,
                             trimMode: TrimMode.Line,
@@ -673,20 +679,20 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                         height: 20,
                         decoration: const BoxDecoration(
                           color: Color(0xff848DFF),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(15.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
-                        child:  Center(
+                        child: Center(
                             child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           physics: BouncingScrollPhysics(),
                           child: Text(
                             widget.favourate!.company!.distance!,
-                            style:
-                                TextStyle(fontSize: 12, color: Colors.white),
+                            style: TextStyle(fontSize: 12, color: Colors.white),
                           ),
                         )),
-                      ) else SizedBox(),
+                      )
+                    else
+                      SizedBox(),
                     const SizedBox(
                       width: 8,
                     ),
@@ -696,20 +702,20 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                         height: 20,
                         decoration: const BoxDecoration(
                           gradient: kAdsHomeGradient,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(15.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
-                        child:  Center(
+                        child: Center(
                             child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           physics: BouncingScrollPhysics(),
                           child: Text(
                             widget.favourate!.company!.city!.name!,
-                            style:
-                                TextStyle(fontSize: 12, color: Colors.white),
+                            style: TextStyle(fontSize: 12, color: Colors.white),
                           ),
                         )),
-                      ) else  SizedBox(),
+                      )
+                    else
+                      SizedBox(),
                     const SizedBox(
                       width: 12,
                     ),
@@ -724,58 +730,57 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                     Padding(
                       padding: EdgeInsets.only(left: 10, right: 10),
                       child: StreamBuilder<String>(
-                         // stream: Stream.fromFuture(getIsLogIn()),
+                          // stream: Stream.fromFuture(getIsLogIn()),
                           builder: (context, snapshotToken) {
-                            if (snapshotToken.hasData) {
-                              //  if(snapshot.data.fav == 0){
-                              //   return Icon(Icons.favorite,color: Colors.grey[600],);
-                              // }else if(snapshot.data.fav == 1){
-                              //   return Icon(Icons.favorite,color: Color(0xffEB1346),);
-                              // }
-                              return StreamBuilder<int>(
-                                  stream: profileCompaineBloc
-                                      .favCompanySubject.stream,
-                                  initialData: 1,
-                                  builder: (context, snapshotfav) {
-                                    if (snapshotfav.data == 0) {
-                                      return GestureDetector(
-                                          onTap: () async {
-                                            await profileCompaineBloc
-                                                .favCompany(widget
-                                                    .favourate!.company_id!,context);
-                                            // profileCompaineBloc
-                                            //     .favCompanySubject.sink
-                                            //     .add(1);
-                                          },
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: Colors.grey[600],
-                                          ));
-                                    } else if (snapshotfav.data == 1) {
-                                      return GestureDetector(
-                                          onTap: () async {
-                                            await profileCompaineBloc
-                                                .favDesCompany(widget
-                                                    .favourate!.company_id!,context);
-
-                                          },
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: Color(0xffEB1346),
-                                          ));
-                                    }
-                                    return Icon(
-                                      Icons.favorite,
-                                      color: Colors.grey[600],
-                                    );
-                                  });
-                            } else {
-                              return Icon(
-                                Icons.favorite,
-                                color: Colors.grey[600],
-                              );
-                            }
-                          }),
+                        if (snapshotToken.hasData) {
+                          //  if(snapshot.data.fav == 0){
+                          //   return Icon(Icons.favorite,color: Colors.grey[600],);
+                          // }else if(snapshot.data.fav == 1){
+                          //   return Icon(Icons.favorite,color: Color(0xffEB1346),);
+                          // }
+                          return StreamBuilder<int>(
+                              stream:
+                                  profileCompaineBloc.favCompanySubject.stream,
+                              initialData: 1,
+                              builder: (context, snapshotfav) {
+                                if (snapshotfav.data == 0) {
+                                  return GestureDetector(
+                                      onTap: () async {
+                                        await profileCompaineBloc.favCompany(
+                                            widget.favourate!.company_id!,
+                                            context);
+                                        // profileCompaineBloc
+                                        //     .favCompanySubject.sink
+                                        //     .add(1);
+                                      },
+                                      child: Icon(
+                                        Icons.favorite,
+                                        color: Colors.grey[600],
+                                      ));
+                                } else if (snapshotfav.data == 1) {
+                                  return GestureDetector(
+                                      onTap: () async {
+                                        await profileCompaineBloc.favDesCompany(
+                                            widget.favourate!.company_id!,
+                                            context);
+                                      },
+                                      child: Icon(
+                                        Icons.favorite,
+                                        color: Color(0xffEB1346),
+                                      ));
+                                }
+                                return Icon(
+                                  Icons.favorite,
+                                  color: Colors.grey[600],
+                                );
+                              });
+                        } else {
+                          return Icon(
+                            Icons.favorite,
+                            color: Colors.grey[600],
+                          );
+                        }
+                      }),
                     ),
                     const SizedBox(
                       width: 20,
@@ -793,7 +798,6 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
 
   Future<String?> getIsLogIn() async {
-
     return await helper.getToken();
   }
 }

@@ -273,7 +273,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                                         width: 5,
                                                       ),
                                                       AutoSizeText(
-                                                        item.name,
+                                                        item.name!,
                                                         style:
                                                             kTextStyle.copyWith(
                                                                 fontSize: 14),
@@ -356,7 +356,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                                       CitiesData>(
                                                   value: item,
                                                   child: AutoSizeText(
-                                                    item.name,
+                                                    item.name!,
                                                     style: kTextStyle.copyWith(
                                                         fontSize: 14),
                                                     minFontSize: 12,

@@ -110,7 +110,7 @@ class _SocialsMediaScreenState extends State<SocialsMediaScreen> {
                                                           SubscriptionData>(
                                                       value: item,
                                                       child: AutoSizeText(
-                                                        item.name,
+                                                        item.name!,
                                                         style:
                                                             kTextStyle.copyWith(
                                                                 fontSize: 18),

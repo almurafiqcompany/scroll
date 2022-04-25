@@ -116,7 +116,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                                           SubscriptionData>(
                                                       value: item,
                                                       child: AutoSizeText(
-                                                        item.name,
+                                                        item.name!,
                                                         style:
                                                             kTextStyle.copyWith(
                                                                 fontSize: 18),

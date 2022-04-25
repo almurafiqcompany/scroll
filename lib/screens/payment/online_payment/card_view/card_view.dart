@@ -127,7 +127,7 @@ class _CardViewState extends State<CardView> {
                     color: Color(0xffDFDFDF),
                   ),
                   child: WebviewScaffold(
-                    url: widget.url,
+                    url: widget.url!,
                     withZoom: true,
                     hidden: true,
                     appBar: PreferredSize(

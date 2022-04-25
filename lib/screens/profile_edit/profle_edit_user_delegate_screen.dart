@@ -533,7 +533,7 @@ class _ProfileEditUserDelegateScreenState
                                                                 width: 5,
                                                               ),
                                                               AutoSizeText(
-                                                                item.name,
+                                                                item.name!,
                                                                 style: kTextStyle
                                                                     .copyWith(
                                                                         fontSize:
@@ -624,7 +624,7 @@ class _ProfileEditUserDelegateScreenState
                                                               CitiesData>(
                                                           value: item,
                                                           child: AutoSizeText(
-                                                            item.name,
+                                                            item.name!,
                                                             style: kTextStyle
                                                                 .copyWith(
                                                                     fontSize:
@@ -701,7 +701,7 @@ class _ProfileEditUserDelegateScreenState
                                                               Languages>(
                                                           value: item,
                                                           child: AutoSizeText(
-                                                            item.name,
+                                                            item.name!,
                                                             style: kTextStyle
                                                                 .copyWith(
                                                                     fontSize:
