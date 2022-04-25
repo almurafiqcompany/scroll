@@ -9,11 +9,11 @@ import 'package:al_murafiq/widgets/widgets.dart';
 import 'package:get/get.dart';
 import 'package:al_murafiq/models/payment_plans.dart';
 class ChoosePayment extends StatefulWidget {
-  final int company_id;
-  final int pay_method_id;
-  final  PaymentPlans paymentPlans;
+  final int? company_id;
+  final int? pay_method_id;
+  final  PaymentPlans? paymentPlans;
 
-  const ChoosePayment({Key key, this.company_id, this.pay_method_id, this.paymentPlans}) : super(key: key);
+  const ChoosePayment({Key? key, this.company_id, this.pay_method_id, this.paymentPlans}) : super(key: key);
 
   @override
   _ChoosePaymentState createState() => _ChoosePaymentState();
@@ -70,13 +70,13 @@ class _ChoosePaymentState extends State<ChoosePayment> {
                         stream: _choosePaymentBloc.dataofhoosePaymentSubject.stream,
                         builder: (context, snapshot) {
                           if(snapshot.hasData){
-                            if(snapshot.data.length>0){
+                            if(snapshot.data!.length>0){
                               return Column(
                                 children: [
                                   CustomedButton(
                                       onPressed: () async {
                                       //  OnlinePayment
-                                        await Get.to(OnlinePayment(choosePaymentBloc:_choosePaymentBloc ,pay_method_id: widget.pay_method_id,company_id: widget.company_id,paymentPlans: widget.paymentPlans,));
+                                        await Get.to(OnlinePayment(choosePaymentBloc:_choosePaymentBloc ,pay_method_id: widget.pay_method_id!,company_id: widget.company_id!,paymentPlans: widget.paymentPlans!,));
 
                                       },
                                       text: 'online'.tr,
@@ -86,7 +86,7 @@ class _ChoosePaymentState extends State<ChoosePayment> {
                                       horizontal: 40, vertical: 20),
                                   CustomedButton(
                                       onPressed: () async {
-                                        await Get.to(OfflinePayment(choosePaymentBloc:_choosePaymentBloc ,pay_method_id: widget.pay_method_id,company_id: widget.company_id,paymentPlans: widget.paymentPlans,));
+                                        await Get.to(OfflinePayment(choosePaymentBloc:_choosePaymentBloc ,pay_method_id: widget.pay_method_id!,company_id: widget.company_id!,paymentPlans: widget.paymentPlans!,));
                                       },
                                       text: 'offline'.tr,
                                       height: 55,

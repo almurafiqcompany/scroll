@@ -7,15 +7,14 @@ class CustomedButton extends StatelessWidget {
       @required this.height,
       this.imageName,
       this.onPressed,
-
       this.textStyle});
 
-  final String text;
-  final double height;
-  final String imageName;
-  final Function onPressed;
- // final bool enable;
-  final TextStyle textStyle;
+  final String? text;
+  final double? height;
+  final String? imageName;
+  final Function? onPressed;
+  // final bool enable;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +25,8 @@ class CustomedButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
           gradient: LinearGradient(
             colors: <Color>[
-               Colors.blueAccent ,
-              Colors.blue.shade800 ,
+              Colors.blueAccent,
+              Colors.blue.shade800,
             ],
           )),
       child: Material(
@@ -35,20 +34,21 @@ class CustomedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
         child: InkWell(
           borderRadius: BorderRadius.circular(15.0),
-          onTap: onPressed,
+          //onTap: onPressed,
+          onTap: () {},
           child: Row(
-           // crossAxisAlignment: CrossAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(text,
+              Text(text!,
                   style: textStyle ??
                       const TextStyle(color: Colors.white, fontSize: 17)),
               if (imageName != null)
                 Image(
-                  image: AssetImage(imageName),
+                  image: AssetImage(imageName!),
                   height: 50,
                   width: 55,
-                   // color: Colors.white,
+                  // color: Colors.white,
                 )
             ],
           ),

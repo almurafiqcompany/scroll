@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:get/get.dart';
 
-class TicketSupportReplay extends StatelessWidget {
-  final String name, message, date,type;
+class
+ TicketSupportReplay extends StatelessWidget {
+  final String? name, message, date,type;
 
   const TicketSupportReplay(
-      {Key key,
+      {Key? key,
       @required this.name,
       @required this.message,
       @required this.type,
@@ -31,18 +32,18 @@ class TicketSupportReplay extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    date,
+                    date!,
                     style: TextStyle(fontSize: 13, color: Colors.grey.shade900),
                   ),
                   Text(
-                    name,
+                    name!,
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ],
               ).addPaddingOnly(bottom: 10, right: 5),
               Text(
-                message,
+                message!,
                 textAlign: TextAlign.end,
                 style: const TextStyle(
                     fontSize: 14,

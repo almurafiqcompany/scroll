@@ -18,11 +18,11 @@ class EshtrakatyBloc {
 
   final dataofAllSubscriptionsSubject = BehaviorSubject<Eshtrakaty>();
 
-  Future<void> fetchAllSubscriptions({int company_id,int typeAdsOrPlan}) async {
+  Future<void> fetchAllSubscriptions({int? company_id,int? typeAdsOrPlan}) async {
 
-    String token = await _helper.getToken();
+    String? token = await _helper.getToken();
     String lang = await _helper.getCodeLang();
-    int countryID = await _helper.getCountryId();
+    int? countryID = await _helper.getCountryId();
 
     try {
 

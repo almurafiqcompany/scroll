@@ -17,12 +17,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 class AccountInformationMerchantPageTwoScreen extends StatefulWidget {
-  final RegisterMerchantBloc bloc;
+  final RegisterMerchantBloc? bloc;
 
-  const AccountInformationMerchantPageTwoScreen({Key key, this.bloc})
+  const AccountInformationMerchantPageTwoScreen({Key? key, this.bloc})
       : super(key: key);
 
   @override
@@ -36,13 +36,13 @@ class _RegisterDealerScreenState
   String _valueChangedFrom = '';
   String _valueToValidateFrom = '';
   String _valueSavedFrom = '';
-  TextEditingController _controllerFrom;
+  TextEditingController? _controllerFrom;
   String _valueChangedTo = '';
   String _valueToValidateTo = '';
   String _valueSavedTo = '';
   String _valueTimeTo = 'select_time'.tr;
   String _valueTimeFrom = 'select_time'.tr;
-  TextEditingController _controllerTo;
+  TextEditingController? _controllerTo;
 
   List<String> LIST_DAYS= <String>[
     'Saturday'.tr,
@@ -68,11 +68,11 @@ class _RegisterDealerScreenState
 
     // _categoriesBloc.fetchDataAllCategories();
     // _bloc.fetchAllCountries();
-    widget.bloc.fetchDataAllCategories(1);
-    widget.bloc.fetchAllCountries(1);
+    widget.bloc!.fetchDataAllCategories(1);
+    widget.bloc!.fetchAllCountries(1);
     // widget.bloc.selectedLanguage.value=null;
-    widget.bloc.selectedSubCategories.value=null;
-    widget.bloc.selectCategoriesSubject.value=null;
+    widget.bloc!.selectedSubCategories.value;
+    widget.bloc!.selectCategoriesSubject.value;
     String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
     String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
     _controllerFrom = TextEditingController(text: '$lsHour:$lsMinute');
@@ -201,7 +201,7 @@ class _RegisterDealerScreenState
                                 borderRadius: BorderRadius.circular(10),
                                 color: Color(0xffE0E7FF)),
                             child: StreamBuilder<CountriesData>(
-                                stream: widget.bloc.selectedCountry.stream,
+                                stream: widget.bloc!.selectedCountry.stream,
                                 // initialData: _bloc
                                 //     .allCountriesSubject.value[0],
                                 builder: (context, snapshot) {
@@ -291,7 +291,7 @@ class _RegisterDealerScreenState
                                                             .text,
                                                         onChanged: (v) {
                                                           widget.bloc
-                                                              .sortCountry(v);
+                                                              !.sortCountry(v);
                                                         },
                                                       ),
                                                     ),
@@ -301,7 +301,7 @@ class _RegisterDealerScreenState
                                                           List<
                                                               CountriesData>>(
                                                           stream: widget.bloc
-                                                              .allSortCountriesSubject
+                                                              !.allSortCountriesSubject
                                                               .stream,
                                                           builder: (context,
                                                               countriesSnapshot) {
@@ -313,11 +313,11 @@ class _RegisterDealerScreenState
                                                                       (ctx,
                                                                       index) {
                                                                     final item =
-                                                                    countriesSnapshot.data[index];
+                                                                    countriesSnapshot.data![index];
                                                                     return InkWell(
                                                                       onTap:
                                                                           () {
-                                                                            widget.bloc.selectedCountry.add(item);
+                                                                            widget.bloc!.selectedCountry.add(item);
                                                                         Get.back();
                                                                       },
                                                                       child:
@@ -335,7 +335,7 @@ class _RegisterDealerScreenState
                                                                             SizedBox(
                                                                               width: 8,
                                                                             ),
-                                                                            Text(item.name),
+                                                                            Text(item.name!),
                                                                           ],
                                                                         ),
                                                                       ),
@@ -350,7 +350,7 @@ class _RegisterDealerScreenState
                                                                   true,
                                                                   itemCount: countriesSnapshot
                                                                       .data
-                                                                      .length);
+                                                                      !.length);
                                                             } else {
                                                               return const Padding(
                                                                 padding:
@@ -377,9 +377,9 @@ class _RegisterDealerScreenState
                                         const EdgeInsets.all(2.0),
                                         child: Row(
                                           children: [
-                                            snapshot.data.icon != null
+                                            snapshot.data!.icon != null
                                                 ? Image.network(
-                                              '$ImgUrl${snapshot.data.icon}',
+                                              '$ImgUrl${snapshot.data!.icon}',
                                               width: 32,
                                               height: 32,
                                             )
@@ -388,7 +388,7 @@ class _RegisterDealerScreenState
                                               width: 8,
                                             ),
                                             Text(
-                                              snapshot.data.name,
+                                              snapshot.data!.name!,
                                               style:
                                               kTextStyle.copyWith(
                                                   color:
@@ -568,12 +568,12 @@ class _RegisterDealerScreenState
                                 borderRadius: BorderRadius.circular(10),
                                 color: Color(0xffE0E7FF)),
                             child: StreamBuilder<CountriesData>(
-                                stream: widget.bloc.selectedCountry.stream,
+                                stream: widget.bloc!.selectedCountry.stream,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    widget.bloc.allSortCitiesSubject.add(snapshot.data.cities);
+                                    widget.bloc!.allSortCitiesSubject.add(snapshot.data!.cities!);
                                     return StreamBuilder<CitiesData>(
-                                        stream: widget.bloc.selectedCities.stream,
+                                        stream: widget.bloc!.selectedCities.stream,
                                         // initialData: _bloc
                                         //     .allCountriesSubject.value[0],
                                         builder: (context, snapshot) {
@@ -663,7 +663,7 @@ class _RegisterDealerScreenState
                                                                     .text,
                                                                 onChanged: (v) {
                                                                   widget.bloc
-                                                                      .sortCities(v);
+                                                                      !.sortCities(v);
                                                                 },
                                                               ),
                                                             ),
@@ -673,7 +673,7 @@ class _RegisterDealerScreenState
                                                                   List<
                                                                       CitiesData>>(
                                                                   stream: widget.bloc
-                                                                      .allSortCitiesSubject
+                                                                      !.allSortCitiesSubject
                                                                       .stream,
                                                                   builder: (context,
                                                                       citiesSnapshot) {
@@ -685,17 +685,17 @@ class _RegisterDealerScreenState
                                                                               (ctx,
                                                                               index) {
                                                                             final item =
-                                                                            citiesSnapshot.data[index];
+                                                                            citiesSnapshot.data![index];
                                                                             return InkWell(
                                                                               onTap:
                                                                                   () {
-                                                                                    widget.bloc.selectedCities.add(item);
+                                                                                    widget.bloc!.selectedCities.add(item);
                                                                                 Get.back();
                                                                               },
                                                                               child:
                                                                               Padding(
                                                                                 padding: const EdgeInsets.all(8.0),
-                                                                                child: Text(item.name),
+                                                                                child: Text(item.name!),
                                                                               ),
                                                                             );
                                                                           },
@@ -708,7 +708,7 @@ class _RegisterDealerScreenState
                                                                           true,
                                                                           itemCount: citiesSnapshot
                                                                               .data
-                                                                              .length);
+                                                                              !.length);
                                                                     } else {
                                                                       return const Padding(
                                                                         padding:
@@ -734,7 +734,7 @@ class _RegisterDealerScreenState
                                                 padding:
                                                 const EdgeInsets.all(2.0),
                                                 child: Text(
-                                                  snapshot.data.name,
+                                                  snapshot.data!.name!,
                                                   style:
                                                   kTextStyle.copyWith(
                                                       color:
@@ -1009,7 +1009,7 @@ class _RegisterDealerScreenState
                                 color: Color(0xffE0E7FF)),
                             child: StreamBuilder<Categories_Data>(
                                 stream: widget.bloc
-                                    .selectCategoriesSubject.stream,
+                                    !.selectCategoriesSubject.stream,
                                 // initialData: _bloc
                                 //     .allCountriesSubject.value[0],
                                 builder: (context, snapshot) {
@@ -1099,7 +1099,7 @@ class _RegisterDealerScreenState
                                                             .text,
                                                         onChanged: (v) {
                                                           widget.bloc
-                                                              .sortAllCategories(
+                                                             ! .sortAllCategories(
                                                               v);
                                                         },
                                                       ),
@@ -1110,7 +1110,7 @@ class _RegisterDealerScreenState
                                                           List<
                                                               Categories_Data>>(
                                                           stream: widget.bloc
-                                                              .getSortAllCategoriesSubject
+                                                             ! .getSortAllCategoriesSubject
                                                               .stream,
                                                           builder: (context,
                                                               countriesSnapshot) {
@@ -1122,11 +1122,11 @@ class _RegisterDealerScreenState
                                                                       (ctx,
                                                                       index) {
                                                                     final item =
-                                                                    countriesSnapshot.data[index];
+                                                                    countriesSnapshot.data![index];
                                                                     return InkWell(
                                                                       onTap:
                                                                           () {
-                                                                            widget.bloc.selectCategoriesSubject.add(item);
+                                                                            widget.bloc!.selectCategoriesSubject.add(item);
                                                                         Get.back();
                                                                       },
                                                                       child:
@@ -1137,7 +1137,7 @@ class _RegisterDealerScreenState
                                                                             SizedBox(
                                                                               width: 8,
                                                                             ),
-                                                                            Text(item.name),
+                                                                            Text(item.name!),
                                                                           ],
                                                                         ),
                                                                       ),
@@ -1152,7 +1152,7 @@ class _RegisterDealerScreenState
                                                                   true,
                                                                   itemCount: countriesSnapshot
                                                                       .data
-                                                                      .length);
+                                                                    !  .length);
                                                             } else {
                                                               return const Padding(
                                                                 padding:
@@ -1183,7 +1183,7 @@ class _RegisterDealerScreenState
                                               width: 8,
                                             ),
                                             Text(
-                                              snapshot.data.name,
+                                              snapshot.data!.name!,
                                               style:
                                               kTextStyle.copyWith(
                                                   color:
@@ -1383,13 +1383,13 @@ class _RegisterDealerScreenState
                                 color: Color(0xffE0E7FF)),
                             child: StreamBuilder<Categories_Data>(
                                 stream: widget.bloc
-                                    .selectCategoriesSubject.stream,
+                                    !.selectCategoriesSubject.stream,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    widget.bloc.getSortAllSubCategories.add(snapshot.data.sub_categories);
+                                    widget.bloc!.getSortAllSubCategories.add(snapshot.data!.sub_categories!);
                                     return StreamBuilder<SubCategories>(
                                         stream: widget.bloc
-                                            .selectedSubCategories.stream,
+                                            !.selectedSubCategories.stream,
                                         builder: (context, snapshot) {
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
@@ -1477,7 +1477,7 @@ class _RegisterDealerScreenState
                                                                     .text,
                                                                 onChanged: (v) {
                                                                   widget.bloc
-                                                                      .sortSubCategories(v);
+                                                                     ! .sortSubCategories(v);
                                                                 },
                                                               ),
                                                             ),
@@ -1487,7 +1487,7 @@ class _RegisterDealerScreenState
                                                                   List<
                                                                       SubCategories>>(
                                                                   stream: widget.bloc
-                                                                      .getSortAllSubCategories
+                                                                      !.getSortAllSubCategories
                                                                       .stream,
                                                                   builder: (context,
                                                                       subCategoriesSnapshot) {
@@ -1499,17 +1499,17 @@ class _RegisterDealerScreenState
                                                                               (ctx,
                                                                               index) {
                                                                             final item =
-                                                                            subCategoriesSnapshot.data[index];
+                                                                            subCategoriesSnapshot.data![index];
                                                                             return InkWell(
                                                                               onTap:
                                                                                   () {
-                                                                                    widget.bloc.selectedSubCategories.add(item);
+                                                                                    widget.bloc!.selectedSubCategories.add(item);
                                                                                 Get.back();
                                                                               },
                                                                               child:
                                                                               Padding(
                                                                                 padding: const EdgeInsets.all(8.0),
-                                                                                child: Text(item.name),
+                                                                                child: Text(item.name!),
                                                                               ),
                                                                             );
                                                                           },
@@ -1522,7 +1522,7 @@ class _RegisterDealerScreenState
                                                                           true,
                                                                           itemCount: subCategoriesSnapshot
                                                                               .data
-                                                                              .length);
+                                                                             ! .length);
                                                                     } else {
                                                                       return const Padding(
                                                                         padding:
@@ -1548,7 +1548,7 @@ class _RegisterDealerScreenState
                                                 padding:
                                                 const EdgeInsets.all(2.0),
                                                 child: Text(
-                                                  snapshot.data.name,
+                                                  snapshot.data!.name!,
                                                   style:
                                                   kTextStyle.copyWith(
                                                       color:
@@ -1671,13 +1671,13 @@ class _RegisterDealerScreenState
                                 color: Color(0xffE0E7FF)),
                             child: StreamBuilder<SubCategories>(
                                 stream: widget.bloc
-                                    .selectedSubCategories.stream,
+                                   ! .selectedSubCategories.stream,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    widget.bloc.getSortAllSubSubCategories.add(snapshot.data.sub_sub_categories);
+                                    widget.bloc!.getSortAllSubSubCategories.add(snapshot.data!.sub_sub_categories!);
                                     return StreamBuilder<SubSubCategories>(
                                         stream: widget.bloc
-                                            .selectedSubSubCategories.stream,
+                                           ! .selectedSubSubCategories.stream,
                                         builder: (context, snapshot) {
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
@@ -1765,7 +1765,7 @@ class _RegisterDealerScreenState
                                                                     .text,
                                                                 onChanged: (v) {
                                                                   widget.bloc
-                                                                      .sortSubSubCategories(v);
+                                                                      !.sortSubSubCategories(v);
                                                                 },
                                                               ),
                                                             ),
@@ -1775,7 +1775,7 @@ class _RegisterDealerScreenState
                                                                   List<
                                                                       SubSubCategories>>(
                                                                   stream: widget.bloc
-                                                                      .getSortAllSubSubCategories
+                                                                     ! .getSortAllSubSubCategories
                                                                       .stream,
                                                                   builder: (context,
                                                                       subSubCategoriesSnapshot) {
@@ -1787,17 +1787,17 @@ class _RegisterDealerScreenState
                                                                               (ctx,
                                                                               index) {
                                                                             final item =
-                                                                            subSubCategoriesSnapshot.data[index];
+                                                                            subSubCategoriesSnapshot.data![index];
                                                                             return InkWell(
                                                                               onTap:
                                                                                   () {
-                                                                                    widget.bloc.selectedSubSubCategories.add(item);
+                                                                                    widget.bloc!.selectedSubSubCategories.add(item);
                                                                                 Get.back();
                                                                               },
                                                                               child:
                                                                               Padding(
                                                                                 padding: const EdgeInsets.all(8.0),
-                                                                                child: Text(item.name),
+                                                                                child: Text(item.name!),
                                                                               ),
                                                                             );
                                                                           },
@@ -1810,7 +1810,7 @@ class _RegisterDealerScreenState
                                                                           true,
                                                                           itemCount: subSubCategoriesSnapshot
                                                                               .data
-                                                                              .length);
+                                                                             ! .length);
                                                                     } else {
                                                                       return const Padding(
                                                                         padding:
@@ -1836,7 +1836,7 @@ class _RegisterDealerScreenState
                                                 padding:
                                                 const EdgeInsets.all(2.0),
                                                 child: Text(
-                                                  snapshot.data.name,
+                                                  snapshot.data!.name!,
                                                   style:
                                                   kTextStyle.copyWith(
                                                       color:
@@ -2150,7 +2150,7 @@ class _RegisterDealerScreenState
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       StreamBuilder<String>(
-                        stream: widget.bloc.workDaysSubjectFrom.stream,
+                        stream: widget.bloc!.workDaysSubjectFrom.stream,
                         initialData: 'Saturday'.tr,
                         builder: (context, snapshot) {
                           return
@@ -2174,7 +2174,7 @@ class _RegisterDealerScreenState
                                   iconSize: 30,
                                   isExpanded: true,
 
-                                  value: snapshot.data.tr,
+                                  value: snapshot.data!.tr,
                                   dropdownColor: const Color(0xFFE0E7FF),
                                   items: LIST_DAYS
                                       .map<DropdownMenuItem<String>>((String value) {
@@ -2186,16 +2186,16 @@ class _RegisterDealerScreenState
                                       ),
                                     );
                                   }).toList(),
-                                  onChanged: (String val) {
+                                  onChanged: (String? val) {
 
-                                    widget.bloc.workDaysSubjectFrom.sink.add(LIST_DAYsS[val]);
+                                    widget.bloc!.workDaysSubjectFrom.sink.add(LIST_DAYsS[val]!);
                                   },
                                 ).addPaddingOnly(right: 15));
                         },
                       ),
                       Text('to'.tr),
                       StreamBuilder<String>(
-                        stream: widget.bloc.workDaysSubjectTo.stream,
+                        stream: widget.bloc!.workDaysSubjectTo.stream,
                         initialData: 'Saturday'.tr,
                         builder: (context, snapshot) {
                           return
@@ -2218,7 +2218,7 @@ class _RegisterDealerScreenState
                                 child: DropdownButton<String>(
                                   iconSize: 30,
                                   isExpanded: true,
-                                  value: snapshot.data.tr,
+                                  value: snapshot.data!.tr,
                                   dropdownColor: const Color(0xFFE0E7FF),
                                   items: LIST_DAYS
                                       .map<DropdownMenuItem<String>>((String value) {
@@ -2231,9 +2231,9 @@ class _RegisterDealerScreenState
                                       ),
                                     );
                                   }).toList(),
-                                  onChanged: (String val) {
+                                  onChanged: (String? val) {
 
-                                    widget.bloc.workDaysSubjectTo.sink.add(LIST_DAYsS[val]);
+                                    widget.bloc!.workDaysSubjectTo.sink.add(LIST_DAYsS[val]!);
                                     // _editCompanyBloc.workDaysSubjectTo.sink.add(val);
 
                                   },
@@ -2330,7 +2330,7 @@ class _RegisterDealerScreenState
                           validator: (e) => (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
                           onDateSelected: (DateTime value) {
                             print(value);
-                            widget.bloc.workTimeSubjectFrom.sink.add(DateFormat.Hms().format(value));
+                            widget.bloc!.workTimeSubjectFrom.sink.add(DateFormat.Hms().format(value));
                           },
                         ),
                       ),
@@ -2355,7 +2355,7 @@ class _RegisterDealerScreenState
                           validator: (e) => (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
                           onDateSelected: (DateTime value) {
                             print(value);
-                            widget.bloc.workTimeSubjectTo.sink.add(DateFormat.Hms().format(value));
+                            widget.bloc!.workTimeSubjectTo.sink.add(DateFormat.Hms().format(value));
                           },
                         ),
                       ),
@@ -2514,7 +2514,7 @@ class _RegisterDealerScreenState
                           onPressed: () async {
                             // await Get.to(AccountInformationDealerPageThreeScreen(bloc: widget.bloc,));
                             await widget.bloc
-                                .accountDealerPageTwo(context, widget.bloc);
+                                !.accountDealerPageTwo(context, widget.bloc!);
                           },
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(30.0))),

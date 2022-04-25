@@ -24,9 +24,9 @@ class SocialsBloc {
 
   Future<void> fetchAllSocialsOfCompany(int company_id) async {
 
-    String token = await _helper.getToken();
-    String lang = await _helper.getCodeLang();
-    int countryID = await _helper.getCountryId();
+    String? token = await _helper.getToken();
+    String? lang = await _helper.getCodeLang();
+    int? countryID = await _helper.getCountryId();
 
     try {
 
@@ -40,7 +40,7 @@ class SocialsBloc {
 
       if (res.statusCode == 200 && res.data['status']==200) {
         dataofSocialsOfCompanySubject.sink.add(SocialsOfComapny.fromJson(res.data['data']));
-        dataListSocialsOfCompanySubject.sink.add(SocialsOfComapny.fromJson(res.data['data']).socialData);
+        dataListSocialsOfCompanySubject.sink.add(SocialsOfComapny.fromJson(res.data['data']).socialData!);
 
       }else if(res.data['status']==400){
         dataofSocialsOfCompanySubject.sink.addError(res.data['message']);
@@ -53,12 +53,12 @@ class SocialsBloc {
 
     }
   }
-  Future<void> socialsDestroy({int social_id,int company_id,BuildContext context}) async {
+  Future<void> socialsDestroy({int? social_id,int? company_id,BuildContext? context}) async {
     try {
-      showAlertDialog(context);
-      String token = await _helper.getToken();
+      showAlertDialog(context!);
+      String? token = await _helper.getToken();
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final res = await _dio.delete(
         '/socials/destroy?id=$company_id&social_id=$social_id&country_id=$countryID',
         options: dioo.Options(
@@ -93,7 +93,7 @@ class SocialsBloc {
 
     Get.back();
       await showModalBottomSheet<void>(
-        context: context,
+        context: context!,
         builder: (BuildContext context) {
           return ShowMessageDialog(type: 400,message: 'e'.tr,show_but: true,);
         },

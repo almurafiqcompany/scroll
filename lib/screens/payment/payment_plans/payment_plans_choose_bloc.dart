@@ -8,12 +8,12 @@ class PaymentPlansChooseBloc {
   Dio _dio = GetIt.instance.get<Dio>();
   final dataOfPaymentPlansSubject = BehaviorSubject<List<PaymentPlans>>();
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
-  Future<void> fetchPaymentPlansChoose({int type}) async {
+  Future<void> fetchPaymentPlansChoose({int? type}) async {
     try {
 
-      String token = await _helper.getToken();
+      String? token = await _helper.getToken();
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final Response res = await _dio.get(
         '/subscriptions/?country_id=$countryID&type=$type',
         options: Options(

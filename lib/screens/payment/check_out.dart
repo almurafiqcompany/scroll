@@ -17,16 +17,16 @@ import 'package:al_murafiq/models/payment_plans.dart';
 import 'package:al_murafiq/widgets/show_loading_alert.dart';
 
 class CheckOut extends StatelessWidget {
-  final int company_id;
-  final int pay_method_id;
-  final int way_pay_id;
-  final String type_payment;
+  final int? company_id;
+  final int? pay_method_id;
+  final int? way_pay_id;
+  final String? type_payment;
 
-  final int bank_or_address_id;
-  final PaymentPlans paymentPlans;
+  final int? bank_or_address_id;
+  final PaymentPlans? paymentPlans;
   CheckOutBloc _checkOutBloc=CheckOutBloc();
 
-   CheckOut({Key key, this.company_id, this.pay_method_id, this.way_pay_id, this.type_payment, this.bank_or_address_id, this.paymentPlans}) : super(key: key);
+   CheckOut({Key? key, this.company_id, this.pay_method_id, this.way_pay_id, this.type_payment, this.bank_or_address_id, this.paymentPlans}) : super(key: key);
 
 
   @override
@@ -68,7 +68,7 @@ class CheckOut extends StatelessWidget {
                               // crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                Text('${paymentPlans.name}',
+                                Text('${paymentPlans!.name}',
                                     style: const TextStyle(color: Colors.white, fontSize: 17)),
 
                               ],
@@ -134,7 +134,7 @@ class CheckOut extends StatelessWidget {
                             if(_checkOutBloc.promoCodeController.text.isNotEmpty){
                               await _checkOutBloc.checkPromoCode(
                                 context: context,
-                                total:paymentPlans.price,
+                                total:paymentPlans!.price,
                               );
                             }
 
@@ -181,7 +181,7 @@ class CheckOut extends StatelessWidget {
                                 // Text('promo_code_used'.tr,
                                 //     style:   const TextStyle(color: Colors.red, fontSize: 15)),
                                 Expanded(
-                                  child: Text(snapshot.data,
+                                  child: Text(snapshot.data!,
                                       style:   const TextStyle(color: Colors.green, fontSize: 12)),
                                 ),
                               ],
@@ -193,7 +193,7 @@ class CheckOut extends StatelessWidget {
                             child: Row(
                               children: [
                                 Expanded(
-                                  child: Text(snapshot.error,
+                                  child: Text('snapshot.error',
                                       style:   const TextStyle(color: Colors.red, fontSize: 12)),
                                 ),
                               ],
@@ -220,7 +220,7 @@ class CheckOut extends StatelessWidget {
                                 children: [
                                   Text('sub_total'.tr,
                                       style:   const TextStyle(color: Color(0xff3E3F68), fontSize: 16)),
-                                  Text('${paymentPlans.price}',
+                                  Text('${paymentPlans!.price}',
                                       style:   const TextStyle(color: Color(0xff444E5B), fontSize: 14)),
                                 ],
                               ),
@@ -302,7 +302,7 @@ class CheckOut extends StatelessWidget {
                                     children: [
                                       Text('price'.tr,
                                           style:   const TextStyle(color: Color(0xff3E3F68), fontSize: 16)),
-                                      Text('${paymentPlans.price}',
+                                      Text('${paymentPlans!.price}',
                                           style:   const TextStyle(color: Color(0xff444E5B), fontSize: 14,fontWeight: FontWeight.bold)),
                                     ],
                                   ),
@@ -345,10 +345,10 @@ class CheckOut extends StatelessWidget {
                           showAlertDialog(context);
                           var linkWebView= await _checkOutBloc.getLinkWebView(
                             context: context,
-                            company_id: company_id,
-                            pay_method_id: pay_method_id,
-                            way_pay_id: way_pay_id,
-                            type_payment: type_payment,
+                            company_id: company_id!,
+                            pay_method_id: pay_method_id!,
+                            way_pay_id: way_pay_id!,
+                            type_payment: type_payment!,
                           );
                         if(linkWebView !=null){
                         print('a ${linkWebView}');
@@ -356,12 +356,12 @@ class CheckOut extends StatelessWidget {
                          await Get.to(
                              CardViewPaypal(
                                url: linkWebView,
-                               paymentPlan: paymentPlans,
-                               company_id: company_id,
-                               pay_method_id: pay_method_id,
-                               way_pay_id: way_pay_id,
-                               bank_or_address_id: bank_or_address_id,
-                               type_payment: type_payment,
+                               paymentPlan: paymentPlans!,
+                               company_id: company_id!,
+                               pay_method_id: pay_method_id!,
+                               way_pay_id: way_pay_id!,
+                               bank_or_address_id: bank_or_address_id!,
+                               type_payment: type_payment!,
                              )
                         );
                         }
@@ -372,22 +372,22 @@ class CheckOut extends StatelessWidget {
                           showAlertDialog(context);
                          var linkWebView= await _checkOutBloc.getLinkWebView(
                            context: context,
-                          company_id: company_id,
-                          pay_method_id: pay_method_id,
-                          way_pay_id: way_pay_id,
-                          type_payment: type_payment,
+                          company_id: company_id!,
+                          pay_method_id: pay_method_id!,
+                          way_pay_id: way_pay_id!,
+                          type_payment: type_payment!,
                           );
                         if(linkWebView !=null){
                           print('a ${linkWebView}');
                           await Get.to(
                               CardView(
                                 url: linkWebView,
-                                paymentPlan: paymentPlans,
-                                company_id: company_id,
-                                pay_method_id: pay_method_id,
-                                way_pay_id: way_pay_id,
-                                bank_or_address_id: bank_or_address_id,
-                                type_payment: type_payment,
+                                paymentPlan: paymentPlans!,
+                                company_id: company_id!,
+                                pay_method_id: pay_method_id!,
+                                way_pay_id: way_pay_id!,
+                                bank_or_address_id: bank_or_address_id!,
+                                type_payment: type_payment!,
                               )
                           );
                           }
@@ -395,7 +395,7 @@ class CheckOut extends StatelessWidget {
                         }else{
                           await _checkOutBloc.checkOut(
                             context: context,
-                            company_id: company_id,
+                            company_id: company_id!,
                             pay_method_id: pay_method_id,
                             way_pay_id: way_pay_id,
                             bank_or_address_id: bank_or_address_id,

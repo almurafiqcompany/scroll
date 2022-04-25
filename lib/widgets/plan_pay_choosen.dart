@@ -59,8 +59,8 @@ class PlanPayChoosen extends StatelessWidget {
                 CustomedButton(
                         onPressed: () async {
                           await Get.to(PayPlansScreen(
-                            company_id: company_id,
-                            typeAdsOrPlan: typeAdsOrPlan,
+                            //company_id: company_id,
+                           // typeAdsOrPlan: typeAdsOrPlan,
                           ));
                         },
                         text: 'my-plan2'.tr,
@@ -70,17 +70,17 @@ class PlanPayChoosen extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-              RowCheckPlan(text: subscription.subscription.desc
+              RowCheckPlan(text: subscription!.subscription!.desc!
                   // context.translate('do1')
                   ),
-              if (subscription.slider_num == 0)
+              if (subscription!.slider_num == 0)
                 const SizedBox()
               else
-                RowCheckPlan(text: '${'do2'.tr} ${subscription.slider_num}'),
-              if (subscription.banner_num == 0)
+                RowCheckPlan(text: '${'do2'.tr} ${subscription!.slider_num}'),
+              if (subscription!.banner_num == 0)
                 const SizedBox()
               else
-                RowCheckPlan(text: '${'do3'.tr} ${subscription.banner_num}'),
+                RowCheckPlan(text: '${'do3'.tr} ${subscription!.banner_num}'),
             ],
           ).addPaddingHorizontalVertical(horizontal: 20, vertical: 15),
           Row(
@@ -89,11 +89,11 @@ class PlanPayChoosen extends StatelessWidget {
               Column(
                 children: <Widget>[
                   RowForAppointments(
-                      text: 'eshtrak'.tr, appointment: subscription.from
+                      text: 'eshtrak'.tr, appointment: subscription!.from!
                       // context.translate('appo1')
                       ),
                   RowForAppointments(
-                      text: 'tagdeed'.tr, appointment: subscription.to
+                      text: 'tagdeed'.tr, appointment: subscription!.to!
                       // context.translate('appo2')
                       )
                 ],

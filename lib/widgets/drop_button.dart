@@ -2,12 +2,12 @@ import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 
 class DropButton extends StatelessWidget {
-  const DropButton({Key key, this.values, this.value, this.onChanged})
+  const DropButton({Key? key, this.values, this.value, this.onChanged})
       : super(key: key);
 
-  final List<String> values;
-  final String value;
-  final ValueChanged<String> onChanged;
+  final List<String>? values;
+  final String? value;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class DropButton extends StatelessWidget {
           isExpanded: true,
           value: value,
           dropdownColor: const Color(0xFFE0E7FF),
-          items: values.map<DropdownMenuItem<String>>((String value) {
+          items: values!.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Padding(
@@ -34,7 +34,8 @@ class DropButton extends StatelessWidget {
               ),
             );
           }).toList(),
-          onChanged: (val){onChanged(val);
+         onChanged: (val){
+           //onChanged(val);
 
           print(val);
           },

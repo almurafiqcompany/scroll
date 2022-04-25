@@ -58,7 +58,7 @@ class LoginBloc {
 
       try {
         String lang = await _helper.getCodeLang();
-        int countryID = await _helper.getCountryId();
+        int? countryID = await _helper.getCountryId();
         final res = await _dio.post(
           '/login?country_id=$countryID',
           options: Options(

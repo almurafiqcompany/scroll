@@ -2,9 +2,9 @@ import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 
 class RowCheckPlan extends StatelessWidget {
-  final String text;
+  final String? text;
 
-  const RowCheckPlan({Key key, @required this.text}) : super(key: key);
+  const RowCheckPlan({Key? key, @required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class RowCheckPlan extends StatelessWidget {
         Flexible(
 
           child: Text(
-            text,
+            text!,
             style: TextStyle(color: Colors.grey.shade800),
           ),
         ),

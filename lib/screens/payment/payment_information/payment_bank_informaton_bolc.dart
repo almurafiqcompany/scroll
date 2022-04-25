@@ -12,9 +12,9 @@ class PaymentBankInformationBloc {
   Future<void> fetchPaymentBankInformation() async {
     try {
 
-      String token = await _helper.getToken();
+      String? token = await _helper.getToken();
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final Response res = await _dio.get(
         '/banks/?country_id=$countryID',
         options: Options(

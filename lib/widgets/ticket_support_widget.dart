@@ -4,11 +4,11 @@ import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:get/get.dart';
 
 class TicketSupport extends StatelessWidget {
-  final String name, message, date,status;
-  final int ticket_id;
-  final bool subTicket;
+  final String? name, message, date,status;
+  final int? ticket_id;
+  final bool? subTicket;
   const TicketSupport(
-      {Key key,
+      {Key? key,
       @required this.name,
       @required this.message,
       @required this.ticket_id,
@@ -23,7 +23,7 @@ class TicketSupport extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: GestureDetector(
         onTap: (){
-          subTicket?Get.to(TicketSupportReplyScreen(ticket_id: ticket_id,)):null;
+          subTicket!?Get.to(TicketSupportReplyScreen(ticket_id: ticket_id!,)):null;
         },
         child: Container(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
@@ -40,12 +40,12 @@ class TicketSupport extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          date,
+                          date!,
                           style: TextStyle(fontSize: 12, color: Colors.grey.shade900),
                         ),
                         SizedBox(height: 4,),
                         Text(
-                          status,
+                          status!,
                           style: TextStyle(fontSize: 12, color: Colors.grey.shade900),
                         ),
 
@@ -53,7 +53,7 @@ class TicketSupport extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      name,
+                      name!,
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -62,9 +62,9 @@ class TicketSupport extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    subTicket? GestureDetector(
+                    subTicket!? GestureDetector(
                       onTap: (){
-                        subTicket?Get.to(TicketSupportReplyScreen(ticket_id: ticket_id,)):null;
+                        subTicket!?Get.to(TicketSupportReplyScreen(ticket_id: ticket_id!,)):null;
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -84,7 +84,7 @@ class TicketSupport extends StatelessWidget {
                     ):SizedBox(),
                     Expanded(
                       child: Text(
-                        message,
+                        message!,
                         textAlign: TextAlign.end,
                         style: const TextStyle(
                             fontSize: 14,

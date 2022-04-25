@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 class SocialCircleSideMenu extends StatelessWidget {
- final List<Social> socail;
- SocialCircleSideMenu({Key key, this.socail}) : super(key: key);
+ final List<Social>? socail;
+ SocialCircleSideMenu({Key? key, this.socail}) : super(key: key);
   // ignore: always_specify_types
   final List<Map<String, dynamic>> socialData = [
     {
@@ -73,11 +73,11 @@ class SocialCircleSideMenu extends StatelessWidget {
         children: List.generate(
 
 
-            socail.length,
+            socail!.length,
             (int index) =>
-            socail[index].icon_type != null  ?GestureDetector(
+            socail![index].icon_type != null  ?GestureDetector(
               onTap: () async {
-                 await launch(socail[index].link);
+                 await launch(socail![index].link!);
                   },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -87,7 +87,7 @@ class SocialCircleSideMenu extends StatelessWidget {
                       child: FaIcon(
                         // ignore: unnecessary_string_interpolations
                         //socialData[index]['icon'],
-                        oo[socail[index].icon_type],
+                        oo[socail![index].icon_type],
                         size: 25,
                         color: Colors.white,
                       ),

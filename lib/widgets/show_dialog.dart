@@ -34,7 +34,7 @@ class CustomDialog {
 
   static Future<BuildContext> showProgressDialog(
       BuildContext contextToShow) async {
-    BuildContext contextForHide;
+    BuildContext? contextForHide;
     // ignore: unawaited_futures
     showDialog(
       context: contextToShow,
@@ -45,7 +45,7 @@ class CustomDialog {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              const ShowProgress(),
+               ShowProgress(),
               Text('please_wait'.tr),
             ],
           ),
@@ -54,7 +54,7 @@ class CustomDialog {
     );
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     //workaround to wait builder to make context
-    return contextForHide;
+    return contextForHide!;
   }
 
   static void hideDialog(BuildContext context) => Navigator.pop(context);

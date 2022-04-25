@@ -9,9 +9,9 @@ import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:get/get.dart';
 class AddSocialScreen extends StatefulWidget {
-  final int company_id;
+  final int? company_id;
 
-  const AddSocialScreen({Key key, this.company_id}) : super(key: key);
+  const AddSocialScreen({Key? key, this.company_id}) : super(key: key);
   @override
   _AddSocialScreenState createState() => _AddSocialScreenState();
 }
@@ -82,7 +82,7 @@ class _AddSocialScreenState extends State<AddSocialScreen> {
                               ),
                               Expanded(
                                   child: Text(
-                                    e.name,
+                                    e.name!,
                                     overflow: TextOverflow.ellipsis,
                                   )),
                             ],
@@ -91,7 +91,7 @@ class _AddSocialScreenState extends State<AddSocialScreen> {
                         onChanged: (SocialItem item) {
 
                           // widget.controller.socialItem = item;
-                          _addSocialBloc.typeSocialSubject.sink.add(socialItemsNames[item.name]);
+                          _addSocialBloc.typeSocialSubject.sink.add(socialItemsNames[item.name]!);
                         },
                       ),
                     ),
@@ -136,7 +136,7 @@ class _AddSocialScreenState extends State<AddSocialScreen> {
                               hintText: 'hint_link'.tr,
                               hintStyle: const TextStyle(
                                   fontSize: 14, color: Color(0xFF9797AD)),
-                              errorText: snapshot.data
+                              errorText: snapshot.data!
                                   ? null
                                   :'link_error'.tr,
                             ),
@@ -221,7 +221,7 @@ class _AddSocialScreenState extends State<AddSocialScreen> {
               color: Color(0xff2E5BFF),
               onPressed: () async {
                 _addSocialBloc.loadingButtonController.start();
-                await _addSocialBloc.addSocial(widget.company_id,context);
+                await _addSocialBloc.addSocial(widget.company_id!,context);
                 _addSocialBloc.loadingButtonController.stop();
               },
             ),

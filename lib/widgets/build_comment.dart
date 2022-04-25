@@ -7,10 +7,10 @@ import 'package:intl/intl.dart' as intl;
 import 'package:get/get.dart';
 
 class BuildComment extends StatelessWidget {
-  final ReviewsData reviewsData;
-  final TextDirection textDirection;
+  final ReviewsData? reviewsData;
+  final TextDirection? textDirection;
 
-  BuildComment({Key key, this.reviewsData, this.textDirection})
+  BuildComment({Key? key, this.reviewsData, this.textDirection})
       : super(key: key);
 
   @override
@@ -63,7 +63,7 @@ class BuildComment extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                '${reviewsData.rate}',
+                                '${reviewsData!.rate}',
                                 style:
                                 TextStyle(fontSize: 12, color: Colors.black),
                               ),
@@ -98,7 +98,7 @@ class BuildComment extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                '${reviewsData.rate}',
+                                '${reviewsData!.rate}',
                                 style:
                                 TextStyle(fontSize: 12, color: Colors.black),
                               ),
@@ -158,8 +158,8 @@ class BuildComment extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 60,
                             backgroundImage: NetworkImage(
-                              reviewsData.company.image != null
-                                  ? '$ImgUrl${reviewsData.company.image}'
+                              reviewsData!.company!.image != null
+                                  ? '$ImgUrl${reviewsData!.company!.image}'
                                   :  defaultImgUrl,
                               //'$ImgUrl${reviewsData.user.avatar}',
                             ),
@@ -176,7 +176,7 @@ class BuildComment extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: Text(
-                              reviewsData.user.name,
+                              reviewsData!.user!.name!,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(fontSize: 15.0),
                             ),
@@ -184,12 +184,12 @@ class BuildComment extends StatelessWidget {
                           const SizedBox(
                             height: 3,
                           ),
-                          reviewsData.comment != null
+                          reviewsData!.comment != null
                               ? Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: Text(
-                                    reviewsData.comment,
+                                    reviewsData!.comment!,
                                     maxLines: 2,
                                     style: TextStyle(
                                       fontSize: 12,
@@ -214,7 +214,7 @@ class BuildComment extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
-                            '${reviewsData.company.name}',
+                            '${reviewsData!.company!.name}',
                             style: const TextStyle(
                                 fontSize: 10, color: Colors.black),
                           ),
@@ -223,7 +223,7 @@ class BuildComment extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
-                          '${reviewsData.created_at}',
+                          '${reviewsData!.created_at}',
                           style: const TextStyle(
                               fontSize: 11, color: Colors.black),
                         ),

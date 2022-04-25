@@ -1050,7 +1050,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
                         errorText:
-                            snapshot.data ? null : 'text_place_name_error'.tr,
+                            snapshot.data! ? null : 'text_place_name_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -1112,7 +1112,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
                         errorText:
-                            snapshot.data ? null : 'text_description_error'.tr,
+                            snapshot.data! ? null : 'text_description_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -1175,7 +1175,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
                         errorText:
-                            snapshot.data ? null : 'text_address_error'.tr,
+                            snapshot.data! ? null : 'text_address_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -1187,38 +1187,38 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                   }),
               GestureDetector(
                 onTap: () async {
-                  locationPicker.LocationResult result =
-                      await locationPicker.showLocationPicker(
-                    context,
-                    'AIzaSyCojvOL87lFBZWjfUGiu_aS22WY0QyudSA',
-                    initialCenter: lng.LatLng(widget.lat, widget.lng),
-                    //automaticallyAnimateToCurrentLocation: true,
-                    //mapStylePath: 'assets/mapStyle.json',
-                    myLocationButtonEnabled: true,
-                    // requiredGPS: true,
-                    layersButtonEnabled: true,
-                    // countries: ['AE', 'NG'],
-                    //resultCardAlignment: Alignment.bottomCenter,
-                    desiredAccuracy: LocationAccuracy.best,
-                  );
-                  print('result = $result');
-                  print('result = ${result.latLng.latitude}');
-                  print('result = ${result.latLng.longitude}');
-                  print('result = ${result.address}');
+                  // locationPicker.LocationResult result =
+                  //     await locationPicker.showLocationPicker(
+                  //   context,
+                  //   'AIzaSyCojvOL87lFBZWjfUGiu_aS22WY0QyudSA',
+                  //   initialCenter: lng.LatLng(widget.lat, widget.lng),
+                  //   //automaticallyAnimateToCurrentLocation: true,
+                  //   //mapStylePath: 'assets/mapStyle.json',
+                  //   myLocationButtonEnabled: true,
+                  //   // requiredGPS: true,
+                  //   layersButtonEnabled: true,
+                  //   // countries: ['AE', 'NG'],
+                  //   //resultCardAlignment: Alignment.bottomCenter,
+                  //   desiredAccuracy: LocationAccuracy.best,
+                  // );
+                  // print('result = $result');
+                  // print('result = ${result.latLng.latitude}');
+                  // print('result = ${result.latLng.longitude}');
+                  // print('result = ${result.address}');
 
-                  setState(() {
-                    // _addBranchesOfCompanyBloc.lanSubject.value=result.latLng.latitude;
-                    // _editCompanyBloc.lngSubject.value=result.latLng.longitude;
-                    widget.lng = result.latLng.longitude;
-                    widget.lat = result.latLng.latitude;
+                  // setState(() {
+                  //   // _addBranchesOfCompanyBloc.lanSubject.value=result.latLng.latitude;
+                  //   // _editCompanyBloc.lngSubject.value=result.latLng.longitude;
+                  //   widget.lng = result.latLng.longitude;
+                  //   widget.lat = result.latLng.latitude;
 
-                    _addBranchesOfCompanyBloc.addressController.text =
-                        result.address;
-                    _addBranchesOfCompanyBloc.longSubject.sink
-                        .add(result.latLng.longitude);
-                    _addBranchesOfCompanyBloc.latSubject.sink
-                        .add(result.latLng.latitude);
-                  });
+                  //   _addBranchesOfCompanyBloc.addressController.text =
+                  //       result.address;
+                  //   _addBranchesOfCompanyBloc.longSubject.sink
+                  //       .add(result.latLng.longitude);
+                  //   _addBranchesOfCompanyBloc.latSubject.sink
+                  //       .add(result.latLng.latitude);
+                  // });
                 },
                 child: BuildViewMap(widget.lng, widget.lat),
               ),
@@ -1275,7 +1275,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintText: '',
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
-                        errorText: snapshot.data ? null : 'text_phone_error'.tr,
+                        errorText: snapshot.data! ? null : 'text_phone_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -1329,7 +1329,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintText: '',
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
-                        errorText: snapshot.data ? null : 'text_phone_error'.tr,
+                        errorText: snapshot.data! ? null : 'text_phone_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -1384,7 +1384,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintText: '',
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
-                        errorText: snapshot.data ? null : 'text_phone_error'.tr,
+                        errorText: snapshot.data! ? null : 'text_phone_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -1559,7 +1559,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintText: 'hint_email'.tr,
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
-                        errorText: snapshot.data ? null : 'email_error'.tr,
+                        errorText: snapshot.data! ? null : 'email_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -1923,7 +1923,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                               child: DropdownButton<String>(
                                 iconSize: 30,
                                 isExpanded: true,
-                                value: snapshot.data.tr,
+                                value: snapshot.data!.tr,
                                 dropdownColor: const Color(0xFFE0E7FF),
                                 items: LIST_DAYS.map<DropdownMenuItem<String>>(
                                     (String value) {
@@ -1939,10 +1939,10 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                     ),
                                   );
                                 }).toList(),
-                                onChanged: (String val) {
+                                onChanged: (String? val) {
                                   _addBranchesOfCompanyBloc
                                       .workDaysSubjectFrom.sink
-                                      .add(LIST_DAYsS[val]);
+                                      .add(LIST_DAYsS[val]!);
                                 },
                               ).addPaddingOnly(right: 15));
                     },
@@ -2016,7 +2016,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                               child: DropdownButton<String>(
                                 iconSize: 30,
                                 isExpanded: true,
-                                value: snapshot.data.tr,
+                                value: snapshot.data!.tr,
                                 dropdownColor: const Color(0xFFE0E7FF),
                                 items: LIST_DAYS.map<DropdownMenuItem<String>>(
                                     (String value) {
@@ -2032,10 +2032,10 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                     ),
                                   );
                                 }).toList(),
-                                onChanged: (String val) {
+                                onChanged: (String? val) {
                                   _addBranchesOfCompanyBloc
                                       .workDaysSubjectTo.sink
-                                      .add(LIST_DAYsS[val]);
+                                      .add(LIST_DAYsS[val]!);
                                   // _editCompanyBloc.workDaysSubjectTo.sink.add(val);
                                 },
                               ).addPaddingOnly(right: 15));
@@ -2173,7 +2173,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                       ),
                       mode: DateTimeFieldPickerMode.time,
                       autovalidateMode: AutovalidateMode.always,
-                      validator: (e) => (e?.day ?? 0) == 1
+                      validator: (e) => (e.day) == 1
                           ? 'Please not the first day'
                           : null,
                       onDateSelected: (DateTime value) {
@@ -2491,7 +2491,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                       index) {
                                                                     final item =
                                                                         countriesSnapshot
-                                                                            .data[index];
+                                                                            .data![index];
                                                                     return InkWell(
                                                                       onTap:
                                                                           () {
@@ -2517,7 +2517,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                             SizedBox(
                                                                               width: 8,
                                                                             ),
-                                                                            Text(item.name),
+                                                                            Text(item.name!),
                                                                           ],
                                                                         ),
                                                                       ),
@@ -2533,7 +2533,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                   itemCount:
                                                                       countriesSnapshot
                                                                           .data
-                                                                          .length);
+                                                                          !.length);
                                                         } else {
                                                           return const Padding(
                                                             padding:
@@ -2559,9 +2559,9 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                           padding: const EdgeInsets.all(2.0),
                                           child: Row(
                                             children: [
-                                              snapshot.data.icon != null
+                                              snapshot.data!.icon != null
                                                   ? Image.network(
-                                                      '$ImgUrl${snapshot.data.icon}',
+                                                      '$ImgUrl${snapshot.data!.icon}',
                                                       width: 32,
                                                       height: 32,
                                                     )
@@ -2570,7 +2570,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                 width: 8,
                                               ),
                                               Text(
-                                                snapshot.data.name,
+                                                snapshot.data!.name!,
                                                 style: kTextStyle.copyWith(
                                                     color: Colors.black),
                                               ),
@@ -2754,7 +2754,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 _addBranchesOfCompanyBloc.allSortCitiesSubject
-                                    .add(snapshot.data.cities);
+                                    .add(snapshot.data!.cities!);
                                 return StreamBuilder<CitiesData>(
                                     stream: _addBranchesOfCompanyBloc
                                         .selectedCities.stream,
@@ -2866,7 +2866,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                           itemBuilder: (ctx,
                                                                               index) {
                                                                             final item =
-                                                                                citiesSnapshot.data[index];
+                                                                                citiesSnapshot.data![index];
                                                                             return InkWell(
                                                                               onTap: () {
                                                                                 _addBranchesOfCompanyBloc.selectedCities.add(item);
@@ -2874,7 +2874,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                               },
                                                                               child: Padding(
                                                                                 padding: const EdgeInsets.all(8.0),
-                                                                                child: Text(item.name),
+                                                                                child: Text(item.name!),
                                                                               ),
                                                                             );
                                                                           },
@@ -2886,7 +2886,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                               true,
                                                                           itemCount: citiesSnapshot
                                                                               .data
-                                                                              .length);
+                                                                              !.length);
                                                                 } else {
                                                                   return const Padding(
                                                                     padding:
@@ -2910,7 +2910,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                   padding:
                                                       const EdgeInsets.all(2.0),
                                                   child: Text(
-                                                    snapshot.data.name,
+                                                    snapshot.data!.name!,
                                                     style: kTextStyle.copyWith(
                                                         color: Colors.black),
                                                   ),
@@ -3201,7 +3201,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                       index) {
                                                                     final item =
                                                                         countriesSnapshot
-                                                                            .data[index];
+                                                                            .data![index];
                                                                     return InkWell(
                                                                       onTap:
                                                                           () {
@@ -3220,7 +3220,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                             SizedBox(
                                                                               width: 8,
                                                                             ),
-                                                                            Text(item.name),
+                                                                            Text(item.name!),
                                                                           ],
                                                                         ),
                                                                       ),
@@ -3236,7 +3236,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                   itemCount:
                                                                       countriesSnapshot
                                                                           .data
-                                                                          .length);
+                                                                          !.length);
                                                         } else {
                                                           return const Padding(
                                                             padding:
@@ -3266,7 +3266,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                 width: 8,
                                               ),
                                               Text(
-                                                snapshot.data.name,
+                                                snapshot.data!.name!,
                                                 style: kTextStyle.copyWith(
                                                     color: Colors.black),
                                               ),
@@ -3470,7 +3470,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                               if (snapshot.hasData) {
                                 _addBranchesOfCompanyBloc
                                     .getSortAllSubCategories
-                                    .add(snapshot.data.sub_categories);
+                                    .add(snapshot.data!.sub_categories!);
                                 return StreamBuilder<SubCategories>(
                                     stream: _addBranchesOfCompanyBloc
                                         .selectedSubCategories.stream,
@@ -3580,7 +3580,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                           itemBuilder: (ctx,
                                                                               index) {
                                                                             final item =
-                                                                                subCategoriesSnapshot.data[index];
+                                                                                subCategoriesSnapshot.data![index];
                                                                             return InkWell(
                                                                               onTap: () {
                                                                                 _addBranchesOfCompanyBloc.selectedSubCategories.add(item);
@@ -3588,7 +3588,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                               },
                                                                               child: Padding(
                                                                                 padding: const EdgeInsets.all(8.0),
-                                                                                child: Text(item.name),
+                                                                                child: Text(item.name!),
                                                                               ),
                                                                             );
                                                                           },
@@ -3600,7 +3600,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                               true,
                                                                           itemCount: subCategoriesSnapshot
                                                                               .data
-                                                                              .length);
+                                                                              !.length);
                                                                 } else {
                                                                   return const Padding(
                                                                     padding:
@@ -3624,7 +3624,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                   padding:
                                                       const EdgeInsets.all(2.0),
                                                   child: Text(
-                                                    snapshot.data.name,
+                                                    snapshot.data!.name!,
                                                     style: kTextStyle.copyWith(
                                                         color: Colors.black),
                                                   ),
@@ -3753,7 +3753,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                               if (snapshot.hasData) {
                                 _addBranchesOfCompanyBloc
                                     .getSortAllSubSubCategories
-                                    .add(snapshot.data.sub_sub_categories);
+                                    .add(snapshot.data!.sub_sub_categories!);
                                 return StreamBuilder<SubSubCategories>(
                                     stream: _addBranchesOfCompanyBloc
                                         .selectedSubSubCategories.stream,
@@ -3863,7 +3863,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                           itemBuilder: (ctx,
                                                                               index) {
                                                                             final item =
-                                                                                subSubCategoriesSnapshot.data[index];
+                                                                                subSubCategoriesSnapshot.data![index];
                                                                             return InkWell(
                                                                               onTap: () {
                                                                                 _addBranchesOfCompanyBloc.selectedSubSubCategories.add(item);
@@ -3871,7 +3871,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                               },
                                                                               child: Padding(
                                                                                 padding: const EdgeInsets.all(8.0),
-                                                                                child: Text(item.name),
+                                                                                child: Text(item.name!),
                                                                               ),
                                                                             );
                                                                           },
@@ -3882,7 +3882,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                           shrinkWrap:
                                                                               true,
                                                                           itemCount: subSubCategoriesSnapshot
-                                                                              .data
+                                                                              .data!
                                                                               .length);
                                                                 } else {
                                                                   return const Padding(
@@ -3907,7 +3907,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                   padding:
                                                       const EdgeInsets.all(2.0),
                                                   child: Text(
-                                                    snapshot.data.name,
+                                                    snapshot.data!.name!,
                                                     style: kTextStyle.copyWith(
                                                         color: Colors.black),
                                                   ),
@@ -4116,7 +4116,7 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                 height: 15,
               ),
 
-              if (widget.beCompany)
+              if (widget.beCompany!)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: RoundedLoadingButton(
@@ -4200,10 +4200,10 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
       } else if (scaleDiff < 0) {
         controller.zoom -= 0.02;
       } else {
-        final now = details.focalPoint;
-        final diff = now - _dragStart;
-        _dragStart = now;
-        controller.drag(diff.dx, diff.dy);
+        // final now = details.focalPoint;
+        // final diff = now - _dragStart;
+        // _dragStart = now;
+        // controller.drag(diff.dx, diff.dy);
       }
     }
 
@@ -4267,10 +4267,10 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
 }
 
 class SocialWidget extends StatefulWidget {
-  final List<SocialItem> socialItems;
-  final SocialController controller;
+  final List<SocialItem>? socialItems;
+  final SocialController? controller;
 
-  const SocialWidget({Key key, this.socialItems, this.controller})
+  const SocialWidget({Key? key, this.socialItems, this.controller})
       : super(key: key);
 
   @override
@@ -4301,7 +4301,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                     items: widget.socialItems,
                     hint: Text('Social'),
                     isExpanded: true,
-                    customWidgets: widget.socialItems.map((e) {
+                    customWidgets: widget.socialItems!.map((e) {
                       return Row(
                         children: [
                           Icon(e.icon),
@@ -4310,14 +4310,14 @@ class _SocialWidgetState extends State<SocialWidget> {
                           ),
                           Expanded(
                               child: Text(
-                            e.name,
+                            e.name!,
                             overflow: TextOverflow.ellipsis,
                           )),
                         ],
                       );
                     }).toList(),
                     onChanged: (SocialItem item) {
-                      widget.controller.socialItem = item;
+                      widget.controller!.socialItem = item;
                     },
                   ),
                 ),
@@ -4330,8 +4330,8 @@ class _SocialWidgetState extends State<SocialWidget> {
               flex: 8,
               child: TextFormField(
                 style: TextStyle(fontSize: 14),
-                validator: (String val) {
-                  if (val.isEmpty && urlExp.hasMatch(val)) {
+                validator: (String? val) {
+                  if (val!.isEmpty && urlExp.hasMatch(val)) {
                     return 'required';
                   }
                   return null;
@@ -4367,7 +4367,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                       const TextStyle(fontSize: 14, color: Color(0xFF9797AD)),
                 ),
                 keyboardType: TextInputType.text,
-                controller: widget.controller.urlController,
+                controller: widget.controller!.urlController,
               ),
             ),
           ],

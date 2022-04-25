@@ -6,19 +6,18 @@ import 'package:al_murafiq/widgets/show_check_login_dialog.dart';
 import 'package:animate_do/animate_do.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:get_it/get_it.dart';
 import 'package:al_murafiq/core/shared_pref_helper.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 class ReviewsScreen extends StatefulWidget {
-  final List<Reviews> reviews;
+  final List<Reviews>? reviews;
 
-  final ProfileCompanyBloc profileCompaineBloc;
-  final ProfileCompany profileCompany;
+  final ProfileCompanyBloc? profileCompaineBloc;
+  final ProfileCompany? profileCompany;
   ReviewsScreen(
-      {Key key, this.reviews, this.profileCompaineBloc, this.profileCompany})
+      {Key? key, this.reviews, this.profileCompaineBloc, this.profileCompany})
       : super(key: key);
 
   @override
@@ -33,7 +32,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         centerTitle: true,
         title:  Text('text_resturant'.tr),
         actions: [
-          StreamBuilder<String>(
+          StreamBuilder<String?>(
               stream: Stream.fromFuture(
                   getIsLogIn()),
               builder: (context,
@@ -56,7 +55,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                             size: 30,
                           ),
                         ),
-                        StreamBuilder<int>(
+                        StreamBuilder<int?>(
                             stream: Stream.fromFuture(
                                 getNumberOfNotfiction()),
                             builder: (context, snapshotNumNotif) {
@@ -152,8 +151,8 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                           child: CircleAvatar(
                             radius: 60,
                             backgroundImage: NetworkImage(
-                              widget.profileCompany.image != null
-                                  ? '$ImgUrl${widget.profileCompany.image}'
+                              widget.profileCompany!.image != null
+                                  ? '$ImgUrl${widget.profileCompany!.image}'
                                   : defaultImgUrl,
                             ),
                           ),
@@ -172,7 +171,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                     scrollDirection: Axis.horizontal,
                                     physics: BouncingScrollPhysics(),
                                     child: Text(
-                                      widget.profileCompany.name,
+                                      widget.profileCompany!.name!,
                                       style: TextStyle(fontSize: 17.0),
                                     ),
                                   ),
@@ -203,7 +202,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                   scrollDirection: Axis.horizontal,
                                   physics: BouncingScrollPhysics(),
                                   child: Text(
-                                    widget.profileCompany.address,
+                                    widget.profileCompany!.address!,
                                     style: const TextStyle(
                                         fontSize: 13, color: Colors.black),
                                   ),
@@ -225,27 +224,27 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.end,
                                       children: [
-                                        RatingBar(
-                                          rating: widget
-                                              .profileCompany.total_rating
-                                              .toDouble(),
-                                          icon: const Icon(
-                                            Icons.star,
-                                            size: 17,
-                                            color: Colors.grey,
-                                          ),
-                                          starCount: 5,
-                                          spacing: 1.0,
-                                          size: 12,
-                                          isIndicator: true,
-                                          allowHalfRating: true,
+                                        // RatingBar(
+                                        //   rating: widget
+                                        //       .profileCompany.total_rating
+                                        //       .toDouble(),
+                                        //   icon: const Icon(
+                                        //     Icons.star,
+                                        //     size: 17,
+                                        //     color: Colors.grey,
+                                        //   ),
+                                        //   starCount: 5,
+                                        //   spacing: 1.0,
+                                        //   size: 12,
+                                        //   isIndicator: true,
+                                        //   allowHalfRating: true,
 
-                                          // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
+                                        //   // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
 
-                                          //   isIndicator.value=true;
-                                          // },
-                                          color: Color(0xffFFAC41),
-                                        ),
+                                        //   //   isIndicator.value=true;
+                                        //   // },
+                                        //   color: Color(0xffFFAC41),
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -254,14 +253,14 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                     physics: BouncingScrollPhysics(),
                                     child: Text(
                                       // '${widget.profileCompany.visit_count}',
-                                      widget.profileCompany.visit_count>999?'${widget.profileCompany.visit_count/1000}K':widget.profileCompany.visit_count>999999?'${widget.profileCompany.visit_count/1000000}M':'${widget.profileCompany.visit_count}',
+                                      widget.profileCompany!.visit_count>999?'${widget.profileCompany!.visit_count/1000}K':widget.profileCompany!.visit_count>999999?'${widget.profileCompany!.visit_count/1000000}M':'${widget.profileCompany!.visit_count}',
 
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: Color(0xffFFAC41)),
                                     ),
                                   ),
-                                  StreamBuilder<String>(
+                                  StreamBuilder<String?>(
                                       stream: Stream.fromFuture(getIsLogIn()),
                                       builder: (context, snapshotToken) {
                                         if (snapshotToken.hasData) {
@@ -274,11 +273,11 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                           return StreamBuilder<int>(
                                               stream: widget
                                                   .profileCompaineBloc
-                                                  .favCompanySubject
+                                                  !.favCompanySubject
                                                   .stream,
                                               initialData: widget
                                                   .profileCompaineBloc
-                                                  .dataOfProfileCompanySubject
+                                                  !.dataOfProfileCompanySubject
                                                   .value
                                                   .fav,
                                               builder:
@@ -288,9 +287,9 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                                       onTap: () async {
                                                         await widget
                                                             .profileCompaineBloc
-                                                            .favCompany(widget
+                                                           ! .favCompany(widget
                                                                 .profileCompany
-                                                                .id,context);
+                                                                !.id!,context);
 
                                                       },
                                                       child: Icon(
@@ -304,9 +303,9 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                                                       onTap: () async {
                                                         await widget
                                                             .profileCompaineBloc
-                                                            .favDesCompany(widget
+                                                           ! .favDesCompany(widget
                                                                 .profileCompany
-                                                                .id,context);
+                                                                !.id!,context);
 
                                                       },
                                                       child: Icon(
@@ -354,7 +353,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               physics: ClampingScrollPhysics(),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              itemCount: widget.reviews.length,
+              itemCount: widget.reviews!.length,
               itemBuilder: (BuildContext context, int index) => Padding(
                 padding: const EdgeInsets.symmetric(vertical: 0),
                 child: ZoomIn(
@@ -364,10 +363,10 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
                       index * 100 > 1000 ? 600 : index * 120),
                   child: BuildComment(
                     textDirection: TextDirection.rtl,
-                    reviews: widget.reviews[index],
-                    profileCompaineBloc: widget.profileCompaineBloc,
-                    like_init: widget.reviews[index].comment_likes != null?1:0,
-                    dis_like_init:widget.reviews[index].comment_dis_likes != null?1:0,
+                    reviews: widget.reviews![index],
+                    profileCompaineBloc: widget.profileCompaineBloc!,
+                    like_init: widget.reviews![index].comment_likes != null?1:0,
+                    dis_like_init:widget.reviews![index].comment_dis_likes != null?1:0,
                   ),
                 ),
               ),
@@ -379,22 +378,22 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
   }
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
     return await helper.getToken();
   }
-  Future<int> getNumberOfNotfiction() async {
+  Future<int?> getNumberOfNotfiction() async {
     return await helper.getNumberOfNotfiction();
   }
 }
 
 class BuildComment extends StatefulWidget {
-  final Reviews reviews;
-  final TextDirection textDirection;
-  final ProfileCompanyBloc profileCompaineBloc;
-  final int like_init;
-  final int dis_like_init;
+  final Reviews? reviews;
+  final TextDirection? textDirection;
+  final ProfileCompanyBloc? profileCompaineBloc;
+  final int? like_init;
+  final int? dis_like_init;
 
-   BuildComment({Key key, this.reviews, this.textDirection, this.profileCompaineBloc, this.like_init, this.dis_like_init}) : super(key: key);
+   BuildComment({Key? key, this.reviews, this.textDirection, this.profileCompaineBloc, this.like_init, this.dis_like_init}) : super(key: key);
 
   @override
   _BuildCommentState createState() => _BuildCommentState();
@@ -411,8 +410,8 @@ class _BuildCommentState extends State<BuildComment> {
 
   @override
   void initState() {
-    numberOfLikeSubject.sink.add(widget.reviews.likes_count);
-    numberOfdislikeSubject.sink.add(widget.reviews.dislikens_count);
+    numberOfLikeSubject.sink.add(widget.reviews!.likes_count!);
+    numberOfdislikeSubject.sink.add(widget.reviews!.dislikens_count!);
     // TODO: implement initState
     super.initState();
   }
@@ -462,7 +461,7 @@ class _BuildCommentState extends State<BuildComment> {
                                 width: 5,
                               ),
                               Text(
-                                '${widget.reviews.rate}',
+                                '${widget.reviews!.rate}',
                                 style:
                                 const TextStyle(fontSize: 12, color: Colors.black),
                               ),
@@ -493,7 +492,7 @@ class _BuildCommentState extends State<BuildComment> {
                                 width: 5,
                               ),
                               Text(
-                                '${widget.reviews.rate}',
+                                '${widget.reviews!.rate}',
                                 style:
                                 const TextStyle(fontSize: 12, color: Colors.black),
                               ),
@@ -546,8 +545,8 @@ class _BuildCommentState extends State<BuildComment> {
                           child: CircleAvatar(
                             radius: 60,
                             backgroundImage: NetworkImage(
-                              widget.reviews.user.avatar != null
-                                  ? '$ImgUrl${widget.reviews.user.avatar}'
+                              widget.reviews!.user!.avatar != null
+                                  ? '$ImgUrl${widget.reviews!.user!.avatar}'
                                   : defaultImgUrl,
                             ),
                           ),
@@ -563,7 +562,7 @@ class _BuildCommentState extends State<BuildComment> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 5),
                             child: Text(
-                              widget.reviews.user.name,
+                              widget.reviews!.user!.name!,
                               style: const TextStyle(fontSize: 17.0),
                             ),
                           ),
@@ -574,7 +573,7 @@ class _BuildCommentState extends State<BuildComment> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                              widget.reviews.comment !=null ?widget.reviews.comment:"",
+                              widget.reviews!.comment !=null ?widget.reviews!.comment:"",
                               maxLines: 3,
                               style: kTextStyle.copyWith(
                                 fontSize: 12,
@@ -595,7 +594,7 @@ class _BuildCommentState extends State<BuildComment> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    if (widget.reviews.created_at != null)
+                    if (widget.reviews!.created_at != null)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: SingleChildScrollView(
@@ -603,7 +602,7 @@ class _BuildCommentState extends State<BuildComment> {
                           physics: BouncingScrollPhysics(),
                           child: Text(
                             // ignore: unnecessary_string_interpolations
-                            '${widget.reviews.created_at.split('T')[0].trim()}',
+                            '${widget.reviews!.created_at.split('T')[0].trim()}',
                             style: const TextStyle(
                                 fontSize: 12, color: Colors.black),
                           ),
@@ -619,7 +618,7 @@ class _BuildCommentState extends State<BuildComment> {
                           children: [
                             StreamBuilder<int>(
                               stream: numberOfdislikeSubject.stream,
-                              initialData: widget.reviews.dislikens_count,
+                              initialData: widget.reviews!.dislikens_count,
                               builder: (context, snapshot) {
                                 return Text(
                                 '${snapshot.data}',
@@ -631,7 +630,7 @@ class _BuildCommentState extends State<BuildComment> {
                             SizedBox(
                               width: 15,
                             ),
-                            StreamBuilder<String>(
+                            StreamBuilder<String?>(
                                 stream: Stream.fromFuture(getIsLogIn()),
                                 builder: (context, snapshotToken) {
                                   if (snapshotToken.hasData) {
@@ -653,11 +652,11 @@ class _BuildCommentState extends State<BuildComment> {
 
                                                     bool co =
                                                     await widget.profileCompaineBloc
-                                                        .dislikeComment(widget.reviews.id,context);
+                                                       ! .dislikeComment(widget.reviews!.id!,context);
                                                     if (co) {
                                                       // await Get.back();
                                                       widget.profileCompaineBloc
-                                                          .commentController
+                                                         ! .commentController
                                                           .text = '';
                                                       dislikeCommentSubject
                                                           .sink
@@ -823,7 +822,7 @@ class _BuildCommentState extends State<BuildComment> {
                                                   // await profileCompaineBloc
                                                   //     .likeComment(reviews.id);
                                                   bool co = await widget.profileCompaineBloc
-                                                      .dislikeComment(widget.reviews.id,context);
+                                                      !.dislikeComment(widget.reviews!.id!,context);
                                                       if (co) {
                                                         dislikeCommentSubject
                                                             .sink
@@ -870,7 +869,7 @@ class _BuildCommentState extends State<BuildComment> {
                           children: [
                             StreamBuilder<int>(
                                 stream: numberOfLikeSubject.stream,
-                                initialData: widget.reviews.likes_count,
+                                initialData: widget.reviews!.likes_count,
                               builder: (context, snapshot) {
                                 return Text(
                                   '${snapshot.data}',
@@ -882,7 +881,7 @@ class _BuildCommentState extends State<BuildComment> {
                             SizedBox(
                               width: 15,
                             ),
-                            StreamBuilder<String>(
+                            StreamBuilder<String?>(
                                 stream: Stream.fromFuture(getIsLogIn()),
                                 builder: (context, snapshotToken) {
                                   if (snapshotToken.hasData) {
@@ -897,7 +896,7 @@ class _BuildCommentState extends State<BuildComment> {
                                             return GestureDetector(
                                                 onTap: () async {
                                                   bool co =  await widget.profileCompaineBloc
-                                                      .likeComment(widget.reviews.id,context);
+                                                     ! .likeComment(widget.reviews!.id!,context);
                                                   if (co) {
                                                     likeCommentSubject.sink.add(1);
                                                     numberOfLikeSubject.sink.add(numberOfLikeSubject.value + 1);
@@ -914,7 +913,7 @@ class _BuildCommentState extends State<BuildComment> {
                                             return GestureDetector(
                                                 onTap: () async {
                                                   bool co =  await widget.profileCompaineBloc
-                                                      .likeComment(widget.reviews.id,context);
+                                                    !  .likeComment(widget.reviews!.id!,context);
                                                   if (co) {
                                                     likeCommentSubject
                                                         .sink
@@ -972,7 +971,7 @@ class _BuildCommentState extends State<BuildComment> {
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
 
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
     return await helper.getToken();
   }
   Future<String> getLangCode() async {

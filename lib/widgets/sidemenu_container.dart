@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 class SideMenuContainer extends StatelessWidget {
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
   SideMenuContainer({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -54,7 +54,7 @@ class SideMenuContainer extends StatelessWidget {
                 children: <Widget>[
                   const SizedBox(width: 20),
                   StreamBuilder<String>(
-                      stream: Stream.fromFuture(getAvatar()),
+                     // stream: Stream.fromFuture(getAvatar()),
                       builder: (context, snapshotAvatar) {
                         // Image.asset(Assets.LAYLA),
                         if (snapshotAvatar.hasData) {
@@ -129,7 +129,7 @@ class SideMenuContainer extends StatelessWidget {
                       // ignore: prefer_const_literals_to_create_immutables
                       children: <Widget>[
                         StreamBuilder<String>(
-                            stream: Stream.fromFuture(getNameUser()),
+                           // stream: Stream.fromFuture(getNameUser()),
                             builder: (context, snapshotNameUser) {
                               if (snapshotNameUser.hasData) {
                                 return Row(
@@ -150,14 +150,14 @@ class SideMenuContainer extends StatelessWidget {
                                     ),
 
                                     StreamBuilder<String>(
-                                        stream: Stream.fromFuture(getTypeMarketer()),
+                                       // stream: Stream.fromFuture(getTypeMarketer()),
                                         builder: (context, snapshotTypeUser) {
                                           print('we ${snapshotTypeUser.data}');
                                           if (snapshotTypeUser.hasData) {
                                             if (snapshotTypeUser.data == 'Marketer') {
                                               return
                                                 StreamBuilder<int>(
-                                                    stream: Stream.fromFuture(getActive()),
+                                                   // stream: Stream.fromFuture(getActive()),
                                                     builder: (context, snapshotActive) {
                                                       if(snapshotActive.hasData){
                                                         if(snapshotActive.data !=0) {
@@ -192,7 +192,7 @@ class SideMenuContainer extends StatelessWidget {
                             }),
                         const SizedBox(height: 5),
                         StreamBuilder<String>(
-                            stream: Stream.fromFuture(getCode()),
+                           // stream: Stream.fromFuture(getCode()),
                             builder: (context, snapshotCode) {
                               if (snapshotCode.hasData) {
                                 return Text(
@@ -217,7 +217,7 @@ class SideMenuContainer extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       StreamBuilder<String>(
-                                          stream: Stream.fromFuture(getMarketer()),
+                                       //   stream: Stream.fromFuture(getMarketer()),
                                           builder: (context, snapshotCode) {
                                             if (snapshotCode.hasData) {
                                               return Text(
@@ -236,12 +236,12 @@ class SideMenuContainer extends StatelessWidget {
 
                                       StreamBuilder<String>(
 
-                                        stream: Stream.fromFuture(getShareMessageMarketer()),
+                                     //   stream: Stream.fromFuture(getShareMessageMarketer()),
                                           builder: (context, snapshotShareMessage) {
 
                                           return  StreamBuilder<String>(
 
-                                              stream: Stream.fromFuture(getMarketer()),
+                                            //  stream: Stream.fromFuture(getMarketer()),
                                               builder: (context, snapshotCode) {
                                                 return GestureDetector(
                                                   onTap:() async {
@@ -314,8 +314,8 @@ class SideMenuContainer extends StatelessWidget {
   }
 
   Future<String> getTypeOfUser() async {
-    int active=await helper.getActive();
-    String type=await helper.getType();
+    int? active=await helper.getActive();
+    String? type=await helper.getType();
     if(active==1&&type=='Marketer'){
       return 'Marketer';
     }
@@ -323,27 +323,27 @@ class SideMenuContainer extends StatelessWidget {
     return '';
   }
 
-  Future<String> getNameUser() async {
+  Future<String?> getNameUser() async {
     return await helper.getName();
   }
-  Future<String> getShareMessageMarketer() async {
+  Future<String?> getShareMessageMarketer() async {
     return await helper.getShareMessage();
   }
-  Future<String> getTypeMarketer() async {
+  Future<String?> getTypeMarketer() async {
     return await helper.getType();
   }
 
-  Future<String> getCode() async {
+  Future<String?> getCode() async {
     return await helper.getCode();
   }
-  Future<String> getMarketer() async {
+  Future<String?> getMarketer() async {
     return await helper.getMarketer();
   }
 
-  Future<String> getAvatar() async {
+  Future<String?> getAvatar() async {
     return await helper.getAvatar();
   }
-  Future<int> getActive() async {
+  Future<int?> getActive() async {
     return await helper.getActive();
   }
 }

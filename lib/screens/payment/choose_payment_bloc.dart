@@ -26,9 +26,9 @@ class ChoosePaymentBloc {
 
   Future<void> fetchChoosePayment() async {
 
-    String token = await _helper.getToken();
+    String? token = await _helper.getToken();
     String lang = await _helper.getCodeLang();
-    int countryID = await _helper.getCountryId();
+    int? countryID = await _helper.getCountryId();
 
     try {
       print('start payment-methods');

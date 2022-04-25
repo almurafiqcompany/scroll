@@ -7,10 +7,10 @@ import 'package:get/get.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 class ShowMessageEmtyDialog extends StatelessWidget {
-  final String message;
-  final String pathImg;
+  final String? message;
+  final String? pathImg;
 
-  const ShowMessageEmtyDialog({Key key, this.message, this.pathImg}) : super(key: key);
+  const ShowMessageEmtyDialog({Key? key, this.message, this.pathImg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,14 @@ class ShowMessageEmtyDialog extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(pathImg,
+                Image.asset(pathImg!,
                   height: Get.height*0.3,
                   width: Get.width*0.8,
                   color: Colors.grey.withOpacity(0.3),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Text(message,style: TextStyle(color: Colors.grey.withOpacity(0.8)),),
+                  child: Text(message!,style: TextStyle(color: Colors.grey.withOpacity(0.8)),),
                 ),
               ],
             )),

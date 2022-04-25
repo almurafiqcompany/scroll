@@ -2,15 +2,13 @@ import 'package:al_murafiq/constants.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
-
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:get/get.dart';
 
 class Swiperr extends StatefulWidget {
-  final String title;
+  final String? title;
 
-  const Swiperr({Key key, this.title}) : super(key: key);
+  const Swiperr({Key? key, this.title}) : super(key: key);
 
   @override
   _SwiperrState createState() => new _SwiperrState();
@@ -33,7 +31,7 @@ class _SwiperrState extends State<Swiperr> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -97,25 +95,25 @@ class _SwiperrState extends State<Swiperr> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,
                                               children: [
-                                                RatingBar(
-                                                  rating: 4,
-                                                  icon: Icon(
-                                                    Icons.star,
-                                                    size: 17,
-                                                    color: Colors.grey,
-                                                  ),
-                                                  starCount: 5,
-                                                  spacing: 1.0,
-                                                  size: 12,
-                                                  isIndicator: true,
-                                                  allowHalfRating: true,
+                                                // RatingBar(
+                                                //   rating: 4,
+                                                //   icon: Icon(
+                                                //     Icons.star,
+                                                //     size: 17,
+                                                //     color: Colors.grey,
+                                                //   ),
+                                                //   starCount: 5,
+                                                //   spacing: 1.0,
+                                                //   size: 12,
+                                                //   isIndicator: true,
+                                                //   allowHalfRating: true,
 
-                                                  // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
-                                                  //   print('Number of stars-->  $value');
-                                                  //   isIndicator.value=true;
-                                                  // },
-                                                  color: Colors.amber,
-                                                ),
+                                                //   // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
+                                                //   //   print('Number of stars-->  $value');
+                                                //   //   isIndicator.value=true;
+                                                //   // },
+                                                //   color: Colors.amber,
+                                                // ),
                                               ],
                                             ),
                                           ),
@@ -323,25 +321,25 @@ class _SwiperrState extends State<Swiperr> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,
                                               children: [
-                                                RatingBar(
-                                                  rating: 4,
-                                                  icon: Icon(
-                                                    Icons.star,
-                                                    size: 17,
-                                                    color: Colors.grey,
-                                                  ),
-                                                  starCount: 5,
-                                                  spacing: 1.0,
-                                                  size: 12,
-                                                  isIndicator: true,
-                                                  allowHalfRating: true,
+                                                // RatingBar(
+                                                //   rating: 4,
+                                                //   icon: Icon(
+                                                //     Icons.star,
+                                                //     size: 17,
+                                                //     color: Colors.grey,
+                                                //   ),
+                                                //   starCount: 5,
+                                                //   spacing: 1.0,
+                                                //   size: 12,
+                                                //   isIndicator: true,
+                                                //   allowHalfRating: true,
 
-                                                  // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
-                                                  //   print('Number of stars-->  $value');
-                                                  //   isIndicator.value=true;
-                                                  // },
-                                                  color: Colors.amber,
-                                                ),
+                                                //   // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
+                                                //   //   print('Number of stars-->  $value');
+                                                //   //   isIndicator.value=true;
+                                                //   // },
+                                                //   color: Colors.amber,
+                                                // ),
                                               ],
                                             ),
                                           ),
@@ -593,8 +591,7 @@ class _SwiperrState extends State<Swiperr> {
             ),
             SizedBox(
               height: 55.0,
-              child:
-              ListView.builder(
+              child: ListView.builder(
                 physics: ClampingScrollPhysics(),
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
@@ -628,7 +625,8 @@ class _SwiperrState extends State<Swiperr> {
                           height: 40,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.5),
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
                           ),
                         ),
                       ],
@@ -637,8 +635,6 @@ class _SwiperrState extends State<Swiperr> {
                 ),
               ),
             ),
-
-
           ],
         ),
       ),

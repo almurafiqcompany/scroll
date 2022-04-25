@@ -12,8 +12,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:rxdart/subjects.dart';
 class SocialItem {
-  final String name;
-  final IconData icon;
+  final String? name;
+  final IconData? icon;
 
   SocialItem({this.name, this.icon});
 }
@@ -59,12 +59,12 @@ class AddSocialBloc {
           return ShowMessageDialog(type: 400,message: 'select social',show_but: true,);
         },
       );
-      return false;
+      return ;
     }
     if ( validateLink(linkController)) {
-      String token = await _helper.getToken();
-      String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
+      String? lang = await _helper.getCodeLang();
+      int? countryID = await _helper.getCountryId();
       final dioo.FormData formData = dioo.FormData.fromMap({
         'link': linkController.text,
         'icon_type': typeSocialSubject.value,
@@ -126,9 +126,9 @@ class AddSocialBloc {
 
   Future<void> fetchAllTickets() async {
 
-    String token = await _helper.getToken();
-    String lang = await _helper.getCodeLang();
-    int countryID = await _helper.getCountryId();
+    String? token = await _helper.getToken();
+    String? lang = await _helper.getCodeLang();
+    int? countryID = await _helper.getCountryId();
 
     try {
 
@@ -143,18 +143,18 @@ class AddSocialBloc {
       if (res.statusCode == 200 && res.data['status']==200) {
 
         dataofAllTicketSubject.sink.add(Tickets.fromJson(res.data['data']));
-        dataofTicketsofuserSubject.sink.add(dataofAllTicketSubject.value.data);
+        dataofTicketsofuserSubject.sink.add(dataofAllTicketSubject.value.data!);
 
         // Get.back(result: ticketData);
         // Get.snackbar(null, "aa",
         //     snackPosition: SnackPosition.BOTTOM);
       } else {
-        Get.snackbar(null, '${res.data['message']}',
+        Get.snackbar('null', '${res.data['message']}',
             snackPosition: SnackPosition.BOTTOM);
       }
     // ignore: avoid_catches_without_on_clauses
     } catch (e) {
-      Get.snackbar(null, '${e}',
+      Get.snackbar('null', '${e}',
           snackPosition: SnackPosition.BOTTOM);
 
     }

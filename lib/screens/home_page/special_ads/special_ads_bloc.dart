@@ -10,11 +10,11 @@ class SpecialAdsBloc {
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
   Future<void> fetchSpecialAds() async {
     try {
-      String token = await _helper.getToken();
-      String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
-      double lat = await _helper.getLat();
-      double lng = await _helper.getLng();
+      String? token = await _helper.getToken();
+      String? lang = await _helper.getCodeLang();
+      int? countryID = await _helper.getCountryId();
+      double? lat = await _helper.getLat();
+      double? lng = await _helper.getLng();
 
       final Response res = await _dio.get(
         '/special-ads?country_id=$countryID&lat=$lat&lng=$lng',

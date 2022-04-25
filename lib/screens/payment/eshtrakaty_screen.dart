@@ -10,10 +10,10 @@ import 'package:al_murafiq/utils/utils.dart';
 import 'package:get/get.dart';
 
 class Eshtrkaty extends StatefulWidget {
-  final int company_id;
-  final int typeAdsOrPlan;
+  final int? company_id;
+  final int? typeAdsOrPlan;
 
-   Eshtrkaty({Key key, this.company_id, this.typeAdsOrPlan}) : super(key: key);
+   Eshtrkaty({Key? key, this.company_id, this.typeAdsOrPlan}) : super(key: key);
 
 
   @override
@@ -66,12 +66,12 @@ class _EshtrkatyState extends State<Eshtrkaty> {
               stream: _eshtrakatyBloc.dataofAllSubscriptionsSubject.stream,
               builder: (context, snapshot) {
                 if(snapshot.hasData){
-                  if(snapshot.data.subscriptions.length > 0){
+                  if(snapshot.data!.subscriptions!.length > 0){
                     return ListView.builder(
                       physics: ClampingScrollPhysics(),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      itemCount: snapshot.data.subscriptions.length,
+                      itemCount: snapshot.data!.subscriptions!.length,
                       itemBuilder: (BuildContext context, int index) => ZoomIn(
                         duration: Duration(milliseconds: 600),
                         delay: Duration(
@@ -80,7 +80,7 @@ class _EshtrkatyState extends State<Eshtrkaty> {
 
                         child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 0),
-                            child: PlanPayChoosen(subscription: snapshot.data.subscriptions[index],company_id: widget.company_id,typeAdsOrPlan: widget.typeAdsOrPlan,)
+                            child: PlanPayChoosen(subscription: snapshot.data!.subscriptions![index],company_id: widget.company_id,typeAdsOrPlan: widget.typeAdsOrPlan,)
                         ),
                       ),
                     );
@@ -98,7 +98,7 @@ class _EshtrkatyState extends State<Eshtrkaty> {
                                   color: Colors.blue.shade800,
                                   textColor: Color(0xffFFFFFF),
                                   onPressed: () async {
-                                    await Get.to(PayPlansScreen(company_id: widget.company_id,typeAdsOrPlan: widget.typeAdsOrPlan,));
+                                    await Get.to(PayPlansScreen(company_id: widget.company_id!,typeAdsOrPlan: widget.typeAdsOrPlan!,));
                                   },
                                   shape:  RoundedRectangleBorder(
                                       borderRadius:

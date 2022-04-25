@@ -16,13 +16,10 @@ import 'package:al_murafiq/widgets/social_circles.dart';
 import 'package:android_intent/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:progress_dialog/progress_dialog.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:readmore/readmore.dart';
 import 'package:al_murafiq/models/profile_compaine.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -34,6 +31,7 @@ import 'package:get_it/get_it.dart';
 import 'package:al_murafiq/core/shared_pref_helper.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:http/http.dart' as http;
+import 'package:smooth_star_rating_nsafe/smooth_star_rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 
@@ -43,11 +41,11 @@ import 'package:permission_handler/permission_handler.dart';
 
 class ResturantPageScreen extends StatefulWidget {
   final compaine_id;
-  final bool flagBranch;
-  final int ad_id;
+  final bool? flagBranch;
+  final int? ad_id;
 
   const ResturantPageScreen(
-      {Key key, this.compaine_id, this.flagBranch, this.ad_id})
+      {Key? key, this.compaine_id, this.flagBranch, this.ad_id})
       : super(key: key);
 
   @override
@@ -60,7 +58,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
   @override
   void initState() {
     _bloc.fetchDataProfileCompany(
-        widget.compaine_id, widget.flagBranch, widget.ad_id, context);
+        widget.compaine_id, widget.flagBranch!, widget.ad_id!, context);
     // TODO: implement initState
     super.initState();
   }
@@ -158,10 +156,10 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                         centerTitle: true,
                         // title: Text('text_resturant'.tr),
                         // title: Text(title),
-                        title: Text("${snapshot.data.category.name}"),
+                        title: Text("${snapshot.data!.category!.name}"),
                         actions: [
                           StreamBuilder<String>(
-                              stream: Stream.fromFuture(getIsLogIn()),
+                              //stream: Stream.fromFuture(getIsLogIn()),
                               builder: (context, snapshotToken) {
                                 if (snapshotToken.hasData) {
                                   return GestureDetector(
@@ -179,8 +177,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                           ),
                                         ),
                                         StreamBuilder<int>(
-                                            stream: Stream.fromFuture(
-                                                getNumberOfNotfiction()),
+                                         //   stream: Stream.fromFuture(getNumberOfNotfiction()),
                                             builder:
                                                 (context, snapshotNumNotif) {
                                               if (snapshotNumNotif.hasData &&
@@ -306,15 +303,15 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                         child: GestureDetector(
                                           onTap: () {
                                             Get.to(FullPhotoView(
-                                              path: snapshot.data.image != null
-                                                  ? '$ImgUrl${snapshot.data.image}'
+                                              path: snapshot.data!.image != null
+                                                  ? '$ImgUrl${snapshot.data!.image}'
                                                   : defaultImgUrl,
                                               type: PhotoType.Network,
                                             ));
                                           },
                                           child: Image.network(
-                                            snapshot.data.image != null
-                                                ? '$ImgUrl${snapshot.data.image}'
+                                            snapshot.data!.image != null
+                                                ? '$ImgUrl${snapshot.data!.image}'
                                                 : defaultImgUrl,
                                             fit: BoxFit.fitWidth,
                                             width: 110,
@@ -350,7 +347,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 5),
                                           child: Text(
-                                            '${snapshot.data.name}',
+                                            '${snapshot.data!.name}',
                                             style: TextStyle(fontSize: 18.0),
                                           ),
                                         ),
@@ -389,7 +386,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                             const SizedBox(
                                               width: 5,
                                             ),
-                                            if (snapshot.data.location != null)
+                                            if (snapshot.data!.location != null)
                                               Expanded(
                                                 child: Padding(
                                                   padding: const EdgeInsets
@@ -397,7 +394,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                   child: Container(
                                                     width: Get.width / 2,
                                                     child: Text(
-                                                      '${snapshot.data.location}',
+                                                      '${snapshot.data!.location}',
                                                       style: const TextStyle(
                                                           fontSize: 14,
                                                           fontWeight:
@@ -427,26 +424,26 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,
                                                   children: [
-                                                    RatingBar(
-                                                      rating: snapshot
-                                                          .data.total_rating
-                                                          .toDouble(),
-                                                      icon: const Icon(
-                                                        Icons.star,
-                                                        size: 17,
-                                                        color: Colors.grey,
-                                                      ),
-                                                      starCount: 5,
-                                                      spacing: 1.0,
-                                                      size: 12,
-                                                      isIndicator: true,
-                                                      allowHalfRating: true,
+                                                    // RatingBar(
+                                                    //   rating: snapshot
+                                                    //       .data.total_rating
+                                                    //       .toDouble(),
+                                                    //   icon: const Icon(
+                                                    //     Icons.star,
+                                                    //     size: 17,
+                                                    //     color: Colors.grey,
+                                                    //   ),
+                                                    //   starCount: 5,
+                                                    //   spacing: 1.0,
+                                                    //   size: 12,
+                                                    //   isIndicator: true,
+                                                    //   allowHalfRating: true,
 
-                                                      // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
-                                                      //   isIndicator.value=true;
-                                                      // },
-                                                      color: Color(0xffFFAC41),
-                                                    ),
+                                                    //   // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
+                                                    //   //   isIndicator.value=true;
+                                                    //   // },
+                                                    //   color: Color(0xffFFAC41),
+                                                    // ),
                                                   ],
                                                 ),
                                               ),
@@ -469,14 +466,14 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                       child: Text(
                                                         // '${snapshot.data.visit_count}',
                                                         snapshot.data
-                                                                    .visit_count >
+                                                                    !.visit_count >
                                                                 999
-                                                            ? '${snapshot.data.visit_count / 1000}K'
+                                                            ? '${snapshot.data!.visit_count / 1000}K'
                                                             : snapshot.data
-                                                                        .visit_count >
+                                                                        !.visit_count >
                                                                     999999
-                                                                ? '${snapshot.data.visit_count / 1000000}M'
-                                                                : '${snapshot.data.visit_count}',
+                                                                ? '${snapshot.data!.visit_count / 1000000}M'
+                                                                : '${snapshot.data!.visit_count}',
                                                         style: TextStyle(
                                                             fontSize: 16,
                                                             color: Color(
@@ -486,12 +483,11 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                   ],
                                                 ),
                                               ),
-                                              if (widget.flagBranch)
+                                              if (widget.flagBranch!)
                                                 SizedBox()
                                               else
                                                 StreamBuilder<String>(
-                                                    stream: Stream.fromFuture(
-                                                        getIsLogIn()),
+                                                    //stream: Stream.fromFuture( getIsLogIn()),
                                                     builder: (context,
                                                         snapshotToken) {
                                                       if (snapshotToken
@@ -523,7 +519,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                       await _bloc.favCompany(
                                                                           snapshot
                                                                               .data
-                                                                              .id,
+                                                                              !.id!,
                                                                           context);
                                                                     },
                                                                     child: Icon(
@@ -543,7 +539,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                       await _bloc.favDesCompany(
                                                                           snapshot
                                                                               .data
-                                                                              .id,
+                                                                             ! .id!,
                                                                           context);
                                                                     },
                                                                     child: Icon(
@@ -590,7 +586,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                   ),
                                 ],
                               ),
-                              if (widget.flagBranch)
+                              if (widget.flagBranch!)
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
@@ -649,21 +645,21 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                         .loadFileSubject
                                                                         .sink
                                                                         .add(
-                                                                            null);
+                                                                            null!);
                                                                     try {
-                                                                      FilePickerResult
+                                                                       FilePickerResult?
                                                                           res =
                                                                           await FilePicker.platform.pickFiles(
                                                                               type: FileType.custom,
                                                                               allowedExtensions: [
                                                                             'pdf'
                                                                           ]);
-                                                                      File pdfFile = res !=
+                                                                      File? pdfFile = res !=
                                                                               null
                                                                           ? File(res
                                                                               .files
                                                                               .single
-                                                                              .path)
+                                                                              .path!)
                                                                           : null;
 
                                                                       if (pdfFile !=
@@ -674,7 +670,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                             .add(pdfFile);
                                                                         await _bloc.uploadFile(
                                                                             companyId: snapshot
-                                                                                .data.id,
+                                                                                .data!.id,
                                                                             type:
                                                                                 'pdf',
                                                                             context:
@@ -741,7 +737,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                     child: GestureDetector(
                                                       onTap: () async {
                                                         try {
-                                                          FilePickerResult res =
+                                                          FilePickerResult? res =
                                                               await FilePicker
                                                                   .platform
                                                                   .pickFiles(
@@ -750,12 +746,12 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                       allowedExtensions: [
                                                                 'pdf'
                                                               ]);
-                                                          File pdfFile =
+                                                          File? pdfFile =
                                                               res != null
                                                                   ? File(res
                                                                       .files
                                                                       .single
-                                                                      .path)
+                                                                      .path!)
                                                                   : null;
 
                                                           if (pdfFile != null) {
@@ -767,7 +763,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                     companyId:
                                                                         snapshot
                                                                             .data
-                                                                            .id,
+                                                                            !.id,
                                                                     type: 'pdf',
                                                                     context:
                                                                         context);
@@ -838,7 +834,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                       // ),
                                       Expanded(
                                         child: ReadMoreText(
-                                          '${snapshot.data.desc}',
+                                          '${snapshot.data!.desc}',
                                           trimLines: 3,
                                           colorClickableText: Colors.blue,
                                           trimMode: TrimMode.Line,
@@ -865,7 +861,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10),
                                         child: GestureDetector(
-                                          onTap: snapshot.data.pdf != null
+                                          onTap: snapshot.data!.pdf != null
                                               ? () async {
                                                   //snapshot.data.pdf
 
@@ -882,14 +878,14 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                   //   },
                                                   // );
                                                   await launch(
-                                                      '$ImgUrl${snapshot.data.pdf}');
+                                                      '$ImgUrl${snapshot.data!.pdf}');
                                                 }
                                               : () {},
                                           child: Image.asset(
                                             'assets/images/pdf.png',
                                             height: 70,
                                             width: 65,
-                                            color: snapshot.data.pdf != null
+                                            color: snapshot.data!.pdf != null
                                                 ? Colors.blue
                                                 : Colors.grey,
                                           ),
@@ -911,7 +907,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                       // ),
                                       Expanded(
                                         child: ReadMoreText(
-                                          '${snapshot.data.desc}',
+                                          '${snapshot.data!.desc}',
                                           trimLines: 3,
                                           colorClickableText: Colors.blue,
                                           trimMode: TrimMode.Line,
@@ -936,7 +932,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              if (widget.flagBranch)
+                              if (widget.flagBranch!)
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
@@ -970,7 +966,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                             BorderRadius
                                                                 .circular(25),
                                                         child: Image.file(
-                                                          snapshotFile.data,
+                                                          snapshotFile.data!,
                                                           fit: BoxFit.fitHeight,
                                                         ),
                                                       ),
@@ -991,9 +987,9 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                         .loadImgSubject
                                                                         .sink
                                                                         .add(
-                                                                            null);
+                                                                            null!);
                                                                     try {
-                                                                      FilePickerResult
+                                                                      FilePickerResult?
                                                                           res =
                                                                           await FilePicker.platform.pickFiles(
                                                                               type: FileType.custom,
@@ -1003,12 +999,12 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                             'jpeg',
                                                                             'gif'
                                                                           ]);
-                                                                      File img = res !=
+                                                                      File? img = res !=
                                                                               null
                                                                           ? File(res
                                                                               .files
                                                                               .single
-                                                                              .path)
+                                                                              .path!)
                                                                           : null;
 
                                                                       if (img !=
@@ -1019,7 +1015,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                             .add(img);
                                                                         await _bloc.uploadFile(
                                                                             companyId: snapshot
-                                                                                .data.id,
+                                                                                .data!.id,
                                                                             type:
                                                                                 'image',
                                                                             context:
@@ -1086,15 +1082,15 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                     child: GestureDetector(
                                                       onTap: () async {
                                                         try {
-                                                          FilePickerResult res =
+                                                          FilePickerResult? res =
                                                               await FilePicker
                                                                   .platform
                                                                   .pickFiles(
                                                                       type: FileType
                                                                           .image);
-                                                          File img = res != null
+                                                          File? img = res != null
                                                               ? File(res.files
-                                                                  .single.path)
+                                                                  .single.path!)
                                                               : null;
 
                                                           if (img != null) {
@@ -1106,7 +1102,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                     companyId:
                                                                         snapshot
                                                                             .data
-                                                                            .id,
+                                                                            !.id,
                                                                     type:
                                                                         'image',
                                                                     context:
@@ -1167,7 +1163,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                     scrollDirection:
                                                         Axis.horizontal,
                                                     itemCount: snapshotPhotos
-                                                        .data.length,
+                                                        .data!.length,
                                                     itemBuilder:
                                                         (BuildContext context,
                                                                 int index) =>
@@ -1239,10 +1235,10 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                 child: Image
                                                                     .network(
                                                                   snapshotPhotos
-                                                                              .data[index]
+                                                                              .data![index]
                                                                               .source !=
                                                                           null
-                                                                      ? '$ImgUrl${snapshotPhotos.data[index].source}'
+                                                                      ? '$ImgUrl${snapshotPhotos.data![index].source}'
                                                                       : defaultImgUrl,
                                                                   fit: BoxFit
                                                                       .fill,
@@ -1260,7 +1256,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                 onTap: () {
                                                                   _bloc.imageDestroyOfCompany(
                                                                       file_id: snapshotPhotos
-                                                                          .data[
+                                                                          .data![
                                                                               index]
                                                                           .id,
                                                                       company_id:
@@ -1303,7 +1299,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                     physics: ClampingScrollPhysics(),
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: snapshot.data.files.length,
+                                    itemCount: snapshot.data!.files!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) =>
                                             Padding(
@@ -1339,14 +1335,14 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                               //   type: PhotoType.Network,
                                               // ));
                                               Get.to(FullImageViewer(
-                                                urls: snapshot.data.files,
+                                                urls: snapshot.data!.files,
                                               ));
                                             },
                                             child: Image.network(
-                                              snapshot.data.files[index]
+                                              snapshot.data!.files![index]
                                                           .source !=
                                                       null
-                                                  ? '$ImgUrl${snapshot.data.files[index].source}'
+                                                  ? '$ImgUrl${snapshot.data!.files![index].source}'
                                                   : defaultImgUrl,
                                               fit: BoxFit.fill,
                                               width: 110,
@@ -1372,12 +1368,12 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                 height: 10,
                               ),
 
-                              if (snapshot.data.lat != null &&
-                                  snapshot.data.lon != null)
+                              if (snapshot.data!.lat != null &&
+                                  snapshot.data!.lon != null)
                                 GestureDetector(
                                   onTap: () async {
                                     String _destination =
-                                        "${snapshot.data.lat},${snapshot.data.lon}";
+                                        "${snapshot.data!.lat},${snapshot.data!.lon}";
                                     if (Platform.isAndroid) {
                                       final AndroidIntent intent = new AndroidIntent(
                                           action: 'action_view',
@@ -1418,8 +1414,8 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                   },
                                   child: Container(
                                     child: BuildViewMap(
-                                        lat: snapshot.data.lat,
-                                        lng: snapshot.data.lon),
+                                        lat: snapshot.data!.lat,
+                                        lng: snapshot.data!.lon),
                                   ),
                                 ),
                               Padding(
@@ -1465,7 +1461,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 30),
                                       child: Text(
-                                        snapshot.data.address,
+                                        snapshot.data!.address!,
                                         style: TextStyle(
                                             fontSize: 16,
                                             color: Color(0xff6E7989)),
@@ -1498,8 +1494,8 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                 height: 10,
                               ),
 
-                              if (snapshot.data.phone1 != null ||
-                                  snapshot.data.phone2 != null)
+                              if (snapshot.data!.phone1 != null ||
+                                  snapshot.data!.phone2 != null)
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20),
@@ -1532,14 +1528,14 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 10),
-                                            child: snapshot.data.phone1 != null
+                                            child: snapshot.data!.phone1 != null
                                                 ? GestureDetector(
                                                     onTap: () {
                                                       launch(
-                                                          'tel://${snapshot.data.phone1}');
+                                                          'tel://${snapshot.data!.phone1}');
                                                     },
                                                     child: Text(
-                                                      '${snapshot.data.phone1}',
+                                                      '${snapshot.data!.phone1}',
                                                       style: const TextStyle(
                                                           fontSize: 15,
                                                           color:
@@ -1550,7 +1546,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                   )
                                                 : SizedBox(),
                                           ),
-                                          snapshot.data.phone2 != null
+                                          snapshot.data!.phone2 != null
                                               ? Text(
                                                   '/',
                                                   style: TextStyle(
@@ -1561,14 +1557,14 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 10),
-                                            child: snapshot.data.phone2 != null
+                                            child: snapshot.data!.phone2 != null
                                                 ? GestureDetector(
                                                     onTap: () {
                                                       launch(
-                                                          'tel://${snapshot.data.phone2}');
+                                                          'tel://${snapshot.data!.phone2}');
                                                     },
                                                     child: Text(
-                                                      '${snapshot.data.phone2}',
+                                                      '${snapshot.data!.phone2}',
                                                       style: const TextStyle(
                                                           fontSize: 15,
                                                           color:
@@ -1638,7 +1634,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                       const SizedBox(
                                         height: 8,
                                       ),
-                                      if (snapshot.data.tel != null)
+                                      if (snapshot.data!.tel != null)
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 0),
@@ -1676,10 +1672,10 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         launch(
-                                                            'tel://${snapshot.data.tel}');
+                                                            'tel://${snapshot.data!.tel}');
                                                       },
                                                       child: Text(
-                                                        '${snapshot.data.tel}',
+                                                        '${snapshot.data!.tel}',
                                                         style: TextStyle(
                                                             fontSize: 15,
                                                             color: Color(
@@ -1709,7 +1705,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                 Icons.date_range,
                                                 color: Color(0xff6E7989),
                                               ),
-                                              if (snapshot.data.is_open == 1)
+                                              if (snapshot.data!.is_open == 1)
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(
                                                       horizontal: 10),
@@ -1749,7 +1745,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                           .spaceEvenly,
                                                   children: [
                                                     Text(
-                                                      '${snapshot.data.open_to}',
+                                                      '${snapshot.data!.open_to}',
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           color:
@@ -1767,7 +1763,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                               FontWeight.bold),
                                                     ),
                                                     Text(
-                                                      '${snapshot.data.open_from}',
+                                                      '${snapshot.data!.open_from}',
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           color:
@@ -1794,7 +1790,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                           .spaceEvenly,
                                                   children: [
                                                     Text(
-                                                      '${snapshot.data.week_from}',
+                                                      '${snapshot.data!.week_from}',
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           color:
@@ -1812,7 +1808,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                               FontWeight.bold),
                                                     ),
                                                     Text(
-                                                      '${snapshot.data.week_to}',
+                                                      '${snapshot.data!.week_to}',
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           color:
@@ -1853,13 +1849,13 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                               //const Spacer(),
                               StreamBuilder<void>(
                                   builder: (context, snapshotSoc) {
-                                if (snapshot.data.social.isNotEmpty) {
+                                if (snapshot.data!.social!.isNotEmpty) {
                                   // print('social ${snapshot.data.social[3].icon_type}');
                                   return Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 30),
                                     child: SocialCircle(
-                                      socail: snapshot.data.social,
+                                      socail: snapshot.data!.social,
                                     ),
                                   );
                                 } else {
@@ -1881,21 +1877,21 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              if (snapshot.data.reviews.length >= 1)
+                              if (snapshot.data!.reviews!.length >= 1)
                                 // BuildCommentOfCompany(
                                 //   textDirection: TextDirection.rtl,
                                 //   reviews: snapshot.data.reviews[0],
                                 // )
                                 BuildComment(
                                   textDirection: TextDirection.rtl,
-                                  reviews: snapshot.data.reviews[0],
+                                  reviews: snapshot.data!.reviews![0],
                                   profileCompaineBloc: _bloc,
                                   like_init:
-                                      snapshot.data.reviews[0].comment_likes !=
+                                      snapshot.data!.reviews![0].comment_likes !=
                                               null
                                           ? 1
                                           : 0,
-                                  dis_like_init: snapshot.data.reviews[0]
+                                  dis_like_init: snapshot.data!.reviews![0]
                                               .comment_dis_likes !=
                                           null
                                       ? 1
@@ -1903,21 +1899,21 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                 )
                               else
                                 const SizedBox(),
-                              if (snapshot.data.reviews.length >= 2)
+                              if (snapshot.data!.reviews!.length >= 2)
                                 // BuildCommentOfCompany(
                                 //   textDirection: TextDirection.rtl,
                                 //   reviews: snapshot.data.reviews[1],
                                 // )
                                 BuildComment(
                                   textDirection: TextDirection.rtl,
-                                  reviews: snapshot.data.reviews[1],
+                                  reviews: snapshot.data!.reviews![1],
                                   profileCompaineBloc: _bloc,
                                   like_init:
-                                      snapshot.data.reviews[1].comment_likes !=
+                                      snapshot.data!.reviews![1].comment_likes !=
                                               null
                                           ? 1
                                           : 0,
-                                  dis_like_init: snapshot.data.reviews[1]
+                                  dis_like_init: snapshot.data!.reviews![1]
                                               .comment_dis_likes !=
                                           null
                                       ? 1
@@ -1928,12 +1924,12 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              if (snapshot.data.reviews.length > 2)
+                              if (snapshot.data!.reviews!.length > 2)
                                 GestureDetector(
                                   onTap: () {
                                     Get.to(ReviewsScreen(
-                                      reviews: snapshot.data.reviews,
-                                      profileCompany: snapshot.data,
+                                      reviews: snapshot.data!.reviews!,
+                                      profileCompany: snapshot.data!,
                                       profileCompaineBloc: _bloc,
                                     ));
                                     //CustomDialog.showWithOk(context,'ds','rrrrrrr');
@@ -1956,7 +1952,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                 height: 10,
                               ),
                               StreamBuilder<String>(
-                                  stream: Stream.fromFuture(getIsLogIn()),
+                                  //stream: Stream.fromFuture(getIsLogIn()),
                                   builder: (context, snapshotToken) {
                                     if (snapshotToken.hasData &&
                                         snapshot.data != null) {
@@ -1977,9 +1973,9 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                       //     },
                                       //     shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0))
                                       // )
-                                      print('Q ${snapshot.data.closed_reason}');
-                                      print('Q ${snapshot.data.is_review}');
-                                      if (widget.flagBranch) {
+                                      print('Q ${snapshot.data!.closed_reason}');
+                                      print('Q ${snapshot.data!.is_review}');
+                                      if (widget.flagBranch!) {
                                         return FlatButton(
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
@@ -1996,9 +1992,9 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                           ),
                                           onPressed: () {},
                                         );
-                                      } else if (snapshot.data.closed_reason !=
+                                      } else if (snapshot.data!.closed_reason !=
                                               null ||
-                                          snapshot.data.is_review == 1) {
+                                          snapshot.data!.is_review == 1) {
                                         return FlatButton(
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
@@ -2120,7 +2116,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                             ),
                                                                             child:
                                                                                 Image.network(
-                                                                              snapshot.data.image != null ? '$ImgUrl${snapshot.data.image}' : defaultImgUrl,
+                                                                              snapshot.data!.image != null ? '$ImgUrl${snapshot.data!.image}' : defaultImgUrl,
                                                                               fit: BoxFit.fitWidth,
                                                                               width: 110,
                                                                               height: 110,
@@ -2139,7 +2135,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                               BouncingScrollPhysics(),
                                                                           child:
                                                                               Text(
-                                                                            snapshot.data.name,
+                                                                            snapshot.data!.name!,
                                                                             style:
                                                                                 TextStyle(fontSize: 22),
                                                                           )),
@@ -2150,7 +2146,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                             scrollDirection: Axis.horizontal,
                                                                             physics: BouncingScrollPhysics(),
                                                                             child: Text(
-                                                                              snapshot.data.address,
+                                                                              snapshot.data!.address!,
                                                                               style: TextStyle(fontSize: 15),
                                                                             )),
                                                                       ),
@@ -2169,7 +2165,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                               textDirection: TextDirection.ltr,
                                                                               child: SmoothStarRating(
                                                                                 rating: 0,
-                                                                                isReadOnly: false,
+                                                                                
                                                                                 color: Color(0xffFFAC41),
                                                                                 borderColor: Colors.grey,
                                                                                 size: 40,
@@ -2179,11 +2175,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                                 starCount: 5,
                                                                                 allowHalfRating: true,
                                                                                 spacing: 2.0,
-                                                                                onRated: (value) {
-                                                                                  rating = value;
-
-                                                                                  _bloc.rateSubject.sink.add(value);
-                                                                                },
+                                                                                
                                                                               ),
                                                                             );
                                                                           }),
@@ -2229,7 +2221,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                                   focusedErrorBorder: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(6)), borderSide: BorderSide(width: 1, color: Colors.red.shade800)),
                                                                                   hintText: 'bt_leave_review'.tr,
 
-                                                                                  errorText: snapshot.data ? null : 'bt_leave_review_error'.tr,
+                                                                                  errorText: snapshot.data! ? null : 'bt_leave_review_error'.tr,
                                                                                   hintStyle: const TextStyle(fontSize: 16, color: Color(0xFF9797AD)),
                                                                                   //errorText: snapshot.data ? null : 'name is not empty',
                                                                                 ),
@@ -2262,7 +2254,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                               bool co = await _bloc.commentToCompany(widget.compaine_id, context);
                                                                               if (co) {
                                                                                 Get.back();
-                                                                                await _bloc.fetchDataProfileCompany(widget.compaine_id, widget.flagBranch, widget.ad_id, context);
+                                                                                await _bloc.fetchDataProfileCompany(widget.compaine_id, widget.flagBranch!, widget.ad_id!, context);
                                                                               }
                                                                               // if (co) {
                                                                               //   // await Get.back();
@@ -2400,7 +2392,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
               } else if (snapshot.hasError) {
                 return Container(
                     height: Get.height,
-                    child: Center(child: Text(snapshot.error)));
+                    child: Center(child: Text('snapshot.error')));
               } else {
                 //return SizedBox();
                 return Container(
@@ -2417,11 +2409,11 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
 
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
     return await helper.getToken();
   }
 
-  Future<int> getNumberOfNotfiction() async {
+  Future<int?> getNumberOfNotfiction() async {
     return await helper.getNumberOfNotfiction();
   }
 
@@ -2455,9 +2447,9 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
         controller.zoom -= 0.02;
       } else {
         final now = details.focalPoint;
-        final diff = now - _dragStart;
-        _dragStart = now;
-        controller.drag(diff.dx, diff.dy);
+        // final diff = now - _dragStart;
+        // _dragStart = now;
+        // controller.drag(diff.dx, diff.dy);
       }
     }
     print('Location:Location:  $lat $lng');
@@ -2556,24 +2548,24 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                       textColor: Color(0xff000000),
                       onPressed: () async {
                         // showAlertDialog(context);
-                        var data = await http.get('$ImgUrl${UrlPdf}');
-                        var bytes = data.bodyBytes;
-                        var dir = await getApplicationDocumentsDirectory();
-                        File file = File("${dir.path}/mypdfonline.pdf");
+                        // var data =  http.get('$ImgUrl${UrlPdf}');
+                        // var bytes = data.bodyBytes;
+                        // var dir = await getApplicationDocumentsDirectory();
+                        // File file = File("${dir.path}/mypdfonline.pdf");
 
-                        File urlFile = await file.writeAsBytes(bytes);
+                        // File urlFile = await file.writeAsBytes(bytes);
 
-                        if (urlFile != null) {
-                          await Get.to(PdfViewPage(
-                            path: urlFile.path,
-                          ));
-                        }
-                        // Get.back();
+                        // if (urlFile != null) {
+                        //   await Get.to(PdfViewPage(
+                        //     path: urlFile.path,
+                        //   ));
+                        // }
+                        // // Get.back();
                       },
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(15.0))),
                   StreamBuilder<String>(
-                      stream: Stream.fromFuture(getIsLogIn()),
+                     // stream: Stream.fromFuture(getIsLogIn()),
                       builder: (context, snapshotToken) {
                         print(snapshotToken.hasData);
                         if (snapshotToken.hasData) {
@@ -2662,16 +2654,15 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
     //get pdf from link
     String progress = "";
 
-    ProgressDialog progressDialog =
-        ProgressDialog(context, type: ProgressDialogType.Normal);
-    progressDialog.style(message: 'Download'.tr);
-    progressDialog.show();
+    // ProgressDialog progressDialog =ProgressDialog(context, type: ProgressDialogType.Normal);
+    // progressDialog.style(message: 'Download'.tr);
+    // progressDialog.show();
 
     var response = await dio.get(
       url,
       onReceiveProgress: (count, total) {
         progress = (count / total * 100).toStringAsFixed(0) + "%";
-        progressDialog.update(message: "${'Download'.tr} $progress");
+      //  progressDialog.update(message: "${'Download'.tr} $progress");
       },
       // showDownloadProgress,
       //Received data with List<int>
@@ -2679,7 +2670,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
           responseType: ResponseType.bytes,
           followRedirects: false,
           validateStatus: (status) {
-            return status < 500;
+            return status! < 500;
           }),
     );
 
@@ -2690,7 +2681,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
     raf.writeFromSync(response.data);
     await raf.close();
 
-    progressDialog.hide();
+    //progressDialog.hide();
   }
 
   void _requestDownload(String link, String savePath) async {
@@ -2714,10 +2705,10 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
 }
 
 class BuildCommentOfCompany extends StatelessWidget {
-  final Reviews reviews;
-  final TextDirection textDirection;
+  final Reviews? reviews;
+  final TextDirection? textDirection;
 
-  BuildCommentOfCompany({Key key, this.reviews, this.textDirection})
+  BuildCommentOfCompany({Key? key, this.reviews, this.textDirection})
       : super(key: key);
 
   @override
@@ -2770,7 +2761,7 @@ class BuildCommentOfCompany extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                '${reviews.rate}',
+                                '${reviews!.rate}',
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black),
                               ),
@@ -2806,7 +2797,7 @@ class BuildCommentOfCompany extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                '${reviews.rate}',
+                                '${reviews!.rate}',
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.black),
                               ),
@@ -2857,8 +2848,8 @@ class BuildCommentOfCompany extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 60,
                             backgroundImage: NetworkImage(
-                              reviews.user.avatar != null
-                                  ? '$ImgUrl${reviews.user.avatar}'
+                              reviews!.user!.avatar != null
+                                  ? '$ImgUrl${reviews!.user!.avatar}'
                                   : defaultImgUrl,
                             ),
                           ),
@@ -2876,7 +2867,7 @@ class BuildCommentOfCompany extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               physics: BouncingScrollPhysics(),
                               child: Text(
-                                reviews.user.name,
+                                reviews!.user!.name!,
                                 style: const TextStyle(fontSize: 18.0),
                               ),
                             ),
@@ -2890,7 +2881,7 @@ class BuildCommentOfCompany extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               physics: BouncingScrollPhysics(),
                               child: Text(
-                                reviews.comment,
+                                reviews!.comment,
                                 maxLines: 3,
                                 style: kTextStyle.copyWith(
                                   fontSize: 12,
@@ -2906,7 +2897,7 @@ class BuildCommentOfCompany extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (reviews.created_at != null)
+                if (reviews!.created_at != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: SingleChildScrollView(
@@ -2914,7 +2905,7 @@ class BuildCommentOfCompany extends StatelessWidget {
                       physics: BouncingScrollPhysics(),
                       child: Text(
                         // ignore: unnecessary_string_interpolations
-                        '${reviews.created_at.split('T')[0].trim()}',
+                        '${reviews!.created_at.split('T')[0].trim()}',
                         style:
                             const TextStyle(fontSize: 13, color: Colors.black),
                       ),

@@ -63,7 +63,7 @@ class ShowCheckLoginDialog extends StatelessWidget {
                       color: Color(0xffd39e00),
                       textColor: Color(0xff000000),
                       onPressed: () async {
-                        await Get.back();
+                         Get.back();
                       },
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0))
                   ),

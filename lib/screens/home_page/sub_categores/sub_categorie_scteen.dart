@@ -9,18 +9,18 @@ import 'package:al_murafiq/screens/home_page/sub_categores/sub_sub_categorie_sct
 import 'package:al_murafiq/widgets/show_check_login_dialog.dart';
 import 'package:al_murafiq/widgets/show_message_emty_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 class SubCategorieScreen extends StatefulWidget {
-  final List<SubCategories> subCategories;
-  final List<Ads> ads;
-  final String name_Categories;
+  final List<SubCategories>? subCategories;
+  final List<Ads>? ads;
+  final String? name_Categories;
 
   const SubCategorieScreen(
-      {Key key, this.subCategories, this.ads, this.name_Categories})
+      {Key? key, this.subCategories, this.ads, this.name_Categories})
       : super(key: key);
 
   @override
@@ -49,7 +49,7 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
             : ''),
         actions: [
 
-          StreamBuilder<String>(
+          StreamBuilder<String?>(
               stream: Stream.fromFuture(
                   getIsLogIn()),
               builder: (context,
@@ -72,7 +72,7 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                             size: 30,
                           ),
                         ),
-                        StreamBuilder<int>(
+                        StreamBuilder<int?>(
                             stream: Stream.fromFuture(
                                 getNumberOfNotfiction()),
                             builder: (context, snapshotNumNotif) {
@@ -252,7 +252,7 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
               height: 10,
             ),
             StreamBuilder<void>(builder: (context, snapshot) {
-              if (widget.ads.isNotEmpty) {
+              if (widget.ads!.isNotEmpty) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Container(
@@ -315,7 +315,7 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                                                 scrollDirection: Axis.horizontal,
                                                                 physics: BouncingScrollPhysics(),
                                                                 child: Text(
-                                                                  '${widget.ads[config.activeIndex].name} ',
+                                                                  '${widget.ads![config.activeIndex].name} ',
                                                                   style: const TextStyle(fontSize: 16.0),
                                                                 ),
                                                               ),
@@ -341,20 +341,20 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                                             mainAxisAlignment:
                                                             MainAxisAlignment.end,
                                                             children: [
-                                                              RatingBar(
-                                                                rating: widget.ads[config.activeIndex].total_rating.toDouble(),
-                                                                icon: const Icon(
-                                                                  Icons.star,
-                                                                  size: 20,
-                                                                  color: Colors.grey,
-                                                                ),
-                                                                starCount: 5,
-                                                                spacing: 2,
-                                                                size: 15,
-                                                                isIndicator: true,
-                                                                allowHalfRating: true,
-                                                                color: Colors.amber,
-                                                              ),
+                                                              // RatingBar(
+                                                              //   rating: widget.ads[config.activeIndex].total_rating.toDouble(),
+                                                              //   icon: const Icon(
+                                                              //     Icons.star,
+                                                              //     size: 20,
+                                                              //     color: Colors.grey,
+                                                              //   ),
+                                                              //   starCount: 5,
+                                                              //   spacing: 2,
+                                                              //   size: 15,
+                                                              //   isIndicator: true,
+                                                              //   allowHalfRating: true,
+                                                              //   color: Colors.amber,
+                                                              // ),
                                                             ],
                                                           ),
                                                         ),
@@ -390,8 +390,8 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                                         BouncingScrollPhysics(),
                                                         child:
                                                         Text(
-                                                          widget.ads[config.activeIndex]
-                                                              .address,
+                                                          widget.ads![config.activeIndex]
+                                                              .address!,
                                                           style: TextStyle(
                                                               fontSize:
                                                               13,
@@ -415,7 +415,7 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                                           .end,
                                                       children: [
 
-                                                        if (widget.ads[config.activeIndex].distance != null)
+                                                        if (widget.ads![config.activeIndex].distance != null)
                                                           Container(
                                                             width:
                                                             50,
@@ -436,7 +436,7 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                                                   BouncingScrollPhysics(),
                                                                   child:
                                                                   Text(
-                                                                    widget.ads[config.activeIndex].distance,
+                                                                    widget.ads![config.activeIndex].distance!,
                                                                     style: TextStyle(fontSize: 10, color: Colors.white),
                                                                   ),
                                                                 )),
@@ -445,7 +445,7 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                                           width:
                                                           5,
                                                         ),
-                                                        if (widget.ads[config.activeIndex].city != null)
+                                                        if (widget.ads![config.activeIndex].city != null)
                                                         Container(
                                                           width:
                                                           50,
@@ -466,13 +466,13 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                                                 BouncingScrollPhysics(),
                                                                 child:
                                                                 Text(
-                                                                  widget.ads[config.activeIndex].city,
+                                                                  widget.ads![config.activeIndex].city!,
                                                                   style: TextStyle(fontSize: 10, color: Colors.white),
                                                                 ),
                                                               )),
                                                         )else SizedBox(),
 
-                                                        if (widget.ads[config.activeIndex]
+                                                        if (widget.ads![config.activeIndex]
                                                             .visit_count !=
                                                             null)
                                                           Padding(
@@ -508,11 +508,11 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                                                       width: 5,
                                                                     ),
                                                                     Text(
-                                                                      widget.ads[config.activeIndex].visit_count > 999
-                                                                          ? '${widget.ads[config.activeIndex].visit_count / 1000}K'
-                                                                          : widget.ads[config.activeIndex].visit_count > 999999
-                                                                          ? '${widget.ads[config.activeIndex].visit_count / 1000000}M'
-                                                                          : '${widget.ads[config.activeIndex].visit_count}',
+                                                                      widget.ads![config.activeIndex].visit_count! > 999
+                                                                          ? '${widget.ads![config.activeIndex].visit_count! / 1000}K'
+                                                                          : widget.ads![config.activeIndex].visit_count! > 999999
+                                                                          ? '${widget.ads![config.activeIndex].visit_count! / 1000000}M'
+                                                                          : '${widget.ads![config.activeIndex].visit_count}',
                                                                       style: TextStyle(fontSize: 12, color: Colors.black),
                                                                     ),
                                                                   ],
@@ -598,10 +598,10 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                         Radius.circular(10.0),
                                       ),
                                       child: Image.network(
-                                        widget.ads[index]
+                                        widget.ads![index]
                                             .image !=
                                             null
-                                            ? '$ImgUrl${widget.ads[index].image}'
+                                            ? '$ImgUrl${widget.ads![index].image}'
                                             : defaultImgUrl,
                                         fit: BoxFit.fill,
                                         height: Get.height*0.18,
@@ -638,7 +638,7 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                                             color: Colors.amber,
                                           ),
                                           Text(
-                                            '${widget.ads[index].total_rating.toStringAsFixed(1)}',
+                                            '${widget.ads![index].total_rating.toStringAsFixed(1)}',
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 color: Colors
@@ -651,14 +651,14 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                             );
                           },
                           itemCount:
-                          widget.ads.length,
+                          widget.ads!.length,
                           //itemWidth: 100.0,
                           //autoplayDelay: 2500,
                           onTap: (int index) {
                             Get.to(ResturantPageScreen(
                               flagBranch: false,
-                              compaine_id: widget.ads[index].company_id,
-                              ad_id: widget.ads[index].id,
+                              compaine_id: widget.ads![index].company_id,
+                              ad_id: widget.ads![index].id,
                             ));
                           },
 
@@ -708,14 +708,14 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                               scrollDirection: Axis.horizontal,
                               physics: BouncingScrollPhysics(),
                               child: Text(
-                                widget.name_Categories,
+                                widget.name_Categories!,
                                 style: TextStyle(fontSize: 15),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      if (widget.subCategories.isNotEmpty) Container(
+                      if (widget.subCategories!.isNotEmpty) Container(
                         child: GridView.count(
                           crossAxisCount: 2,
                           childAspectRatio: (itemWidth / itemHeight),
@@ -724,7 +724,7 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
                           controller: ScrollController(keepScrollOffset: false),
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
-                          children: _buildGridTileList(widget.subCategories.length),
+                          children: _buildGridTileList(widget.subCategories!.length),
                         ),
                       ) else Center(child: ShowMessageEmtyDialog(message: "",pathImg:'assets/images/noDocument.png',)),
                     ],
@@ -739,16 +739,16 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
     );
   }
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
     return await helper.getToken();
   }
-  Future<int> getNumberOfNotfiction() async {
+  Future<int?> getNumberOfNotfiction() async {
     return await helper.getNumberOfNotfiction();
   }
   List<Widget> _buildGridTileList(int count) => List.generate(
       count,
-      (i) => BuildSubCategorie(widget.subCategories[i].name,
-          widget.subCategories[i].image, widget.subCategories[i].id,widget.subCategories[i].color,widget.subCategories[i]));
+      (i) => BuildSubCategorie(widget.subCategories![i].name!,
+          widget.subCategories![i].image!, widget.subCategories![i].id!,widget.subCategories![i].color!,widget.subCategories![i]));
 
   Widget BuildSubCategorie(String name, String img, int subCategoriesID,String color, SubCategories subCategori) {
     return Padding(
@@ -758,15 +758,15 @@ class _SubCategorieScreenState extends State<SubCategorieScreen> {
           // await _subCategoriesBloc.fetchDataSearch(subCategoriesID);
           // final SearchBloc blocCoby=_subCategoriesBloc;
 
-          subCategori.sub_sub_categories.length ==0 ? Get.to(ResturantsScreen(
+          subCategori.sub_sub_categories!.length ==0 ? Get.to(ResturantsScreen(
             bloc: _blocSearch,
             subCategoriesID: subCategoriesID,
             targert: 1,
           )):
           await Get.to(SubSubCategorieScreen(
-            subSubCategories:  subCategori.sub_sub_categories,
+            subSubCategories:  subCategori.sub_sub_categories!,
             name_Sub_Categories:  name,
-            ads: widget.ads,
+            ads: widget.ads!,
           ));
         },
         child: Container(

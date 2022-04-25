@@ -29,15 +29,15 @@ class SearchBloc {
   }
 
   int _pageNumber = 1;
-  int _pagesCount;
+  int? _pagesCount;
 
   int get pageNumber => _pageNumber;
 
-  int get pagesCount => _pagesCount;
+  int get pagesCount => _pagesCount!;
 
-  Future<void> pageNumberSet(int pageNumber) {
+  int pageNumberSet(int pageNumber) {
     _pageNumber = pageNumber;
-    return null;
+    return _pageNumber;
   }
 
   void nextPage() {
@@ -47,16 +47,16 @@ class SearchBloc {
   Future getProducts(
       {bool reset = false,
       bool goToNextPage = false,
-      BuildContext context}) async {
+      BuildContext? context}) async {
     //showAlertDialog(context);
     loadSubject.sink.add(true);
 
     // if (goToNextPage) nextPage();
     if (reset) {
       _pageNumber = 1;
-      dataOfSearchSubject.value = null;
+      dataOfSearchSubject.value ;
     }
-    if (goToNextPage && _pageNumber <= _pagesCount) {
+    if (goToNextPage && _pageNumber <= _pagesCount!) {
       if (_pageNumber != _pagesCount) nextPage();
       // await getUpdateProducts(context);
 
@@ -102,9 +102,9 @@ class SearchBloc {
     if (validateText(searchController)) {
       try {
         String lang = await _helper.getCodeLang();
-        int countryID = await _helper.getCountryId();
-        double lat = await _helper.getLat();
-        double lng = await _helper.getLng();
+        int? countryID = await _helper.getCountryId();
+        double? lat = await _helper.getLat();
+        double? lng = await _helper.getLng();
 
         showAlertDialog(context);
         final DioPacage.FormData formData = DioPacage.FormData.fromMap({
@@ -113,7 +113,7 @@ class SearchBloc {
           'lat': lat,
           'lng': lng,
         });
-        String token = await _helper.getToken();
+        String? token = await _helper.getToken();
         final res = await _dio.post(
           '/search?country_id=$countryID&page=$pageNumber',
           options: Options(
@@ -135,7 +135,7 @@ class SearchBloc {
 
           if (pageNumber == 1)
             dataOfproductSubject.sink
-                .add(Search.fromJson(res.data['data']).data);
+                .add(Search.fromJson(res.data['data']).data!);
           // dataOfproductSubject.sink.add(dataOfSearchSubject.value.data);
 
         } else if (res.data['status'] == 400) {
@@ -166,9 +166,9 @@ class SearchBloc {
     try {
       buildLoad ? showAlertDialog(context) : null;
 
-      String code = await _helper.getCode();
-      double lat = await _helper.getLat();
-      double lng = await _helper.getLng();
+      String? code = await _helper.getCode();
+      double? lat = await _helper.getLat();
+      double? lng = await _helper.getLng();
       final DioPacage.FormData formData = DioPacage.FormData.fromMap({
         "query": searchController.text != null ? searchController.text : "",
         "country_id": countriesData != null
@@ -184,7 +184,7 @@ class SearchBloc {
         'lng': lng,
       });
 
-      String token = await _helper.getToken();
+      String? token = await _helper.getToken();
       String lang = await _helper.getCodeLang();
 
       final res = await _dio.post(
@@ -212,7 +212,7 @@ class SearchBloc {
         _pagesCount = Search.fromJson(res.data['data']).last_page;
 
         if (pageNumber == 1)
-          dataOfproductSubject.sink.add(Search.fromJson(res.data['data']).data);
+          dataOfproductSubject.sink.add(Search.fromJson(res.data['data']).data!);
         // dataOfproductSubject.sink.add(dataOfSearchSubject.value.data);
 
         return true;
@@ -241,10 +241,10 @@ class SearchBloc {
     try {
       buildLoad ? showAlertDialog(context) : null;
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
-      String token = await _helper.getToken();
-      double lat = await _helper.getLat();
-      double lng = await _helper.getLng();
+      int? countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
+      double? lat = await _helper.getLat();
+      double? lng = await _helper.getLng();
       final res = await _dio.get(
         '/companies?country_id=$countryID&category_id=$sub_category_id&lat=$lat&lng=$lng&page=$pageNumber',
         options: Options(
@@ -262,7 +262,7 @@ class SearchBloc {
         _pagesCount = Search.fromJson(res.data['data']).last_page;
 
         if (pageNumber == 1)
-          dataOfproductSubject.sink.add(Search.fromJson(res.data['data']).data);
+          dataOfproductSubject.sink.add(Search.fromJson(res.data['data']).data!);
         // dataOfproductSubject.sink.add(dataOfSearchSubject.value.data);
 
         // return dataOfSubCategoriesSubject.value;
@@ -281,10 +281,10 @@ class SearchBloc {
     try {
       buildLoad ? showAlertDialog(context) : null;
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
-      String token = await _helper.getToken();
-      double lat = await _helper.getLat();
-      double lng = await _helper.getLng();
+      int? countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
+      double? lat = await _helper.getLat();
+      double? lng = await _helper.getLng();
       final res = await _dio.get(
         '/companies?country_id=$countryID&sub_sub_category_id=$sub_sub_category_id&lat=$lat&lng=$lng&page=$pageNumber',
         options: Options(
@@ -302,7 +302,7 @@ class SearchBloc {
         _pagesCount = Search.fromJson(res.data['data']).last_page;
 
         if (pageNumber == 1)
-          dataOfproductSubject.sink.add(Search.fromJson(res.data['data']).data);
+          dataOfproductSubject.sink.add(Search.fromJson(res.data['data']).data!);
         // dataOfproductSubject.sink.add(dataOfSearchSubject.value.data);
 
         // return dataOfSubCategoriesSubject.value;

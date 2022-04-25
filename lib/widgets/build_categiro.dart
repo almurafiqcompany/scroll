@@ -8,12 +8,12 @@ import 'package:get/get.dart';
 
 
 class BulidCategiro extends StatelessWidget {
- final String name;
- final String image;
- final String color;
- final int id;
+ final String? name;
+ final String? image;
+ final String? color;
+ final int? id;
 
-  const BulidCategiro({Key key,  this.name, this.image, this.color, this.id}) : super(key: key);
+  const BulidCategiro({Key? key,  this.name, this.image, this.color, this.id}) : super(key: key);
 
 
   @override
@@ -23,8 +23,8 @@ class BulidCategiro extends StatelessWidget {
       child: GestureDetector(
         onTap: () async {
           HomePageBloc _bloc = HomePageBloc();
-          await _bloc.fetchDataAllSubCategories(id);
-          await Get.to(SubCategorieHomeScreen(name_Categories: name,id: id,bloc: _bloc,));
+          await _bloc.fetchDataAllSubCategories(id!);
+          await Get.to(SubCategorieHomeScreen(name_Categories: name!,id: id!,bloc: _bloc,));
 
         },
         child: Container(

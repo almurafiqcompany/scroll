@@ -16,12 +16,11 @@ import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:get_it/get_it.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class SearchScreen extends StatefulWidget {
-  final String query;
+  final String? query;
 
-  const SearchScreen({Key key, this.query}) : super(key: key);
+  const SearchScreen({Key? key, this.query}) : super(key: key);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -41,7 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     _bloc.fetchAllCountries(context);
     _categoriesBloc.fetchDataAllCategories();
-    _blocSearch.searchController.text = widget.query;
+    _blocSearch.searchController.text = widget.query!;
     // TODO: implement initState
     super.initState();
   }
@@ -58,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
         actions: [
-          StreamBuilder<String>(
+          StreamBuilder<String?>(
               stream: Stream.fromFuture(getIsLogIn()),
               builder: (context, snapshotToken) {
                 if (snapshotToken.hasData) {
@@ -76,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             size: 30,
                           ),
                         ),
-                        StreamBuilder<int>(
+                        StreamBuilder<int?>(
                             stream: Stream.fromFuture(getNumberOfNotfiction()),
                             builder: (context, snapshotNumNotif) {
                               if (snapshotNumNotif.hasData &&
@@ -452,7 +451,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                             (ctx,
                                                                                 index) {
                                                                           final item =
-                                                                              countriesSnapshot.data[index];
+                                                                              countriesSnapshot.data![index];
                                                                           return InkWell(
                                                                             onTap:
                                                                                 () {
@@ -474,7 +473,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                   SizedBox(
                                                                                     width: 8,
                                                                                   ),
-                                                                                  Text(item.name),
+                                                                                  Text(item.name!),
                                                                                 ],
                                                                               ),
                                                                             ),
@@ -489,7 +488,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                             true,
                                                                         itemCount: countriesSnapshot
                                                                             .data
-                                                                            .length);
+                                                                           ! .length);
                                                               } else {
                                                                 return const Padding(
                                                                   padding:
@@ -516,9 +515,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     const EdgeInsets.all(2.0),
                                                 child: Row(
                                                   children: [
-                                                    snapshot.data.icon != null
+                                                    snapshot.data!.icon != null
                                                         ? Image.network(
-                                                            '$ImgUrl${snapshot.data.icon}',
+                                                            '$ImgUrl${snapshot.data!.icon}',
                                                             width: 32,
                                                             height: 32,
                                                           )
@@ -527,7 +526,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                       width: 8,
                                                     ),
                                                     Text(
-                                                      snapshot.data.name,
+                                                      snapshot.data!.name!,
                                                       style:
                                                           kTextStyle.copyWith(
                                                               color:
@@ -804,7 +803,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   stream: _bloc.selectedCountry.stream,
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
-                                      _bloc.allSortCitiesSubject.add(snapshot.data.cities);
+                                      _bloc.allSortCitiesSubject.add(snapshot.data!.cities!);
                                       return StreamBuilder<CitiesData>(
                                           stream: _bloc.selectedCities.stream,
                                           // initialData: _bloc
@@ -918,7 +917,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                 (ctx,
                                                                                 index) {
                                                                               final item =
-                                                                              citiesSnapshot.data[index];
+                                                                              citiesSnapshot.data![index];
                                                                               return InkWell(
                                                                                 onTap:
                                                                                     () {
@@ -928,7 +927,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                 child:
                                                                                 Padding(
                                                                                   padding: const EdgeInsets.all(8.0),
-                                                                                  child: Text(item.name),
+                                                                                  child: Text(item.name!),
                                                                                 ),
                                                                               );
                                                                             },
@@ -941,7 +940,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                             true,
                                                                             itemCount: citiesSnapshot
                                                                                 .data
-                                                                                .length);
+                                                                                !.length);
                                                                       } else {
                                                                         return const Padding(
                                                                           padding:
@@ -967,7 +966,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   padding:
                                                   const EdgeInsets.all(2.0),
                                                   child: Text(
-                                                    snapshot.data.name,
+                                                    snapshot.data!.name!,
                                                     style:
                                                     kTextStyle.copyWith(
                                                         color:
@@ -1152,7 +1151,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                             (ctx,
                                                                                 index) {
                                                                           final item =
-                                                                              countriesSnapshot.data[index];
+                                                                              countriesSnapshot.data![index];
                                                                           return InkWell(
                                                                             onTap:
                                                                                 () {
@@ -1167,7 +1166,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                   SizedBox(
                                                                                     width: 8,
                                                                                   ),
-                                                                                  Text(item.name),
+                                                                                  Text(item.name!),
                                                                                 ],
                                                                               ),
                                                                             ),
@@ -1182,7 +1181,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                             true,
                                                                         itemCount: countriesSnapshot
                                                                             .data
-                                                                            .length);
+                                                                          !  .length);
                                                               } else {
                                                                 return const Padding(
                                                                   padding:
@@ -1213,7 +1212,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                       width: 8,
                                                     ),
                                                     Text(
-                                                      snapshot.data.name,
+                                                      snapshot.data!.name!,
                                                       style:
                                                           kTextStyle.copyWith(
                                                               color:
@@ -1438,7 +1437,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       .selectCategoriesSubject.stream,
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
-                                      _categoriesBloc.getSortAllSubCategories.add(snapshot.data.sub_categories);
+                                      _categoriesBloc.getSortAllSubCategories.add(snapshot.data!.sub_categories!);
                                       return StreamBuilder<SubCategories>(
                                           stream: _categoriesBloc
                                               .selectedSubCategories.stream,
@@ -1551,7 +1550,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                 (ctx,
                                                                                 index) {
                                                                               final item =
-                                                                              subCategoriesSnapshot.data[index];
+                                                                              subCategoriesSnapshot.data![index];
                                                                               return InkWell(
                                                                                 onTap:
                                                                                     () {
@@ -1561,7 +1560,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                 child:
                                                                                 Padding(
                                                                                   padding: const EdgeInsets.all(8.0),
-                                                                                  child: Text(item.name),
+                                                                                  child: Text(item.name!),
                                                                                 ),
                                                                               );
                                                                             },
@@ -1574,7 +1573,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                             true,
                                                                             itemCount: subCategoriesSnapshot
                                                                                 .data
-                                                                                .length);
+                                                                              !  .length);
                                                                       } else {
                                                                         return const Padding(
                                                                           padding:
@@ -1600,7 +1599,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   padding:
                                                   const EdgeInsets.all(2.0),
                                                   child: Text(
-                                                    snapshot.data.name,
+                                                    snapshot.data!.name!,
                                                     style:
                                                     kTextStyle.copyWith(
                                                         color:
@@ -1745,7 +1744,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       .selectedSubCategories.stream,
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
-                                      _categoriesBloc.getSortAllSubSubCategories.add(snapshot.data.sub_sub_categories);
+                                      _categoriesBloc.getSortAllSubSubCategories.add(snapshot.data!.sub_sub_categories!);
                                       return StreamBuilder<SubSubCategories>(
                                           stream: _categoriesBloc
                                               .selectedSubSubCategories.stream,
@@ -1858,7 +1857,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                 (ctx,
                                                                                 index) {
                                                                               final item =
-                                                                              subSubCategoriesSnapshot.data[index];
+                                                                              subSubCategoriesSnapshot.data![index];
                                                                               return InkWell(
                                                                                 onTap:
                                                                                     () {
@@ -1868,7 +1867,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                                 child:
                                                                                 Padding(
                                                                                   padding: const EdgeInsets.all(8.0),
-                                                                                  child: Text(item.name),
+                                                                                  child: Text(item.name!),
                                                                                 ),
                                                                               );
                                                                             },
@@ -1881,7 +1880,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                                             true,
                                                                             itemCount: subSubCategoriesSnapshot
                                                                                 .data
-                                                                                .length);
+                                                                               ! .length);
                                                                       } else {
                                                                         return const Padding(
                                                                           padding:
@@ -1907,7 +1906,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   padding:
                                                   const EdgeInsets.all(2.0),
                                                   child: Text(
-                                                    snapshot.data.name,
+                                                    snapshot.data!.name!,
                                                     style:
                                                     kTextStyle.copyWith(
                                                         color:
@@ -2243,7 +2242,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     //   ),
                     // ),
 
-                    StreamBuilder<String>(
+                    StreamBuilder<String?>(
                         stream: Stream.fromFuture(getIsLogIn()),
                         builder: (context, snapshotToken) {
                           if (snapshotToken.hasData) {
@@ -2260,8 +2259,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 color: Colors.blue.shade800,
                                 onPressed: () async {
                                   _blocSearch.loadingButtonController.start();
-                                  _blocSearch.dataOfSearchSubject.sink
-                                      .add(null);
+                              //    _blocSearch.dataOfSearchSubject.sink.add();
                                   bool falg =
                                       await _blocSearch.fetchDataCustomSearch(
                                           _bloc.selectedCountry.value,
@@ -2334,11 +2332,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
 
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
     return await helper.getToken();
   }
 
-  Future<int> getNumberOfNotfiction() async {
+  Future<int?> getNumberOfNotfiction() async {
     return await helper.getNumberOfNotfiction();
   }
 }

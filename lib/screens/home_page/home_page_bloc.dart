@@ -18,9 +18,9 @@ class HomePageBloc {
   Future<void> fetchDataHome() async {
     try {
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
-      double lat = await _helper.getLat();
-      double lng = await _helper.getLng();
+      int? countryID = await _helper.getCountryId();
+      double? lat = await _helper.getLat();
+      double? lng = await _helper.getLng();
 
       final Response res = await _dio.get(
         '/home?country_id=$countryID&lat=$lat&lng=$lng',
@@ -54,7 +54,7 @@ class HomePageBloc {
     try {
       //final List<Categories_Data> categoriesData = [];
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final Response res = await _dio.get('/categories/sub?category_id=$id&country_id=$countryID',
         options: Options(
           headers: {'lang': '$lang'},

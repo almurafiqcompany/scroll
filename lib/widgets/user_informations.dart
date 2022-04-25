@@ -6,14 +6,14 @@ import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:get/get.dart';
 import 'package:al_murafiq/models/payment_plans.dart';
 class BankAccountInformations extends StatelessWidget {
-  final int id;
-  final String bankName, accountOwnerName, branchName, accountNumber, swiftCode;
-  final int company_id;
-  final int pay_method_id;
-  final int way_pay_id;
-  final PaymentPlans paymentPlans;
+  final int? id;
+  final String? bankName, accountOwnerName, branchName, accountNumber, swiftCode;
+  final int? company_id;
+  final int? pay_method_id;
+  final int? way_pay_id;
+  final PaymentPlans? paymentPlans;
 
-  const BankAccountInformations({Key key, this.id, this.bankName, this.accountOwnerName, this.branchName, this.accountNumber, this.swiftCode, this.company_id, this.pay_method_id, this.way_pay_id, this.paymentPlans}) : super(key: key);
+  const BankAccountInformations({Key? key, this.id, this.bankName, this.accountOwnerName, this.branchName, this.accountNumber, this.swiftCode, this.company_id, this.pay_method_id, this.way_pay_id, this.paymentPlans}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class BankAccountInformations extends StatelessWidget {
 
           Text('bank_info_1'.tr,
               style: TextStyle(fontSize: 15, color: Color(0xff8C98A9))),
-          Text(bankName,
+          Text(bankName!,
                   style: const TextStyle(
                       fontSize: 18,color: Color(0xFF052656), fontWeight: FontWeight.w300))
               .addPaddingHorizontalVertical(vertical: 10),
@@ -38,12 +38,12 @@ class BankAccountInformations extends StatelessWidget {
             child: CustomedButton(
                 onPressed: () async {
                   await Get.to(CheckOut(
-                    company_id: company_id,
-                    pay_method_id: pay_method_id,
-                    way_pay_id: way_pay_id,
-                    bank_or_address_id: id,
+                    company_id: company_id!,
+                    pay_method_id: pay_method_id!,
+                    way_pay_id: way_pay_id!,
+                    bank_or_address_id: id!,
                     type_payment: 'Bank',
-                    paymentPlans: paymentPlans,
+                    paymentPlans: paymentPlans!,
                   ));
                 },
                 text:'Select this bank',
@@ -52,25 +52,25 @@ class BankAccountInformations extends StatelessWidget {
           ),
           Text('bank_info_2'.tr,
               style: TextStyle(fontSize: 15, color: Color(0xff8C98A9))),
-          Text(accountNumber,
+          Text(accountNumber!,
                   style: const TextStyle(
                       fontSize: 18, color: Color(0xFF052656), fontWeight: FontWeight.bold))
               .addPaddingHorizontalVertical(vertical: 10),
           Text('bank_info_3'.tr,
               style: TextStyle(fontSize: 15, color: Color(0xff8C98A9))),
-          Text(accountOwnerName,
+          Text(accountOwnerName!,
                   style: const TextStyle(
                       fontSize: 18, color: Color(0xFF052656), fontWeight: FontWeight.w500))
               .addPaddingHorizontalVertical(vertical: 10),
           Text('bank_info_4'.tr,
               style: const TextStyle(fontSize: 15, color: Color(0xff8C98A9))),
-          Text(branchName,
+          Text(branchName!,
                   style: const TextStyle(
                       fontSize: 18, color: Color(0xFF052656), fontWeight: FontWeight.w500))
               .addPaddingHorizontalVertical(vertical: 10),
           Text('bank_info_5'.tr,
               style: TextStyle(fontSize: 15, color: Color(0xff8C98A9))),
-          Text(swiftCode,
+          Text(swiftCode!,
                   style: const TextStyle(
                       fontSize: 18,  color: Color(0xFF052656), fontWeight: FontWeight.bold))
               .addPaddingHorizontalVertical(vertical: 10),

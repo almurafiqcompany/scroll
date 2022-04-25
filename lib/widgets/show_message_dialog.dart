@@ -7,15 +7,15 @@ import 'package:get/get.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 class ShowMessageDialog extends StatelessWidget {
-  final String message;
-  final int type;
-  final bool show_but;
+  final String? message;
+  final int? type;
+  final bool? show_but;
 
 
   RoundedLoadingButtonController loadingButtonController =
   RoundedLoadingButtonController();
 
-   ShowMessageDialog({Key key, this.message, this.type, this.show_but}) : super(key: key);
+   ShowMessageDialog({Key? key, this.message, this.type, this.show_but}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,7 +49,7 @@ class ShowMessageDialog extends StatelessWidget {
                      child: SingleChildScrollView(
                        child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                        child:  Text(message,textAlign: TextAlign.center,style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold,),),
+                        child:  Text(message!,textAlign: TextAlign.center,style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold,),),
               ),
                      ),
                    ),
@@ -58,7 +58,7 @@ class ShowMessageDialog extends StatelessWidget {
               const SizedBox(height: 5,),
 
 
-             if (show_but) ElevatedButton(
+             if (show_but!) ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: Color(0xff2E5BFF),
                     padding: EdgeInsets.symmetric(horizontal: (Get.width/3), vertical: 10),

@@ -2,16 +2,16 @@
 import 'package:al_murafiq/models/home_page.dart';
 import 'package:al_murafiq/screens/home_page/company/resturant_page_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
 
 import '../constants.dart';
 
 class BuildCard extends StatelessWidget {
-  final BannerData bannerData;
+  final BannerData? bannerData;
 
-  const BuildCard({Key key, this.bannerData}) : super(key: key);
+  const BuildCard({Key? key, this.bannerData}) : super(key: key);
 
 
 
@@ -19,7 +19,7 @@ class BuildCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Get.to(ResturantPageScreen(flagBranch: false,compaine_id: bannerData.company_id,ad_id:bannerData.id ,));
+        Get.to(ResturantPageScreen(flagBranch: false,compaine_id: bannerData!.company_id,ad_id:bannerData!.id! ,));
       },
       child: Container(
         decoration: const BoxDecoration(
@@ -57,7 +57,7 @@ class BuildCard extends StatelessWidget {
 
                     radius: 60,
                     backgroundImage: NetworkImage(
-                      '$ImgUrl${bannerData.image}',
+                      '$ImgUrl${bannerData!.image}',
                     ),
                   ),
                 ),
@@ -96,7 +96,7 @@ class BuildCard extends StatelessWidget {
                                 // ),
                                 Expanded(
                                   child: Text(
-                                    bannerData.name,
+                                    bannerData!.name!,
                                     style: const TextStyle(fontSize: 18.0),
                                     maxLines: 2,
                                     // overflow: TextOverflow.ellipsis,
@@ -120,25 +120,26 @@ class BuildCard extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              RatingBar(
-                                rating: bannerData.total_rating.toDouble(),
-                                icon: const Icon(
-                                  Icons.star,
-                                  size: 17,
-                                  color: Colors.grey,
-                                ),
-                                starCount: 5,
-                                spacing: 1.0,
-                                size: 12,
-                                isIndicator: true,
-                                allowHalfRating: true,
+                              // RatingBar(
 
-                                // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
-                                //   print('Number of stars-->  $value');
-                                //   isIndicator.value=true;
-                                // },
-                                color: Colors.amber,
-                              ),
+                              //   rating: bannerData!.total_rating.toDouble(),
+                              //   icon: const Icon(
+                              //     Icons.star,
+                              //     size: 17,
+                              //     color: Colors.grey,
+                              //   ),
+                              //   starCount: 5,
+                              //   spacing: 1.0,
+                              //   size: 12,
+                              //   isIndicator: true,
+                              //   allowHalfRating: true,
+
+                              //   // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
+                              //   //   print('Number of stars-->  $value');
+                              //   //   isIndicator.value=true;
+                              //   // },
+                              //   color: Colors.amber,
+                              // ),
                             ],
                           ),
                         ),
@@ -164,7 +165,7 @@ class BuildCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Text(
-                        '${bannerData.des}',
+                        '${bannerData!.des}',
                         maxLines: 3,
                         style: TextStyle(
                           fontSize: 12,

@@ -1,14 +1,13 @@
 import 'package:al_murafiq/constants.dart';
 import 'package:al_murafiq/models/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
 import 'package:readmore/readmore.dart';
 import 'package:get/get.dart';
 class BuildLastAddtion extends StatelessWidget {
-  final LatestCompaniesData latestCompaniesData;
-  final TextDirection textDirection;
+  final LatestCompaniesData? latestCompaniesData;
+  final TextDirection? textDirection;
 
-  const BuildLastAddtion({Key key, this.latestCompaniesData, this.textDirection}) : super(key: key);
+  const BuildLastAddtion({Key? key, this.latestCompaniesData, this.textDirection}) : super(key: key);
 
 
 
@@ -54,8 +53,8 @@ class BuildLastAddtion extends StatelessWidget {
                       child: CircleAvatar(
                         radius: 60,
                         backgroundImage: NetworkImage(
-                          //'$ImgUrl${latestCompaniesData.image}',
-                          latestCompaniesData.image != null?'$ImgUrl${latestCompaniesData.image}':defaultImgUrl,
+                          //'$ImgUrl${latestCompaniesData.image?}',
+                          latestCompaniesData!.image != null?'$ImgUrl${latestCompaniesData!.image}':defaultImgUrl,
                         ),
                       ),
                     ),
@@ -94,7 +93,7 @@ class BuildLastAddtion extends StatelessWidget {
                                   // ),
                                   Expanded(
                                     child: Text(
-                                      latestCompaniesData.name,
+                                      latestCompaniesData!.name!,
                                       style: const TextStyle(fontSize: 18.0),
                                     ),
                                   ),
@@ -118,7 +117,7 @@ class BuildLastAddtion extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Text(
-                          latestCompaniesData.desc,
+                          latestCompaniesData!.desc!,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -140,7 +139,7 @@ class BuildLastAddtion extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  if (latestCompaniesData.distance != null)
+                                  if (latestCompaniesData!.distance != null)
                                     Container(
                                       width: 50,
                                       height: 20,
@@ -150,14 +149,14 @@ class BuildLastAddtion extends StatelessWidget {
                                       ),
                                       child: Center(
                                           child: Text(
-                                            latestCompaniesData.distance,
+                                            latestCompaniesData!.distance!,
                                             style: TextStyle(fontSize: 10, color: Colors.white),
                                           )),
                                     ) else SizedBox(),
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  if (latestCompaniesData.city != null)
+                                  if (latestCompaniesData!.city != null)
                                   Container(
                                     width: 50,
                                     height: 20,
@@ -167,7 +166,7 @@ class BuildLastAddtion extends StatelessWidget {
                                     ),
                                     child:  Center(
                                         child: Text(
-                                          latestCompaniesData.city.name,
+                                          latestCompaniesData!.city!.name!,
                                           style: TextStyle(fontSize: 10, color: Colors.white),
                                         )),
                                   )else SizedBox(),
@@ -183,21 +182,21 @@ class BuildLastAddtion extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  RatingBar(
-                                    rating: latestCompaniesData.total_rating.toDouble(),
-                                    icon: const Icon(
-                                      Icons.star,
-                                      size: 17,
-                                      color: Colors.grey,
-                                    ),
-                                    starCount: 5,
-                                    spacing: 1.0,
-                                    size: 12,
-                                    isIndicator: true,
-                                    allowHalfRating: true,
+                                  // RatingBar(
+                                  //   rating: latestCompaniesData.total_rating.toDouble(),
+                                  //   icon: const Icon(
+                                  //     Icons.star,
+                                  //     size: 17,
+                                  //     color: Colors.grey,
+                                  //   ),
+                                  //   starCount: 5,
+                                  //   spacing: 1.0,
+                                  //   size: 12,
+                                  //   isIndicator: true,
+                                  //   allowHalfRating: true,
 
-                                    color: Colors.amber,
-                                  ),
+                                  //   color: Colors.amber,
+                                  // ),
                                 ],
                               ),
                             ),

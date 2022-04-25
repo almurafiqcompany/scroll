@@ -15,8 +15,8 @@ class BranchesOfCompanyBloc {
     try {
       String lang = await _helper.getCodeLang();
 
-      String token = await _helper.getToken();
-      int countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
+      int? countryID = await _helper.getCountryId();
       final res = await _dio.get(
         '/companies/branches?country_id=$countryID&type=0',
         options: Options(

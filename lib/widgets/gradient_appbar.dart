@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 
 class GradientAppbar extends StatelessWidget implements PreferredSizeWidget {
   const GradientAppbar({
-    Key key,
+    Key? key,
     this.title,
     this.color1,
     this.color2,
     this.actions,
   }) : super(key: key);
-  final String title;
+  final String? title;
 
-  final Color color1;
-  final Color color2;
-  final List<Widget> actions;
+  final Color? color1;
+  final Color? color2;
+  final List<Widget>? actions;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight + 6);
@@ -25,14 +25,14 @@ class GradientAppbar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: (title != null)
           ? Text(
-              title,
+              title!,
               style: appbarTitleStyle,
             )
           : null,
       iconTheme: const IconThemeData(
         color: Color(0xFFFFFFFF),
       ),
-      actions: <Widget>[if (actions != null) ...actions],
+      actions: <Widget>[if (actions != null) ...actions!],
       flexibleSpace: Column(
         children: <Widget>[
           Flexible(

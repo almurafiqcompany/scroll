@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class TextFieldOutlineBorder extends StatelessWidget {
   const TextFieldOutlineBorder({
-    Key key,
+    Key? key,
     @required this.hintText,
     @required this.keyboardType,
     @required this.textInputAction,
@@ -17,20 +17,20 @@ class TextFieldOutlineBorder extends StatelessWidget {
     this.onChanged,
     this.controller,
   }) : super(key: key);
-  final String hintText;
+  final String? hintText;
 
-  final String error;
-  final GestureTapCallback onTap;
-  final bool enabled;
+  final String? error;
+  final GestureTapCallback? onTap;
+  final bool? enabled;
 
-  final bool obscure;
-  final VoidCallback obscureChanged;
-  final FocusNode focusNode;
-  final FocusNode nextFocusNode;
-  final ValueChanged<String> onChanged;
-  final TextInputType keyboardType;
-  final TextInputAction textInputAction;
-  final TextEditingController controller;
+  final bool? obscure;
+  final VoidCallback? obscureChanged;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode;
+  final ValueChanged<String>? onChanged;
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class TextFieldOutlineBorder extends StatelessWidget {
             ? IconButton(
                 icon: Icon(
                   Icons.remove_red_eye,
-                  color: obscure ? Colors.grey : const Color(0xFF383B6E),
+                  color: obscure! ? Colors.grey : const Color(0xFF383B6E),
                 ),
                 onPressed: obscureChanged,
               )
@@ -76,7 +76,7 @@ class TextFieldOutlineBorder extends StatelessWidget {
       enabled: enabled,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
-      obscureText: obscure,
+      obscureText: obscure!,
       focusNode: focusNode,
       onChanged: onChanged,
       controller: controller,

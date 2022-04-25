@@ -36,7 +36,7 @@ class AppBarHome extends StatelessWidget {
                   ),
                 ),
               ),
-              StreamBuilder<String>(
+              StreamBuilder<String?>(
                   stream: Stream.fromFuture(getIsLogIn()),
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data != null) {
@@ -85,7 +85,7 @@ class AppBarHome extends StatelessWidget {
     );
   }
 
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
     return await helper.getToken();
   }
 }

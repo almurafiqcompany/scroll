@@ -16,9 +16,9 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 class SocialsScreen extends StatefulWidget {
-  final int company_id;
+  final int? company_id;
 
-  const SocialsScreen({Key key, this.company_id}) : super(key: key);
+  const SocialsScreen({Key? key, this.company_id}) : super(key: key);
   @override
   _SocialsScreenState createState() => _SocialsScreenState();
 }
@@ -27,7 +27,7 @@ class _SocialsScreenState extends State<SocialsScreen> {
   SocialsBloc _SocialsBloc = SocialsBloc();
   @override
   void initState() {
-    _SocialsBloc.fetchAllSocialsOfCompany(widget.company_id);
+    _SocialsBloc.fetchAllSocialsOfCompany(widget.company_id!);
     // TODO: implement initState
     super.initState();
   }
@@ -45,7 +45,7 @@ class _SocialsScreenState extends State<SocialsScreen> {
           ),
           backgroundColor: Color(0xff2E5BFF),
           onPressed: () async {
-            SocialData socialData = await Get.to(AddSocialScreen(company_id: widget.company_id,));
+            SocialData socialData = await Get.to(AddSocialScreen(company_id: widget.company_id!,));
 
             if (socialData != null) {
               _SocialsBloc.dataListSocialsOfCompanySubject
@@ -58,7 +58,7 @@ class _SocialsScreenState extends State<SocialsScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
 
-              if (snapshot.data.socialData.length > 0) {
+              if (snapshot.data!.socialData!.length > 0) {
                 return SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
@@ -70,19 +70,19 @@ class _SocialsScreenState extends State<SocialsScreen> {
                         stream: _SocialsBloc.dataListSocialsOfCompanySubject.stream,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            if (snapshot.data.length > 0) {
+                            if (snapshot.data!.length > 0) {
                               return ListView.builder(
                                 physics: ClampingScrollPhysics(),
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
-                                itemCount:  snapshot.data.length,
+                                itemCount:  snapshot.data!.length,
                                 itemBuilder: (BuildContext context, int index) =>
                                     ZoomIn(
                                         duration: Duration(milliseconds: 600),
                                         delay: Duration(
                                             milliseconds:
                                             index * 100 > 1000 ? 600 : index * 120),
-                                        child: BuildSocialCard( snapshot.data[index])),
+                                        child: BuildSocialCard( snapshot.data![index])),
                               );
                             }else{
                               return SizedBox();
@@ -121,7 +121,7 @@ class _SocialsScreenState extends State<SocialsScreen> {
                     )));
               }
             } else if(snapshot.hasError){
-              return Center(child: ShowMessageEmtyDialog(message: snapshot.error,pathImg:'assets/images/noDocument.png',));
+              return Center(child: ShowMessageEmtyDialog(message: 'snapshot.error',pathImg:'assets/images/noDocument.png',));
             }
             else {
               return SizedBox(
@@ -185,7 +185,7 @@ class _SocialsScreenState extends State<SocialsScreen> {
                 padding: const EdgeInsets.all(4.0),
                 child: GestureDetector(
                   onTap: () async {
-                  await _SocialsBloc.socialsDestroy(social_id: socialData.id,company_id:widget.company_id,context: context);
+                  await _SocialsBloc.socialsDestroy(social_id: socialData.id,company_id:widget.company_id!,context: context);
                   },
                   child: Icon(
                     Icons.delete,

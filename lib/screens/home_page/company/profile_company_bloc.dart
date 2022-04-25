@@ -26,8 +26,8 @@ class ProfileCompanyBloc {
   Future<void> fetchDataProfileCompany(int companyId, bool flagBranch,int ad_id,BuildContext context) async {
     try {
       String lang = await _helper.getCodeLang();
-      String token = await _helper.getToken();
-      String code = await _helper.getCode();
+      String? token = await _helper.getToken();
+      String? code = await _helper.getCode();
       final res = await _dio.get(
         flagBranch
             ? '/companies/show-profile?id=$companyId&user_id=$code'
@@ -78,8 +78,8 @@ class ProfileCompanyBloc {
       showAlertDialog(context);
 
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
-      String token = await _helper.getToken();
+      int? countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
       final res = await _dio.post('/wishlists/store?country_id=$countryID',
           options: Options(
             headers: {'Authorization': 'Bearer $token'
@@ -155,8 +155,8 @@ class ProfileCompanyBloc {
         'review_id': commentId,
       });
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
-      String token = await _helper.getToken();
+      int? countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
       final res = await _dio.post('/reviews/like?country_id=$countryID',
           options: Options(
             headers: {'Authorization': 'Bearer $token', 'lang': '$lang'},
@@ -217,8 +217,8 @@ class ProfileCompanyBloc {
         'reson': reportController.text,
       });
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
-      String token = await _helper.getToken();
+      int? countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
       final res = await _dio.post('/reviews/dislike?country_id=$countryID',
           options: Options(
             headers: {'Authorization': 'Bearer $token', 'lang': '$lang'},
@@ -272,13 +272,13 @@ class ProfileCompanyBloc {
   final loadImgSubject = BehaviorSubject<bool>();
   final loadFileSubject = BehaviorSubject<bool>();
   Future<void> uploadFile(
-      {int companyId, String type, BuildContext context}) async {
+      {int? companyId, String? type, BuildContext? context}) async {
     try {
 
-      showAlertDialog(context);
+      showAlertDialog(context!);
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
-      String token = await _helper.getToken();
+      int? countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
       final DioPacage.FormData formData = DioPacage.FormData.fromMap({
         'source': type == 'pdf'
             ? DioPacage.MultipartFile.fromFileSync(fileController.value.path)
@@ -333,7 +333,7 @@ class ProfileCompanyBloc {
           : loadImgSubject.sink.add(false);
       Get.back();
       await showModalBottomSheet<void>(
-        context: context,
+        context: context!,
         builder: (BuildContext context) {
           return ShowMessageDialog(
             type: 400,
@@ -346,13 +346,13 @@ class ProfileCompanyBloc {
   }
 
   Future<void> imageDestroyOfCompany(
-      {int file_id, int company_id, BuildContext context}) async {
+      {int? file_id, int? company_id, BuildContext? context}) async {
     try {
 
-      showAlertDialog(context);
-      String token = await _helper.getToken();
-      String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      showAlertDialog(context!);
+      String? token = await _helper.getToken();
+      String? lang = await _helper.getCodeLang();
+      int? countryID = await _helper.getCountryId();
       final res = await _dio.delete(
         '/files/destroy?id=$company_id&file_id=$file_id&country_id=$countryID',
         options: DioPacage.Options(
@@ -392,7 +392,7 @@ class ProfileCompanyBloc {
 
       Get.back();
       await showModalBottomSheet<void>(
-        context: context,
+        context: context!,
         builder: (BuildContext context) {
           return ShowMessageDialog(
             type: 400,
@@ -409,7 +409,7 @@ class ProfileCompanyBloc {
 
       showAlertDialog(context);
 
-      String token = await _helper.getToken();
+      String? token = await _helper.getToken();
       String lang = await _helper.getCodeLang();
       final res = await _dio.delete(
         '/wishlists/destroy?company_id=$companyId',
@@ -481,7 +481,7 @@ class ProfileCompanyBloc {
     if (rateSubject.value >0) {
       try {
         showAlertDialog(context);
-        String token = await _helper.getToken();
+        String? token = await _helper.getToken();
         final DioPacage.FormData formData = DioPacage.FormData.fromMap({
           'company_id': companyId,
           'rate': rateSubject.value,
@@ -489,7 +489,7 @@ class ProfileCompanyBloc {
         });
 
         String lang = await _helper.getCodeLang();
-        int countryID = await _helper.getCountryId();
+        int? countryID = await _helper.getCountryId();
         final res = await _dio.post('/reviews/store?company_id=$companyId&country_id=$countryID',
             options: Options(
               headers: {'Authorization': 'Bearer $token', 'lang': '$lang'},
@@ -513,7 +513,7 @@ class ProfileCompanyBloc {
           //   },
           // );
           rateSubject.sink.add(0);
-          commentController.text=null;
+          //commentController.text=null;
           showCommentSubject.sink.add(true);
           return true;
         } else if (res.data['status'] == 500) {

@@ -12,7 +12,6 @@ import 'package:al_murafiq/screens/home_page/search/search_bloc.dart';
 import 'package:al_murafiq/widgets/show_check_login_dialog.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -51,7 +50,7 @@ class _BranchesScreenState extends State<BranchesScreen> {
         centerTitle: true,
         title: const Text(''),
         actions: [
-          StreamBuilder<String>(
+          StreamBuilder<String?>(
               stream: Stream.fromFuture(
                   getIsLogIn()),
               builder: (context,
@@ -74,9 +73,8 @@ class _BranchesScreenState extends State<BranchesScreen> {
                             size: 30,
                           ),
                         ),
-                        StreamBuilder<int>(
-                            stream: Stream.fromFuture(
-                                getNumberOfNotfiction()),
+                        StreamBuilder<int?>(
+                            stream: Stream.fromFuture( getNumberOfNotfiction()),
                             builder: (context, snapshotNumNotif) {
                               if(snapshotNumNotif.hasData && snapshotNumNotif.data != 0){
                                 return Padding(
@@ -255,23 +253,23 @@ class _BranchesScreenState extends State<BranchesScreen> {
                     //     }),
 
                     BuildCardHeaderBranchComoany(
-                      id: snapshot.data.id,
-                      name: snapshot.data.name,
-                      image: snapshot.data.image,
-                      desc: snapshot.data.desc,
-                      total_rating: snapshot.data.total_rating,
-                      visit_count:  snapshot.data.visit_count,
-                      active:  snapshot.data.active,
+                      id: snapshot.data!.id,
+                      name: snapshot.data!.name,
+                      image: snapshot.data!.image,
+                      desc: snapshot.data!.desc,
+                      total_rating: snapshot.data!.total_rating,
+                      visit_count:  snapshot.data!.visit_count,
+                      active:  snapshot.data!.active,
                     ),
                     const SizedBox(
                       height: 5,
                     ),
-                    snapshot.data.branch.length > 0
+                    snapshot.data!.branch!.length > 0
                         ? ListView.builder(
                             physics: ClampingScrollPhysics(),
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: snapshot.data.branch.length,
+                            itemCount: snapshot.data!.branch!.length,
                             itemBuilder: (BuildContext context, int index) =>
                                 ZoomIn(
                                   duration: Duration(milliseconds: 600),
@@ -282,7 +280,7 @@ class _BranchesScreenState extends State<BranchesScreen> {
                                   child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 0),
                               child: BuildCardBranch(
-                                  branches: snapshot.data.branch[index],
+                                  branches: snapshot.data!.branch![index],
                               ),
                             ),
                                 ),
@@ -383,11 +381,11 @@ class _BranchesScreenState extends State<BranchesScreen> {
   }
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
 
     return await helper.getToken();
   }
-  Future<int> getNumberOfNotfiction() async {
+  Future<int?> getNumberOfNotfiction() async {
     return await helper.getNumberOfNotfiction();
   }
   Future<Position> _determinePosition() async {
@@ -462,10 +460,10 @@ class MapSampleState extends State<MapSample> {
 }
 
 class BuildCompanyCard extends StatefulWidget {
-  final Favourate favourate;
-  final TextDirection textDirection;
+  final Favourate? favourate;
+  final TextDirection? textDirection;
 
-  BuildCompanyCard({Key key, this.favourate, this.textDirection})
+  BuildCompanyCard({Key? key, this.favourate, this.textDirection})
       : super(key: key);
 
   @override
@@ -478,7 +476,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(ResturantPageScreen(compaine_id: widget.favourate.company_id,
+        Get.to(ResturantPageScreen(compaine_id: widget.favourate!.company_id,
             //snapshot.data.latest_companies[index].id,
           flagBranch: false,
           ad_id: 0,
@@ -522,8 +520,8 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                       child: CircleAvatar(
                         radius: 70,
                         backgroundImage: NetworkImage(
-                          widget.favourate.company.image != null
-                              ? '$ImgUrl${widget.favourate.company.image}'
+                          widget.favourate!.company!.image != null
+                              ? '$ImgUrl${widget.favourate!.company!.image}'
                               : '$defaultImgUrl',
                         ),
                       ),
@@ -549,7 +547,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                                       scrollDirection: Axis.horizontal,
                                       physics: BouncingScrollPhysics(),
                                       child: Text(
-                                        widget.favourate.company.name,
+                                        widget.favourate!.company!.name!,
                                         style:
                                             const TextStyle(fontSize: 18.0),
                                       ),
@@ -572,27 +570,27 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  RatingBar(
-                                    rating: widget
-                                        .favourate.company.total_rating
-                                        .toDouble(),
-                                    icon: const Icon(
-                                      Icons.star,
-                                      size: 17,
-                                      color: Colors.grey,
-                                    ),
-                                    starCount: 5,
-                                    spacing: 1.0,
-                                    size: 12,
-                                    isIndicator: true,
-                                    allowHalfRating: true,
+                                  // RatingBar(
+                                  //   rating: widget
+                                  //       .favourate.company.total_rating
+                                  //       .toDouble(),
+                                  //   icon: const Icon(
+                                  //     Icons.star,
+                                  //     size: 17,
+                                  //     color: Colors.grey,
+                                  //   ),
+                                  //   starCount: 5,
+                                  //   spacing: 1.0,
+                                  //   size: 12,
+                                  //   isIndicator: true,
+                                  //   allowHalfRating: true,
 
-                                    // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
+                                  //   // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
 
-                                    //   isIndicator.value=true;
-                                    // },
-                                    color: Color(0xffFFAC41),
-                                  ),
+                                  //   //   isIndicator.value=true;
+                                  //   // },
+                                  //   color: Color(0xffFFAC41),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -605,7 +603,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10),
                           child: ReadMoreText(
-                            widget.favourate.company.desc,
+                            widget.favourate!.company!.desc,
                             trimLines: 3,
                             colorClickableText: Colors.black,
                             trimMode: TrimMode.Line,
@@ -669,7 +667,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    if (widget.favourate.company.distance != null)
+                    if (widget.favourate!.company!.distance != null)
                       Container(
                         width: 50,
                         height: 20,
@@ -683,7 +681,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                           scrollDirection: Axis.horizontal,
                           physics: BouncingScrollPhysics(),
                           child: Text(
-                            widget.favourate.company.distance,
+                            widget.favourate!.company!.distance!,
                             style:
                                 TextStyle(fontSize: 12, color: Colors.white),
                           ),
@@ -692,7 +690,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                     const SizedBox(
                       width: 8,
                     ),
-                    if (widget.favourate.company.city != null)
+                    if (widget.favourate!.company!.city != null)
                       Container(
                         width: 50,
                         height: 20,
@@ -706,7 +704,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                           scrollDirection: Axis.horizontal,
                           physics: BouncingScrollPhysics(),
                           child: Text(
-                            widget.favourate.company.city.name,
+                            widget.favourate!.company!.city!.name!,
                             style:
                                 TextStyle(fontSize: 12, color: Colors.white),
                           ),
@@ -726,7 +724,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                     Padding(
                       padding: EdgeInsets.only(left: 10, right: 10),
                       child: StreamBuilder<String>(
-                          stream: Stream.fromFuture(getIsLogIn()),
+                         // stream: Stream.fromFuture(getIsLogIn()),
                           builder: (context, snapshotToken) {
                             if (snapshotToken.hasData) {
                               //  if(snapshot.data.fav == 0){
@@ -744,7 +742,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                                           onTap: () async {
                                             await profileCompaineBloc
                                                 .favCompany(widget
-                                                    .favourate.company_id,context);
+                                                    .favourate!.company_id!,context);
                                             // profileCompaineBloc
                                             //     .favCompanySubject.sink
                                             //     .add(1);
@@ -758,7 +756,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
                                           onTap: () async {
                                             await profileCompaineBloc
                                                 .favDesCompany(widget
-                                                    .favourate.company_id,context);
+                                                    .favourate!.company_id!,context);
 
                                           },
                                           child: Icon(
@@ -794,7 +792,7 @@ class _BuildCompanyCardState extends State<BuildCompanyCard> {
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
 
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
 
     return await helper.getToken();
   }

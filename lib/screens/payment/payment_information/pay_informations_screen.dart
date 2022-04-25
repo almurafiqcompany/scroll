@@ -9,12 +9,13 @@ import 'package:get/get.dart';
 import 'package:al_murafiq/models/payment_bank_information.dart';
 import 'package:al_murafiq/models/payment_plans.dart';
 class PayInfoScreen extends StatefulWidget {
-  final int company_id;
-  final int pay_method_id;
-  final int way_pay_id;
-  final  PaymentPlans paymentPlans;
+  final int? company_id;
+  final int? pay_method_id;
+  final
+   int? way_pay_id;
+  final  PaymentPlans? paymentPlans;
 
-   PayInfoScreen({Key key, this.company_id, this.pay_method_id, this.way_pay_id, this.paymentPlans}) : super(key: key);
+   PayInfoScreen({Key? key, this.company_id, this.pay_method_id, this.way_pay_id, this.paymentPlans}) : super(key: key);
 
 
   @override
@@ -78,12 +79,12 @@ class _PayInfoScreenState extends State<PayInfoScreen> {
                               .dataOfPaymentBankInformationSubject.stream,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              if (snapshot.data.length > 0) {
+                              if (snapshot.data!.length > 0) {
                                 return ListView.builder(
                                   physics: ClampingScrollPhysics(),
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
-                                  itemCount: snapshot.data.length,
+                                  itemCount: snapshot.data!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) =>
                                           Padding(
@@ -91,11 +92,11 @@ class _PayInfoScreenState extends State<PayInfoScreen> {
                                         const EdgeInsets.symmetric(vertical: 0),
                                     child: BulidBankCard(
                                         paymentBankInformation:
-                                            snapshot.data[index],
-                                        company_id: widget.company_id,
-                                        pay_method_id: widget.pay_method_id,
-                                        paymentPlans: widget.paymentPlans,
-                                        way_pay_id: widget.way_pay_id),
+                                            snapshot.data![index],
+                                        company_id: widget.company_id!,
+                                        pay_method_id: widget.pay_method_id!,
+                                        paymentPlans: widget.paymentPlans!,
+                                        way_pay_id: widget.way_pay_id!),
                                   ),
                                 );
                               } else {
@@ -137,18 +138,18 @@ class _PayInfoScreenState extends State<PayInfoScreen> {
   }
 
   Widget BulidBankCard({
-    PaymentBankInformation paymentBankInformation,
-    int company_id,
-    int pay_method_id,
-    int way_pay_id,
-    PaymentPlans paymentPlans,
+    PaymentBankInformation? paymentBankInformation,
+    int? company_id,
+    int? pay_method_id,
+    int? way_pay_id,
+    PaymentPlans? paymentPlans,
   }) {
     return Column(
       children: [
         // Image.asset(Assets.HSBC,width: (Get.width)-30,)
         //     .addPaddingHorizontalVertical(vertical: 10,horizontal: 10),
         Image.network(
-          '$ImgUrl${paymentBankInformation.logo}',
+          '$ImgUrl${paymentBankInformation!.logo}',
           fit: BoxFit.fill,
           width: (Get.width / 2) + 20,
           height: 100,

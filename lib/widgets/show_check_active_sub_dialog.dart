@@ -10,9 +10,9 @@ import 'package:get/get.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 class ShowCheckActiveSubDialog extends StatelessWidget {
-final int company_id;
+final int? company_id;
 
-  const ShowCheckActiveSubDialog({Key key, this.company_id}) : super(key: key);
+  const ShowCheckActiveSubDialog({Key? key, this.company_id}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,7 +66,7 @@ final int company_id;
                       color: Color(0xffd39e00),
                       textColor: Color(0xff000000),
                       onPressed: () async {
-                        await Get.back();
+                      //  await Get.back();
                       },
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0))
                   ),
@@ -78,7 +78,7 @@ final int company_id;
                       color: Colors.blue.shade800,
                       textColor: Color(0xffFFFFFF),
                       onPressed: () async {
-                        await Get.to(PayPlansScreen(company_id:company_id ,typeAdsOrPlan: 0,));
+                        await Get.to(PayPlansScreen(company_id:company_id! ,typeAdsOrPlan: 0,));
 
                       },
                       shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0))

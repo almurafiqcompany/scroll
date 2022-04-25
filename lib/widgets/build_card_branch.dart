@@ -5,7 +5,6 @@ import 'package:al_murafiq/screens/home_page/company/socials/socials_screen.dart
 import 'package:al_murafiq/widgets/show_check_active_sub_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:readmore/readmore.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -69,7 +68,7 @@ class BuildCardBranch extends StatelessWidget {
                           height: 100,
                           decoration: BoxDecoration(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(50.0)),
+                                BorderRadius?.all(Radius.circular(50.0)),
                             border: Border.all(
                               color: Colors.grey.withOpacity(0.3),
                               width: 0.4,
@@ -77,8 +76,8 @@ class BuildCardBranch extends StatelessWidget {
                           ),
                           child: CircleAvatar(
                             radius: 60,
-                            backgroundImage: NetworkImage(branches.image != null
-                                ? '$ImgUrl${branches.image}'
+                            backgroundImage: NetworkImage(branches!.image != null
+                                ? '$ImgUrl${branches!.image}'
                                 : defaultImgUrl),
                           ),
                         ),
@@ -120,7 +119,7 @@ class BuildCardBranch extends StatelessWidget {
                                         // ),
                                         Expanded(
                                           child: Text(
-                                            branches.name,
+                                            branches!.name!,
                                             style:
                                                 const TextStyle(fontSize: 18.0),
                                             maxLines: 2,
@@ -135,7 +134,7 @@ class BuildCardBranch extends StatelessWidget {
                                         const SizedBox(
                                           width: 2,
                                         ),
-                                        if (branches.active == 1)
+                                        if (branches!.active == 1)
                                           const Icon(
                                             Icons.check_circle_outline,
                                             color: Colors.green,
@@ -160,7 +159,7 @@ class BuildCardBranch extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: Text(
-                                '${branches.desc}',
+                                '${branches!.desc}',
                                 maxLines: 3,
                                 style: kTextStyle.copyWith(
                                   fontSize: 12,
@@ -257,7 +256,7 @@ class BuildCardBranch extends StatelessWidget {
                                             width: 5,
                                           ),
                                           Text(
-                                            '${branches.total_rating}',
+                                            '${branches!.total_rating}',
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.black),
@@ -297,16 +296,16 @@ class BuildCardBranch extends StatelessWidget {
                                           const SizedBox(
                                             width: 5,
                                           ),
-                                          Text(
-                                            branches.visit_count > 999
-                                                ? '${branches.visit_count / 1000}K'
-                                                : branches.visit_count > 999999
-                                                    ? '${branches.visit_count / 1000000}M'
-                                                    : '${branches.visit_count}',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black),
-                                          ),
+                                          // Text(
+                                          //   branches?.visit_count > 999
+                                          //       ? '${branches?.visit_count / 1000}K'
+                                          //       : branches?.visit_count> 999999
+                                          //           ? '${branches?.visit_count / 1000000}M'
+                                          //           : '${branches?.visit_count}',
+                                          //   style: TextStyle(
+                                          //       fontSize: 12,
+                                          //       color: Colors.black),
+                                          // ),
                                         ],
                                       ),
                                     ),
@@ -398,16 +397,16 @@ class BuildCardBranch extends StatelessWidget {
                               // ),
                               GestureDetector(
                                 onTap: () async {
-                                  if (branches.active == 1) {
+                                  if (branches!.active == 1) {
                                     Get.to(EditCompanyScreen(
-                                      company_id: branches.id,
+                                      company_id: branches!.id,
                                     ));
                                   } else {
                                     await showModalBottomSheet<void>(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return ShowCheckActiveSubDialog(
-                                          company_id: branches.id,
+                                          company_id: branches!.id,
                                         );
                                       },
                                     );
@@ -493,16 +492,16 @@ class BuildCardBranch extends StatelessWidget {
 }
 
 class BuildCardHeaderBranchComoany extends StatelessWidget {
-  final int id;
-  final String name;
-  final String desc;
-  final String image;
-  final int total_rating;
-  final int visit_count;
-  final int active;
+  final int? id;
+  final String? name;
+  final String? desc;
+  final String? image;
+  final int? total_rating;
+  final int? visit_count;
+  final int? active;
 
   const BuildCardHeaderBranchComoany(
-      {Key key,
+      {Key? key,
       this.id,
       this.name,
       this.desc,
@@ -625,7 +624,7 @@ class BuildCardHeaderBranchComoany extends StatelessWidget {
                                         // ),
                                         Expanded(
                                           child: Text(
-                                            name,
+                                            name!,
                                             style:
                                                 const TextStyle(fontSize: 18.0),
                                             maxLines: 2,
@@ -797,16 +796,16 @@ class BuildCardHeaderBranchComoany extends StatelessWidget {
                                           const SizedBox(
                                             width: 5,
                                           ),
-                                          Text(
-                                            visit_count > 999
-                                                ? '${visit_count / 1000}K'
-                                                : visit_count > 999999
-                                                    ? '${visit_count / 1000000}M'
-                                                    : '${visit_count}',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black),
-                                          ),
+                                          // Text(
+                                          //   visit_count > 999
+                                          //       ? '${visit_count / 1000}K'
+                                          //       : visit_count > 999999
+                                          //           ? '${visit_count / 1000000}M'
+                                          //           : '${visit_count}',
+                                          //   style: TextStyle(
+                                          //       fontSize: 12,
+                                          //       color: Colors.black),
+                                          // ),
                                         ],
                                       ),
                                     ),

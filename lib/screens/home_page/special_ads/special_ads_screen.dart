@@ -10,8 +10,7 @@ import 'package:al_murafiq/widgets/show_check_login_dialog.dart';
 import 'package:al_murafiq/widgets/show_message_emty_dialog.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:marquee/marquee.dart';
@@ -55,7 +54,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
           style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         actions: [
-          StreamBuilder<String>(
+          StreamBuilder<String?>(
               stream: Stream.fromFuture(getIsLogIn()),
               builder: (context, snapshotToken) {
                 if (snapshotToken.hasData) {
@@ -73,7 +72,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                             size: 30,
                           ),
                         ),
-                        StreamBuilder<int>(
+                        StreamBuilder<int?>(
                             stream: Stream.fromFuture(getNumberOfNotfiction()),
                             builder: (context, snapshotNumNotif) {
                               if (snapshotNumNotif.hasData &&
@@ -278,7 +277,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                             height: Get.height * 0.01,
                           ),
 
-                          if (snapshot.data.slider.length != 0)
+                          if (snapshot.data!.slider!.length != 0)
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
@@ -308,7 +307,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                           MainAxisAlignment.start,
                                       children: [
                                         //flutter Swipper default
-                                        if (snapshot.data.slider.length != 0)
+                                        if (snapshot.data!.slider!.length != 0)
                                           Container(
                                             height: Get.height * 0.3,
                                             width: Get.width - 20,
@@ -357,7 +356,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                                   scrollDirection: Axis.horizontal,
                                                                                   physics: BouncingScrollPhysics(),
                                                                                   child: Text(
-                                                                                    '${snapshot.data.slider[config.activeIndex].name} ',
+                                                                                    '${snapshot.data!.slider![config.activeIndex].name} ',
                                                                                     style: const TextStyle(fontSize: 18.0),
                                                                                   ),
                                                                                 ),
@@ -379,25 +378,25 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                                 Row(
                                                                               mainAxisAlignment: MainAxisAlignment.end,
                                                                               children: [
-                                                                                RatingBar(
-                                                                                  rating: snapshot.data.slider[config.activeIndex].total_rating.toDouble(),
-                                                                                  icon: const Icon(
-                                                                                    Icons.star,
-                                                                                    size: 20,
-                                                                                    color: Colors.grey,
-                                                                                  ),
-                                                                                  starCount: 5,
-                                                                                  spacing: 2,
-                                                                                  size: 15,
-                                                                                  isIndicator: true,
-                                                                                  allowHalfRating: true,
+                                                                                // RatingBar(
+                                                                                //   rating: snapshot.data.slider[config.activeIndex].total_rating.toDouble(),
+                                                                                //   icon: const Icon(
+                                                                                //     Icons.star,
+                                                                                //     size: 20,
+                                                                                //     color: Colors.grey,
+                                                                                //   ),
+                                                                                //   starCount: 5,
+                                                                                //   spacing: 2,
+                                                                                //   size: 15,
+                                                                                //   isIndicator: true,
+                                                                                //   allowHalfRating: true,
 
-                                                                                  // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
+                                                                                //   // onRatingCallback: (double value,ValueNotifier<bool> isIndicator){
 
-                                                                                  //   isIndicator.value=true;
-                                                                                  // },
-                                                                                  color: Colors.amber,
-                                                                                ),
+                                                                                //   //   isIndicator.value=true;
+                                                                                //   // },
+                                                                                //   color: Colors.amber,
+                                                                                // ),
                                                                               ],
                                                                             ),
                                                                           ),
@@ -435,7 +434,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                               BouncingScrollPhysics(),
                                                                           child:
                                                                               Text(
-                                                                            snapshot.data.slider[config.activeIndex].address,
+                                                                            snapshot.data!.slider![config.activeIndex].address!,
                                                                             style:
                                                                                 TextStyle(fontSize: 12, color: Colors.grey),
                                                                           ),
@@ -454,7 +453,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                         mainAxisAlignment:
                                                                             MainAxisAlignment.end,
                                                                         children: [
-                                                                          if (snapshot.data.slider[config.activeIndex].distance !=
+                                                                          if (snapshot.data!.slider![config.activeIndex].distance !=
                                                                               null)
                                                                             Container(
                                                                               width: 50,
@@ -468,7 +467,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                                 scrollDirection: Axis.horizontal,
                                                                                 physics: BouncingScrollPhysics(),
                                                                                 child: Text(
-                                                                                  snapshot.data.slider[config.activeIndex].distance,
+                                                                                  snapshot.data!.slider![config.activeIndex].distance!,
                                                                                   style: TextStyle(fontSize: 10, color: Colors.white),
                                                                                 ),
                                                                               )),
@@ -479,7 +478,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                             width:
                                                                                 5,
                                                                           ),
-                                                                          if (snapshot.data.slider[config.activeIndex].city !=
+                                                                          if (snapshot.data!.slider![config.activeIndex].city !=
                                                                               null)
                                                                             Container(
                                                                               width: 50,
@@ -493,14 +492,14 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                                 scrollDirection: Axis.horizontal,
                                                                                 physics: BouncingScrollPhysics(),
                                                                                 child: Text(
-                                                                                  snapshot.data.slider[config.activeIndex].city,
+                                                                                  snapshot.data!.slider![config.activeIndex].city!,
                                                                                   style: TextStyle(fontSize: 10, color: Colors.white),
                                                                                 ),
                                                                               )),
                                                                             )
                                                                           else
                                                                             SizedBox(),
-                                                                          if (snapshot.data.slider[config.activeIndex].visit_count !=
+                                                                          if (snapshot.data!.slider![config.activeIndex].visit_count !=
                                                                               null)
                                                                             Padding(
                                                                               padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -525,11 +524,11 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                                         width: 5,
                                                                                       ),
                                                                                       Text(
-                                                                                        snapshot.data.slider[config.activeIndex].visit_count > 999
-                                                                                            ? '${snapshot.data.slider[config.activeIndex].visit_count / 1000}K'
-                                                                                            : snapshot.data.slider[config.activeIndex].visit_count > 999999
-                                                                                                ? '${snapshot.data.slider[config.activeIndex].visit_count / 1000000}M'
-                                                                                                : '${snapshot.data.slider[config.activeIndex].visit_count}',
+                                                                                        snapshot.data!.slider![config.activeIndex].visit_count! > 999
+                                                                                            ? '${snapshot.data!.slider![config.activeIndex].visit_count! / 1000}K'
+                                                                                            : snapshot.data!.slider![config.activeIndex].visit_count! > 999999
+                                                                                                ? '${snapshot.data!.slider![config.activeIndex].visit_count! / 1000000}M'
+                                                                                                : '${snapshot.data!.slider![config.activeIndex].visit_count}',
                                                                                         style: TextStyle(fontSize: 12, color: Colors.black),
                                                                                       ),
                                                                                     ],
@@ -624,11 +623,11 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                 Image.network(
                                                               snapshot
                                                                           .data
-                                                                          .slider[
+                                                                        !  .slider![
                                                                               index]
                                                                           .image !=
                                                                       null
-                                                                  ? '$ImgUrl${snapshot.data.slider[index].image}'
+                                                                  ? '$ImgUrl${snapshot.data!.slider![index].image}'
                                                                   : defaultImgUrl,
                                                               fit: BoxFit.fill,
                                                               height:
@@ -674,7 +673,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                                       .amber,
                                                                 ),
                                                                 Text(
-                                                                  '${snapshot.data.slider[index].total_rating.toStringAsFixed(1)}',
+                                                                  '${snapshot.data!.slider![index].total_rating.toStringAsFixed(1)}',
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           12,
@@ -688,7 +687,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                   );
                                                 },
                                                 itemCount:
-                                                    snapshot.data.slider.length,
+                                                    snapshot.data!.slider!.length,
                                                 //itemWidth: 100.0,
                                                 //autoplayDelay: 2500,
                                                 onTap: (int index) {
@@ -696,10 +695,10 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                                                     flagBranch: false,
                                                     compaine_id: snapshot
                                                         .data
-                                                        .slider[index]
+                                                        !.slider![index]
                                                         .company_id,
                                                     ad_id: snapshot
-                                                        .data.slider[index].id,
+                                                        .data!.slider![index].id,
                                                   ));
                                                 },
 
@@ -1143,7 +1142,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               children: _buildGridTileList(
-                                  count: snapshot.data.banner.length,
+                                  count: snapshot.data!.banner!.length,
                                   bn: snapshot.data),
                             ),
                           )
@@ -1162,7 +1161,7 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                     height: Get.height * 0.8,
                     child: Center(
                       child: ShowMessageEmtyDialog(
-                        message: snapshot.error,
+                        message: 'snapshot.error',
                         pathImg: 'assets/images/noAds.jpg',
                       ),
                     ),
@@ -1183,24 +1182,24 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
 
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
     return await helper.getToken();
   }
 
-  Future<int> getNumberOfNotfiction() async {
+  Future<int?> getNumberOfNotfiction() async {
     return await helper.getNumberOfNotfiction();
   }
 
   List<Widget> _buildGridTileList({
-    int count,
-    Special_Ads_Data bn,
+    int? count,
+    Special_Ads_Data? bn,
   }) =>
       List.generate(
-          count,
+          count!,
           (i) => ZoomIn(
               duration: Duration(milliseconds: 600),
               delay: Duration(milliseconds: i * 100 > 1000 ? 600 : i * 120),
-              child: BuildCart(bn.banner[i])));
+              child: BuildCart(bn!.banner![i])));
 
   Widget BuildCart(bn) {
     return Padding(
@@ -1322,20 +1321,20 @@ class _SpecialAdsScreenState extends State<SpecialAdsScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    RatingBar(
-                      rating: bn.total_rating.toDouble(),
-                      icon: const Icon(
-                        Icons.star,
-                        size: 17,
-                        color: Colors.grey,
-                      ),
-                      starCount: 5,
-                      spacing: 1.0,
-                      size: 12,
-                      isIndicator: true,
-                      allowHalfRating: true,
-                      color: Colors.amber,
-                    ),
+                    // RatingBar(
+                    //   rating: bn.total_rating.toDouble(),
+                    //   icon: const Icon(
+                    //     Icons.star,
+                    //     size: 17,
+                    //     color: Colors.grey,
+                    //   ),
+                    //   starCount: 5,
+                    //   spacing: 1.0,
+                    //   size: 12,
+                    //   isIndicator: true,
+                    //   allowHalfRating: true,
+                    //   color: Colors.amber,
+                    // ),
                   ],
                 ),
               ),

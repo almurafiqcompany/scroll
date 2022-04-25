@@ -5,9 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SocialCircle extends StatelessWidget {
-  final List<Social> socail;
+  final List<Social>? socail;
 
-  SocialCircle({Key key, this.socail}) : super(key: key);
+  SocialCircle({Key? key, this.socail}) : super(key: key);
 
   // ignore: always_specify_types
   final List<Map<String, dynamic>> socialData = [
@@ -43,11 +43,11 @@ class SocialCircle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         // ignore: prefer_const_literals_to_create_immutables, always_specify_types
         children: List.generate(
-          socail.length,
-          (int index) => socail[index].icon_type != null
+          socail!.length,
+          (int index) => socail![index].icon_type != null
               ? GestureDetector(
                   onTap: () async {
-                    await launch(socail[index].link);
+                    await launch(socail![index].link!);
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -57,7 +57,7 @@ class SocialCircle extends StatelessWidget {
                       child: FaIcon(
                         // ignore: unnecessary_string_interpolations
                         //socialData[index]['icon'],
-                        oo[socail[index].icon_type],
+                        oo[socail![index].icon_type],
                         size: 25,
                         color: Colors.white,
                       ),

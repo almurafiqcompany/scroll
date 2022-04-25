@@ -5,22 +5,21 @@ import 'package:get/get.dart';
 
 class GradientBtn extends StatelessWidget {
   const GradientBtn(
-      {Key key,
+      {Key? key,
       @required this.text,
       this.onPressed,
-
       this.textStyle,
       this.iconColor,
       this.imageName})
       : super(key: key);
 
-  final String text;
+  final String? text;
   // ignore: always_specify_types, prefer_typing_uninitialized_variables
   final  onPressed;
 
-  final TextStyle textStyle;
-  final String imageName;
-  final Color iconColor;
+  final TextStyle? textStyle;
+  final String? imageName;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +44,12 @@ class GradientBtn extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                text,
+                text!,
                 style: textStyle ?? buttonTextStyle,
               ).addPaddingOnly(left: 10,right: 10),
               if (imageName != null)
                 Image(
-                 image: AssetImage(imageName),
+                 image: AssetImage(imageName!),
                   height: 50,
                   width: 30,
                   color: iconColor ?? Colors.white,

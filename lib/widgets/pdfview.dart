@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_full_pdf_viewer_null_safe/full_pdf_viewer_scaffold.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 
 class PdfViewPage extends StatefulWidget {
-  final String path;
+  final String? path;
 
-  const PdfViewPage({Key key, this.path}) : super(key: key);
+  const PdfViewPage({Key? key, this.path}) : super(key: key);
   @override
   _PdfViewPageState createState() => _PdfViewPageState();
 }
@@ -15,7 +15,7 @@ class _PdfViewPageState extends State<PdfViewPage> {
   int _totalPages = 0;
   int _currentPage = 0;
   bool pdfReady = false;
-  PDFViewController _pdfViewController;
+  PDFViewController? _pdfViewController;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +87,7 @@ class _PdfViewPageState extends State<PdfViewPage> {
               ],
             ),
           ),
-        path: widget.path);
+        path: widget.path!);
     //   Scaffold(
     //   appBar:AppBar(
     //     centerTitle: true,
