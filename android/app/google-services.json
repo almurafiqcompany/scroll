@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "803265670160",
+    "project_id": "psychic-yew-291212",
+    "storage_bucket": "psychic-yew-291212.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803265670160:android:8e6f1bd730023175bc2e95",
+        "android_client_info": {
+          "package_name": "io.krito.al_murafiq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803265670160-14b68f23aafg88rebi5fe0rrcjmui1ss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3w-fHwxkP7rRS6SmGCOA-B19VVfR1rzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803265670160-14b68f23aafg88rebi5fe0rrcjmui1ss.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "803265670160-2umqk8tmf0m0btb9hebq5g3qahrgl69v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.almurafiq.AlMurafiq"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
