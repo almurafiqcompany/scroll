@@ -12,9 +12,9 @@ class PolicyBloc {
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
   Future<void> fetchPolicy() async {
     try {
-      String token = await _helper.getToken();
-      String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
+      String? lang = await _helper.getCodeLang();
+      int? countryID = await _helper.getCountryId();
       final Response res = await _dio.get(
         '/policies/?country_id=$countryID',
         options: Options(
@@ -23,16 +23,13 @@ class PolicyBloc {
       );
 
       if (res.statusCode == 200 && res.data['status'] == 200) {
-
         dataOfPolicySubject.sink.add(Policy.fromJson(res.data['data']));
-
       } else if (res.data['status'] == 400) {
-
         dataOfPolicySubject.sink.addError(res.data['message']);
       } else {
         dataOfPolicySubject.sink.addError('');
       }
-    // ignore: avoid_catches_without_on_clauses
+      // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       dataOfPolicySubject.sink.addError('');
     }

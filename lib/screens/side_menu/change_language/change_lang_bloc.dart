@@ -1,4 +1,3 @@
-
 import 'package:al_murafiq/core/shared_pref_helper.dart';
 import 'package:al_murafiq/widgets/show_message_dialog.dart';
 import 'package:dio/dio.dart';
@@ -24,8 +23,8 @@ class ChangeLanguageBloc {
       RoundedLoadingButtonController();
   Future<void> fetchAllCountries(BuildContext context) async {
     try {
-       String langCode = await helper.getCodeLang();
-       int idCountry= await helper.getCountryId();
+      String langCode = await helper.getCodeLang();
+      int? idCountry = await helper.getCountryId();
 
       final List<CountriesData> countries = [];
       final List<Languages> languages = [];
@@ -39,15 +38,15 @@ class ChangeLanguageBloc {
         for (var obj in res.data['data']['countries']) {
           // countries.add(CountriesData.fromJson(obj));
           CountriesData country = CountriesData.fromJson(obj);
-          if(country.id == idCountry){
+          if (country.id == idCountry) {
             selectedCountry.sink.add(country);
           }
           countries.add(country);
         }
         for (var obj in res.data['data']['language']) {
           // languages.add(Languages.fromJson(obj));
-          Languages language=Languages.fromJson(obj);
-          if(language.code == langCode){
+          Languages language = Languages.fromJson(obj);
+          if (language.code == langCode) {
             selectedLanguage.sink.add(language);
           }
           languages.add(language);

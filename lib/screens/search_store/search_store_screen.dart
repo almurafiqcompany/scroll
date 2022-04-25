@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
+
 class SearchStoreScreen extends StatefulWidget {
   @override
   _SearchStoreScreenState createState() => _SearchStoreScreenState();
@@ -30,12 +31,14 @@ class _SearchStoreScreenState extends State<SearchStoreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GradientAppbar(title:'side_search_store'.tr,),
+      appBar: GradientAppbar(
+        title: 'side_search_store'.tr,
+      ),
       body: StreamBuilder<SearchStore>(
           stream: _searchStoreBloc.dataofSearchStoreSubject.stream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data.data.length > 0) {
+              if (snapshot.data!.data!.length > 0) {
                 return SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
@@ -44,28 +47,29 @@ class _SearchStoreScreenState extends State<SearchStoreScreen> {
                         child: SideMenuContainer(),
                       ),
                       StreamBuilder<List<SearchStoreData>>(
-                        stream: _searchStoreBloc.dataListSearchStoreSubject.stream,
-                        builder: (context, snapshot) {
-                          if(snapshot.hasData){
-                            return ListView.builder(
-                              physics: ClampingScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount:  snapshot.data.length,
-                              itemBuilder: (BuildContext context, int index) =>
-                                  ZoomIn(
-                                      duration: Duration(milliseconds: 600),
-                                      delay: Duration(
-                                          milliseconds:
-                                          index * 100 > 1000 ? 600 : index * 120),
-                                      child: BuildSearchCard( snapshot.data[index])),
-                            );
-                          }else{
-                           return SizedBox();
-                          }
-
-                        }
-                      ),
+                          stream: _searchStoreBloc
+                              .dataListSearchStoreSubject.stream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                physics: ClampingScrollPhysics(),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) => ZoomIn(
+                                        duration: Duration(milliseconds: 600),
+                                        delay: Duration(
+                                            milliseconds: index * 100 > 1000
+                                                ? 600
+                                                : index * 120),
+                                        child: BuildSearchCard(
+                                            snapshot.data![index])),
+                              );
+                            } else {
+                              return SizedBox();
+                            }
+                          }),
                       // StreamBuilder<List<SearchStoreData>>(
                       //   stream: _searchStoreBloc.dataListSearchStoreSubject.stream,
                       //   initialData: snapshot.data.data,
@@ -83,14 +87,18 @@ class _SearchStoreScreenState extends State<SearchStoreScreen> {
                     ],
                   ),
                 );
-              } else{
+              } else {
                 return SizedBox(
                     height: Get.height,
-                    child: const Center(
-                        child: Text('Not Found data of search')));
+                    child:
+                        const Center(child: Text('Not Found data of search')));
               }
-            }else if(snapshot.hasError){
-              return  Center(child: ShowMessageEmtyDialog(message: snapshot.error,pathImg:'assets/images/noSearch.png',));
+            } else if (snapshot.hasError) {
+              return Center(
+                  child: ShowMessageEmtyDialog(
+                message: 'snapshot.error!',
+                pathImg: 'assets/images/noSearch.png',
+              ));
             } else {
               return SizedBox(
                   height: Get.height,
@@ -102,31 +110,30 @@ class _SearchStoreScreenState extends State<SearchStoreScreen> {
           }),
     );
   }
-  Widget BuildSearchCard(SearchStoreData searchStoreData){
+
+  Widget BuildSearchCard(SearchStoreData searchStoreData) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: GestureDetector(
-        onTap: (){
-          Get.to(SearchScreen(query: searchStoreData.query,));
+        onTap: () {
+          Get.to(SearchScreen(
+            query: searchStoreData.query,
+          ));
         },
         child: Container(
-           // height: 80,
-            padding: const EdgeInsets.symmetric(
-                vertical: 5, horizontal: 10),
+            // height: 80,
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             decoration: BoxDecoration(
               color: Colors.grey.withOpacity(0.2),
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Expanded(
                     flex: 4,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: Text(
                         searchStoreData.query,
                         style: TextStyle(fontSize: 17),
@@ -135,8 +142,7 @@ class _SearchStoreScreenState extends State<SearchStoreScreen> {
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Column(
-                    mainAxisAlignment:
-                    MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
                         searchStoreData.time,
@@ -144,7 +150,8 @@ class _SearchStoreScreenState extends State<SearchStoreScreen> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                         await _searchStoreBloc.searchStoreDestroy(searchStoreData.id,context);
+                          await _searchStoreBloc.searchStoreDestroy(
+                              searchStoreData.id, context);
                         },
                         child: Icon(
                           Icons.delete,

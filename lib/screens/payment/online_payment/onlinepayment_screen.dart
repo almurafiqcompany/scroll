@@ -13,18 +13,23 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:al_murafiq/models/payment_plans.dart';
 
-
 class OnlinePayment extends StatelessWidget {
   // dynamic lng = 0.0;
   // dynamic lat = 0.0;
-  final ChoosePaymentBloc choosePaymentBloc;
-  final int company_id;
-  final int pay_method_id;
-  final  PaymentPlans paymentPlans;
+  final ChoosePaymentBloc? choosePaymentBloc;
+  final int? company_id;
+  final int? pay_method_id;
+  final PaymentPlans? paymentPlans;
 
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
 
-  OnlinePayment({Key key, this.choosePaymentBloc, this.company_id, this.pay_method_id, this.paymentPlans}) : super(key: key);
+  OnlinePayment(
+      {Key? key,
+      this.choosePaymentBloc,
+      this.company_id,
+      this.pay_method_id,
+      this.paymentPlans})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +73,16 @@ class OnlinePayment extends StatelessWidget {
                           .addPaddingOnly(
                               top: 30, bottom: 10, right: 10, left: 10),
                       StreamBuilder<PaymentMethod>(
-                          stream: choosePaymentBloc
+                          stream: choosePaymentBloc!
                               .dataofPaymentMethodPayTabsSubject.stream,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              print('${snapshot.data.name}');
+                              print('${snapshot.data!.name}');
                               return CustomedButton(
                                       onPressed: () async {
                                         await Get.to(CheckOut(
-                                          type_payment: snapshot.data.type,
-                                          way_pay_id: snapshot.data.id,
+                                          type_payment: snapshot.data!.type,
+                                          way_pay_id: snapshot.data!.id,
                                           pay_method_id: pay_method_id,
                                           company_id: company_id,
                                           paymentPlans: paymentPlans,
@@ -87,7 +92,7 @@ class OnlinePayment extends StatelessWidget {
                                         //   way_pay_id: snapshot.data.id,
                                         // paymentPlans: paymentPlans,));
                                       },
-                                      text: snapshot.data.name,
+                                      text: snapshot.data!.name,
                                       height: 55,
                                       imageName: Assets.PAYTABS)
                                   .addPaddingHorizontalVertical(
@@ -99,16 +104,16 @@ class OnlinePayment extends StatelessWidget {
                             }
                           }),
                       StreamBuilder<PaymentMethod>(
-                          stream: choosePaymentBloc
+                          stream: choosePaymentBloc!
                               .dataofPaymentMethodPayPallSubject.stream,
                           builder: (context, snapshot) {
-                            print('${snapshot.data.name}');
+                            print('${snapshot.data!.name}');
                             if (snapshot.hasData) {
                               return CustomedButton(
                                 onPressed: () async {
                                   await Get.to(CheckOut(
-                                    type_payment: snapshot.data.type,
-                                    way_pay_id: snapshot.data.id,
+                                    type_payment: snapshot.data!.type,
+                                    way_pay_id: snapshot.data!.id,
                                     pay_method_id: pay_method_id,
                                     company_id: company_id,
                                     paymentPlans: paymentPlans,
@@ -124,7 +129,7 @@ class OnlinePayment extends StatelessWidget {
                                   //     paymentPlans: paymentPlans,
                                   //     ));
                                 },
-                                text: snapshot.data.name,
+                                text: snapshot.data!.name,
                                 height: 55,
                                 imageName: Assets.PAYPALL,
                               ).addPaddingHorizontalVertical(horizontal: 60);

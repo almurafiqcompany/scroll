@@ -10,6 +10,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import 'account_information.dart';
 import 'package:get/get.dart';
+
 class RegisterScreen extends StatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -29,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               return DefaultTabController(
                 key: UniqueKey(),
                 length: 2,
-                initialIndex: snapshot.data,
+                initialIndex: snapshot.data!,
                 child: Scaffold(
                     appBar: const GradientAppbar(),
                     body: Column(
@@ -39,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 style: const TextStyle(fontSize: 30))
                             .addPaddingOnly(right: 44, left: 44, top: 10),
                         const SizedBox(height: 10),
-                         TabBar(
+                        TabBar(
                           unselectedLabelColor: Colors.grey,
                           unselectedLabelStyle: TextStyle(fontSize: 14),
                           labelStyle: TextStyle(fontSize: 14),

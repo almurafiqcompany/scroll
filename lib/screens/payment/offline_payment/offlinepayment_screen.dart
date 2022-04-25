@@ -12,18 +12,23 @@ import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
 import 'package:al_murafiq/models/payment_plans.dart';
 
-
 class OfflinePayment extends StatelessWidget {
   // dynamic lng = 0.0;
   // dynamic lat = 0.0;
-  final ChoosePaymentBloc choosePaymentBloc;
-  final int company_id;
-  final int pay_method_id;
-  final  PaymentPlans paymentPlans;
+  final ChoosePaymentBloc? choosePaymentBloc;
+  final int? company_id;
+  final int? pay_method_id;
+  final PaymentPlans? paymentPlans;
 
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
 
-  OfflinePayment({Key key, this.choosePaymentBloc, this.company_id, this.pay_method_id, this.paymentPlans}) : super(key: key);
+  OfflinePayment(
+      {Key? key,
+      this.choosePaymentBloc,
+      this.company_id,
+      this.pay_method_id,
+      this.paymentPlans})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,18 +72,20 @@ class OfflinePayment extends StatelessWidget {
                           .addPaddingOnly(
                               top: 30, bottom: 10, right: 10, left: 10),
                       StreamBuilder<PaymentMethod>(
-                          stream: choosePaymentBloc
+                          stream: choosePaymentBloc!
                               .dataofPaymentMethodBankSubject.stream,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return CustomedButton(
                                       onPressed: () async {
-                                        await Get.to(PayInfoScreen(company_id: company_id,
-                                        pay_method_id: pay_method_id,
-                                          way_pay_id: snapshot.data.id,
-                                        paymentPlans: paymentPlans,));
+                                        await Get.to(PayInfoScreen(
+                                          company_id: company_id,
+                                          pay_method_id: pay_method_id,
+                                          way_pay_id: snapshot.data!.id,
+                                          paymentPlans: paymentPlans,
+                                        ));
                                       },
-                                      text: snapshot.data.name,
+                                      text: snapshot.data!.name,
                                       height: 55,
                                       imageName: Assets.BANK)
                                   .addPaddingHorizontalVertical(
@@ -90,7 +97,7 @@ class OfflinePayment extends StatelessWidget {
                             }
                           }),
                       StreamBuilder<PaymentMethod>(
-                          stream: choosePaymentBloc
+                          stream: choosePaymentBloc!
                               .dataofPaymentMethodCashSubject.stream,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
@@ -108,16 +115,17 @@ class OfflinePayment extends StatelessWidget {
                                   //   // });
                                   // });
 
-                                  await Get.to(
-                                      AddAddressScreen(
-                                        // lng: lng, lat: lat,
-                                        lng:await _helper.getLng(),lat: await _helper.getLat(),
-                                        company_id: company_id,
-                                        pay_method_id: pay_method_id,
-                                        way_pay_id: snapshot.data.id,
-                                      paymentPlans: paymentPlans,));
+                                  await Get.to(AddAddressScreen(
+                                    // lng: lng, lat: lat,
+                                    lng: await _helper.getLng(),
+                                    lat: await _helper.getLat(),
+                                    company_id: company_id!,
+                                    pay_method_id: pay_method_id!,
+                                    way_pay_id: snapshot.data!.id!,
+                                    paymentPlans: paymentPlans!,
+                                  ));
                                 },
-                                text: snapshot.data.name,
+                                text: snapshot.data!.name,
                                 height: 55,
                                 imageName: Assets.DELIVERY,
                               ).addPaddingHorizontalVertical(horizontal: 60);

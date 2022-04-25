@@ -34,10 +34,12 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GradientAppbar(title: 'side_language_country'.tr,),
+      appBar: GradientAppbar(
+        title: 'side_language_country'.tr,
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await  _bloc.fetchAllCountries(context);
+          await _bloc.fetchAllCountries(context);
           return Future.delayed(Duration(milliseconds: 400));
         },
         child: Stack(children: <Widget>[
@@ -46,7 +48,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
               physics: iosScrollPhysics(),
               child: Container(
                 width: Get.width,
-                height: Get.height*0.88,
+                height: Get.height * 0.88,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -83,11 +85,12 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                     if (countriesSnapshot.hasData) {
                                       return StreamBuilder<CountriesData>(
                                           stream: _bloc.selectedCountry.stream,
-
                                           builder: (context, snapshot) {
                                             return Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 2),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 2),
                                               child: DropdownButton<
                                                       CountriesData>(
                                                   dropdownColor: Colors.white,
@@ -96,27 +99,29 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                                   elevation: 3,
                                                   icon: Icon(Icons
                                                       .arrow_drop_down_outlined),
-                                                  items: countriesSnapshot.data
+                                                  items: countriesSnapshot.data!
                                                       .map((item) {
                                                     return DropdownMenuItem<
                                                             CountriesData>(
                                                         value: item,
                                                         child: Row(
                                                           children: [
-                                                            item.icon != null?
-                                                            Image.network(
-                                                              '$ImgUrl${item.icon}',
-                                                              width: 32,
-                                                              height: 32,
-                                                            ):SizedBox(),
+                                                            item.icon != null
+                                                                ? Image.network(
+                                                                    '$ImgUrl${item.icon}',
+                                                                    width: 32,
+                                                                    height: 32,
+                                                                  )
+                                                                : SizedBox(),
                                                             SizedBox(
                                                               width: 5,
                                                             ),
                                                             AutoSizeText(
                                                               item.name,
-                                                              style:
-                                                                  kTextStyle.copyWith(
-                                                                      fontSize: 18),
+                                                              style: kTextStyle
+                                                                  .copyWith(
+                                                                      fontSize:
+                                                                          18),
                                                               minFontSize: 14,
                                                               maxFontSize: 18,
                                                             ),
@@ -132,8 +137,8 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                                         // context.translate('select_country'),
                                                         style:
                                                             kTextStyle.copyWith(
-                                                                color:
-                                                                    Colors.black),
+                                                                color: Colors
+                                                                    .black),
                                                       ),
                                                     ],
                                                   ),
@@ -142,11 +147,10 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                                   underline: SizedBox(),
                                                   value: snapshot.data,
                                                   onChanged:
-                                                      (CountriesData item) {
+                                                      (CountriesData? item) {
                                                     // _bloc.selectedLanguage.sink.add(null);
                                                     _bloc.selectedCountry.sink
-                                                        .add(item);
-
+                                                        .add(item!);
                                                   }),
                                             );
                                           });
@@ -185,11 +189,12 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                     if (snapshot.hasData) {
                                       return StreamBuilder<Languages>(
                                           stream: _bloc.selectedLanguage.stream,
-
                                           builder: (context, langSnapshot) {
                                             return Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 2),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 2),
                                               child: DropdownButton<Languages>(
                                                   dropdownColor: Colors.white,
                                                   iconEnabledColor: Colors.grey,
@@ -197,15 +202,15 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                                   elevation: 3,
                                                   icon: Icon(Icons
                                                       .arrow_drop_down_outlined),
-                                                  items: snapshot.data
+                                                  items: snapshot.data!
                                                       .map((item) {
                                                     return DropdownMenuItem<
                                                             Languages>(
                                                         value: item,
                                                         child: AutoSizeText(
                                                           item.name,
-                                                          style:
-                                                              kTextStyle.copyWith(
+                                                          style: kTextStyle
+                                                              .copyWith(
                                                                   fontSize: 18),
                                                           minFontSize: 14,
                                                           maxFontSize: 18,
@@ -214,24 +219,25 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                                   isExpanded: true,
                                                   hint: Row(
                                                     children: [
-                                                      Icon(Icons.language_sharp),
+                                                      Icon(
+                                                          Icons.language_sharp),
                                                       Text(
                                                         'select_language'.tr,
                                                         // context.translate('select_language'),
                                                         style:
                                                             kTextStyle.copyWith(
-                                                                color:
-                                                                    Colors.black),
+                                                                color: Colors
+                                                                    .black),
                                                       ),
                                                     ],
                                                   ),
                                                   style: kTextStyle.copyWith(
                                                       color: Colors.black),
                                                   underline: SizedBox(),
-                                                  value:  langSnapshot.data,
-                                                  onChanged: (Languages item) {
+                                                  value: langSnapshot.data,
+                                                  onChanged: (Languages? item) {
                                                     _bloc.selectedLanguage.sink
-                                                        .add(item);
+                                                        .add(item!);
                                                   }),
                                             );
                                           });
@@ -317,7 +323,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                     //     ),
                     //   ],
                     // ),
-                     SizedBox(
+                    SizedBox(
                       height: 20,
                     ),
                     Padding(
@@ -326,22 +332,23 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                         child: Text(
                           'bt_change'.tr,
                           // context.translate('bt_done'),
-                          style: kTextStyle.copyWith(fontSize: 20,color: Color(0xffFFFFFF)),
+                          style: kTextStyle.copyWith(
+                              fontSize: 20, color: Color(0xffFFFFFF)),
                         ),
                         height: 50,
                         controller: _bloc.loadingButtonController,
                         color: Colors.blue.shade800,
                         onPressed: () async {
                           _bloc.loadingButtonController.start();
-                            int idCountry=_bloc.selectedCountry.value.id;
-                            await helper.setCountryId(idCountry);
-                            String codeLang=_bloc.selectedLanguage.value.code;
-                            await helper.setCodeLang(codeLang);
+                          int? idCountry = _bloc.selectedCountry.value.id;
+                          await helper.setCountryId(idCountry!);
+                          String? codeLang = _bloc.selectedLanguage.value.code;
+                          await helper.setCodeLang(codeLang!);
 
-                            Get.updateLocale(Locale(codeLang));
+                          Get.updateLocale(Locale(codeLang));
 
-                            Get.back();
-                            _bloc.loadingButtonController.stop();
+                          Get.back();
+                          _bloc.loadingButtonController.stop();
 
                           _bloc.loadingButtonController.stop();
                         },
@@ -378,7 +385,6 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                     //     ),
                     //   ),
                     // ),
-
                   ],
                 ),
               )),

@@ -14,10 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:get/get.dart';
-class PersonalInformationMerchantScreen extends StatefulWidget {
-  final RegisterMerchantBloc bloc;
 
-  const PersonalInformationMerchantScreen({Key key, this.bloc}) : super(key: key);
+class PersonalInformationMerchantScreen extends StatefulWidget {
+  final RegisterMerchantBloc? bloc;
+
+  const PersonalInformationMerchantScreen({Key? key, this.bloc})
+      : super(key: key);
 
   @override
   _PersonalInformationMerchantScreenState createState() =>
@@ -42,7 +44,7 @@ class _PersonalInformationMerchantScreenState
               height: 10,
             ),
             StreamBuilder<File>(
-                stream: widget.bloc.avatarController.stream,
+                stream: widget.bloc!.avatarController.stream,
                 initialData: null,
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
@@ -63,7 +65,7 @@ class _PersonalInformationMerchantScreenState
                             ClipRRect(
                               borderRadius: BorderRadius.circular(25),
                               child: Image.file(
-                                snapshot.data,
+                                snapshot.data!,
                                 fit: BoxFit.fitHeight,
                               ),
                             ),
@@ -71,21 +73,23 @@ class _PersonalInformationMerchantScreenState
                               child: GestureDetector(
                                 onTap: () async {
                                   try {
-                                    FilePickerResult res =
-                                    await FilePicker.platform
-                                        .pickFiles(
-                                        type: FileType.custom,
-                                        allowedExtensions: ['jpg','png','jpeg','gif']
-                                    );
-                                    File img = res != null
-                                        ? File(res.files.single.path)
+                                    FilePickerResult? res =
+                                        await FilePicker.platform.pickFiles(
+                                            type: FileType.custom,
+                                            allowedExtensions: [
+                                          'jpg',
+                                          'png',
+                                          'jpeg',
+                                          'gif'
+                                        ]);
+                                    File? img = res != null
+                                        ? File(res.files.single.path!)
                                         : null;
                                     if (img != null) {
-                                      widget.bloc.avatarController.sink
+                                      widget.bloc!.avatarController.sink
                                           .add(img);
                                     }
                                   } catch (e) {
-
                                     print(e.toString());
                                   }
                                 },
@@ -124,24 +128,22 @@ class _PersonalInformationMerchantScreenState
                           child: GestureDetector(
                             onTap: () async {
                               try {
-                                FilePickerResult res = await FilePicker
+                                FilePickerResult? res = await FilePicker
                                     .platform
                                     .pickFiles(type: FileType.image);
-                                File img = res != null
-                                    ? File(res.files.single.path)
+                                File? img = res != null
+                                    ? File(res.files.single.path!)
                                     : null;
 
                                 if (img != null) {
-                                  widget.bloc.avatarController.sink.add(img);
+                                  widget.bloc!.avatarController.sink.add(img);
                                 }
                               } catch (e) {
-
                                 print(e.toString());
                               }
                             },
                             child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Card(
                                   elevation: 0,
@@ -229,7 +231,7 @@ class _PersonalInformationMerchantScreenState
                 .addPaddingOnly(right: 15, top: 20, bottom: 10),
 
             StreamBuilder<bool>(
-                stream: widget.bloc.nameSubject.stream,
+                stream: widget.bloc!.nameSubject.stream,
                 initialData: true,
                 builder: (context, snapshot) {
                   return TextField(
@@ -263,21 +265,22 @@ class _PersonalInformationMerchantScreenState
                               const BorderRadius.all(Radius.circular(6)),
                           borderSide:
                               BorderSide(width: 1, color: Colors.red.shade800)),
-                      hintText:'hint_name'.tr,
+                      hintText: 'hint_name'.tr,
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText: snapshot.data ? null : 'text_full_name_error'.tr,
+                      errorText:
+                          snapshot.data! ? null : 'text_full_name_error'.tr,
                     ),
                     keyboardType: TextInputType.text,
-                    onChanged: (val) => widget.bloc.changeName(val),
-                    controller: widget.bloc.nameController,
+                    onChanged: (val) => widget.bloc!.changeName(val),
+                    controller: widget.bloc!.nameController,
                   );
                 }),
             Text('text_email'.tr,
-                style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
+                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
                 .addPaddingOnly(right: 15, top: 25, bottom: 10),
             StreamBuilder<bool>(
-                stream: widget.bloc.emailOrPhoneSubject.stream,
+                stream: widget.bloc!.emailOrPhoneSubject.stream,
                 initialData: true,
                 builder: (context, snapshot) {
                   return TextField(
@@ -287,9 +290,9 @@ class _PersonalInformationMerchantScreenState
                       fillColor: const Color(0xFFE0E7FF),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(6)),
+                            const BorderRadius.all(Radius.circular(6)),
                         borderSide:
-                        BorderSide(width: 1, color: context.accentColor),
+                            BorderSide(width: 1, color: context.accentColor),
                       ),
                       disabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -298,7 +301,7 @@ class _PersonalInformationMerchantScreenState
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6)),
                         borderSide:
-                        BorderSide(width: 1, color: Color(0xFFC2C3DF)),
+                            BorderSide(width: 1, color: Color(0xFFC2C3DF)),
                       ),
                       border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -308,27 +311,24 @@ class _PersonalInformationMerchantScreenState
                           borderSide: BorderSide(width: 1, color: Colors.red)),
                       focusedErrorBorder: OutlineInputBorder(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(6)),
+                              const BorderRadius.all(Radius.circular(6)),
                           borderSide:
-                          BorderSide(width: 1, color: Colors.red.shade800)),
-                      hintText:'hint_email'.tr,
+                              BorderSide(width: 1, color: Colors.red.shade800)),
+                      hintText: 'hint_email'.tr,
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText: snapshot.data
-                          ? null
-                          : 'email_error'.tr,
+                      errorText: snapshot.data! ? null : 'email_error'.tr,
                     ),
                     keyboardType: TextInputType.emailAddress,
-                    onChanged: (val) => widget.bloc.changeEmailOrPhone(val),
-                    controller: widget.bloc.emailOrPhoneController,
+                    onChanged: (val) => widget.bloc!.changeEmailOrPhone(val),
+                    controller: widget.bloc!.emailOrPhoneController,
                   );
                 }),
             Text('text_phone'.tr,
-                style: TextStyle(
-                    fontSize: 14, color: Colors.grey.shade600))
+                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
                 .addPaddingOnly(right: 15, top: 25, bottom: 5),
             StreamBuilder<bool>(
-                stream: widget.bloc.userPhoneSubject.stream,
+                stream: widget.bloc!.userPhoneSubject.stream,
                 initialData: true,
                 builder: (context, snapshot) {
                   return TextField(
@@ -338,45 +338,38 @@ class _PersonalInformationMerchantScreenState
                       fillColor: const Color(0xFFE0E7FF),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(6)),
-                        borderSide: BorderSide(
-                            width: 1, color: context.accentColor),
+                            const BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: context.accentColor),
                       ),
                       disabledBorder: const OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(6)),
-                        borderSide:
-                        BorderSide(width: 1, color: Colors.black54),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide: BorderSide(width: 1, color: Colors.black54),
                       ),
                       enabledBorder: const OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(6)),
-                        borderSide: BorderSide(
-                            width: 1, color: Color(0xFFC2C3DF)),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: Color(0xFFC2C3DF)),
                       ),
                       border: const OutlineInputBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(6)),
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
                           borderSide: BorderSide(width: 1)),
                       errorBorder: const OutlineInputBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(6)),
-                          borderSide:
-                          BorderSide(width: 1, color: Colors.red)),
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          borderSide: BorderSide(width: 1, color: Colors.red)),
                       focusedErrorBorder: OutlineInputBorder(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(6)),
-                          borderSide: BorderSide(
-                              width: 1, color: Colors.red.shade800)),
+                              const BorderRadius.all(Radius.circular(6)),
+                          borderSide:
+                              BorderSide(width: 1, color: Colors.red.shade800)),
                       hintText: '',
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText:
-                      snapshot.data ? null : 'text_phone_error'.tr,
+                      errorText: snapshot.data! ? null : 'text_phone_error'.tr,
                     ),
                     keyboardType: TextInputType.phone,
-                    onChanged: (val) => widget.bloc.changeUserPhone(val),
-                    controller: widget.bloc.userPhoneController,
+                    onChanged: (val) => widget.bloc!.changeUserPhone(val),
+                    controller: widget.bloc!.userPhoneController,
                   );
                 }),
             // Text('number'.tr,
@@ -429,7 +422,6 @@ class _PersonalInformationMerchantScreenState
             //       );
             //     }),
 
-
             ////////////////////////////////
             // Text('text_gender'.tr,
             //         style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
@@ -464,8 +456,6 @@ class _PersonalInformationMerchantScreenState
             //       }),
             // ),
             ////////////////////////////////
-
-
 
             // CustomedButton(
             //   text: context.translate('cont'),

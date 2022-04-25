@@ -16,7 +16,7 @@ class AddTicketBloc {
   TextEditingController detailsController = TextEditingController();
   TextEditingController subjectController = new TextEditingController();
   RoundedLoadingButtonController loadingButtonController =
-  RoundedLoadingButtonController();
+      RoundedLoadingButtonController();
 
   final detailSubject = BehaviorSubject<bool>();
   final subjectSubject = BehaviorSubject<bool>();
@@ -30,53 +30,61 @@ class AddTicketBloc {
   }
 
   Future<void> addTicketPost(BuildContext context) async {
-
     if (validateText(detailsController) && validateText(subjectController)) {
-      String token = await _helper.getToken();
+      String? token = await _helper.getToken();
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final dioo.FormData formData = dioo.FormData.fromMap({
         'subject': subjectController.text,
         'details': detailsController.text,
-
       });
       try {
-
         dioo.Response res = await _dio.post(
           '/tickets/store?country_id=$countryID',
           options: dioo.Options(
             headers: {'Authorization': 'Bearer $token', 'lang': '$lang'},
           ),
-          data:formData,
+          data: formData,
         );
 
-        if (res.statusCode == 200 && res.data['status']==200) {
-
+        if (res.statusCode == 200 && res.data['status'] == 200) {
           TicketData ticketOfUser = TicketData.fromJson(res.data['data']);
           Get.back(result: ticketOfUser);
 
           await showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
-              return ShowMessageDialog(type: 200,message: '${res.data['message']}',show_but: true,);
+              return ShowMessageDialog(
+                type: 200,
+                message: '${res.data['message']}',
+                show_but: true,
+              );
             },
           );
         } else {
           await showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
-              return ShowMessageDialog(type: 400,message: '${res.data['message']}',show_but: true,);
+              return ShowMessageDialog(
+                type: 400,
+                message: '${res.data['message']}',
+                show_but: true,
+              );
             },
           );
         }
-      // ignore: avoid_catches_without_on_clauses
+        // ignore: avoid_catches_without_on_clauses
       } catch (e) {
         // Get.snackbar(null, 'حدث خطأ ما. حاول مرة أخري ',
         //     snackPosition: SnackPosition.BOTTOM);
         await showModalBottomSheet<void>(
           context: context,
           builder: (BuildContext context) {
-            return ShowMessageDialog(type: 400,message: 'e'.tr,show_but: true,);
+            return ShowMessageDialog(
+              type: 400,
+              message: 'e'.tr,
+              show_but: true,
+            );
           },
         );
       }
@@ -91,38 +99,33 @@ class AddTicketBloc {
   final dataofTicketsofuserSubject = BehaviorSubject<List<TicketData>>();
 
   Future<void> fetchAllTickets() async {
-
-    String token = await _helper.getToken();
+    String? token = await _helper.getToken();
     String lang = await _helper.getCodeLang();
-    int countryID = await _helper.getCountryId();
+    int? countryID = await _helper.getCountryId();
 
     try {
-
       dioo.Response res = await _dio.get(
         '/tickets?country_id=$countryID',
         options: dioo.Options(
           headers: {"Authorization": "Bearer $token", 'lang': '$lang'},
         ),
-
       );
 
-      if (res.statusCode == 200 && res.data['status']==200) {
-
+      if (res.statusCode == 200 && res.data['status'] == 200) {
         dataofAllTicketSubject.sink.add(Tickets.fromJson(res.data['data']));
-        dataofTicketsofuserSubject.sink.add(Tickets.fromJson(res.data['data']).data);
+        dataofTicketsofuserSubject.sink
+            .add(Tickets.fromJson(res.data['data']).data!);
 
         // Get.back(result: ticketData);
         // Get.snackbar(null, "aa",
         //     snackPosition: SnackPosition.BOTTOM);
-      }else if(res.data['status']==400) {
+      } else if (res.data['status'] == 400) {
         dataofAllTicketSubject.sink.addError(res.data['message']);
-      }
-      else {
+      } else {
         dataofAllTicketSubject.sink.addError('');
       }
     } catch (e) {
       dataofAllTicketSubject.sink.addError('');
-
     }
   }
 

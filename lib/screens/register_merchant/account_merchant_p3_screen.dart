@@ -6,10 +6,11 @@ import 'package:al_murafiq/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:get/get.dart';
-class AccountInformationMerchantPageThreeScreen extends StatefulWidget {
-  final RegisterMerchantBloc bloc;
 
-  const AccountInformationMerchantPageThreeScreen({Key key, this.bloc})
+class AccountInformationMerchantPageThreeScreen extends StatefulWidget {
+  final RegisterMerchantBloc? bloc;
+
+  const AccountInformationMerchantPageThreeScreen({Key? key, this.bloc})
       : super(key: key);
 
   @override
@@ -29,22 +30,23 @@ class _RegisterDealerScreenState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('new_account'.tr,
-                          style: const TextStyle(fontSize: 30))
+                  Text('new_account'.tr, style: const TextStyle(fontSize: 30))
                       .addPaddingOnly(right: 44, left: 44, top: 10),
                   const SizedBox(height: 10),
                   Row(
                     children: [
                       Text('text_email'.tr,
-                          style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
-                          .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
+                              style: TextStyle(
+                                  fontSize: 14, color: Colors.grey.shade600))
+                          .addPaddingOnly(
+                              right: 8, left: 8, top: 15, bottom: 5),
                       Text('*',
-                          style: TextStyle(fontSize: 14, color: Colors.red))
-                          .addPaddingOnly( top: 15),
+                              style: TextStyle(fontSize: 14, color: Colors.red))
+                          .addPaddingOnly(top: 15),
                     ],
                   ),
                   StreamBuilder<bool>(
-                      stream: widget.bloc.emailOrPhoneSubject.stream,
+                      stream: widget.bloc!.emailOrPhoneSubject.stream,
                       initialData: true,
                       builder: (context, snapshot) {
                         return TextField(
@@ -55,42 +57,47 @@ class _RegisterDealerScreenState
                             contentPadding: EdgeInsets.all(9),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(6)),
-                              borderSide:
-                              BorderSide(width: 1, color: context.accentColor),
+                                  const BorderRadius.all(Radius.circular(6)),
+                              borderSide: BorderSide(
+                                  width: 1, color: context.accentColor),
                             ),
                             disabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(6)),
-                              borderSide: BorderSide(width: 1, color: Colors.black54),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(6)),
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.black54),
                             ),
                             enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(6)),
-                              borderSide:
-                              BorderSide(width: 1, color: Color(0xFFC2C3DF)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(6)),
+                              borderSide: BorderSide(
+                                  width: 1, color: Color(0xFFC2C3DF)),
                             ),
                             border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
                                 borderSide: BorderSide(width: 1)),
                             errorBorder: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                                borderSide: BorderSide(width: 1, color: Colors.red)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
+                                borderSide:
+                                    BorderSide(width: 1, color: Colors.red)),
                             focusedErrorBorder: OutlineInputBorder(
                                 borderRadius:
-                                const BorderRadius.all(Radius.circular(6)),
-                                borderSide:
-                                BorderSide(width: 1, color: Colors.red.shade800)),
-                            hintText:'hint_email'.tr,
+                                    const BorderRadius.all(Radius.circular(6)),
+                                borderSide: BorderSide(
+                                    width: 1, color: Colors.red.shade800)),
+                            hintText: 'hint_email'.tr,
                             hintStyle: const TextStyle(
                                 fontSize: 14, color: Color(0xFF9797AD)),
-                            errorText: snapshot.data
-                                ? null
-                                : 'email_error'.tr,
+                            errorText: snapshot.data! ? null : 'email_error'.tr,
                           ),
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => node.nextFocus(),
                           keyboardType: TextInputType.emailAddress,
-                          onChanged: (val) => widget.bloc.changeEmailOrPhone(val),
-                          controller: widget.bloc.emailOrPhoneController,
+                          onChanged: (val) =>
+                              widget.bloc!.changeEmailOrPhone(val),
+                          controller: widget.bloc!.emailOrPhoneController,
                         );
                       }),
 
@@ -99,18 +106,19 @@ class _RegisterDealerScreenState
                       Text('text_password'.tr,
                               style: TextStyle(
                                   fontSize: 14, color: Colors.grey.shade600))
-                          .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
+                          .addPaddingOnly(
+                              right: 8, left: 8, top: 15, bottom: 5),
                       Text('*',
-                          style: TextStyle(fontSize: 14, color: Colors.red))
-                          .addPaddingOnly( top: 15),
+                              style: TextStyle(fontSize: 14, color: Colors.red))
+                          .addPaddingOnly(top: 15),
                     ],
                   ),
                   StreamBuilder<bool>(
-                      stream: widget.bloc.passwordSubject.stream,
+                      stream: widget.bloc!.passwordSubject.stream,
                       initialData: true,
                       builder: (context, snapshot) {
                         return StreamBuilder<bool>(
-                            stream: widget.bloc.obscurePasswordSubject.stream,
+                            stream: widget.bloc!.obscurePasswordSubject.stream,
                             initialData: true,
                             builder: (context, obscureSnapshot) {
                               return TextField(
@@ -154,16 +162,15 @@ class _RegisterDealerScreenState
                                           color: Colors.red.shade800)),
                                   hintStyle: const TextStyle(
                                       fontSize: 14, color: Color(0xFF9797AD)),
-                                  errorText: snapshot.data
-                                      ? null
-                                      : 'pass_error'.tr,
+                                  errorText:
+                                      snapshot.data! ? null : 'pass_error'.tr,
                                   suffixIcon: GestureDetector(
                                       onTap: () {
-                                        widget.bloc.obscurePasswordSubject.sink
-                                            .add(!widget.bloc
+                                        widget.bloc!.obscurePasswordSubject.sink
+                                            .add(!widget.bloc!
                                                 .obscurePasswordSubject.value);
                                       },
-                                      child: Icon(obscureSnapshot.data
+                                      child: Icon(obscureSnapshot.data!
                                           ? Icons.visibility
                                           : Icons.visibility_off)),
                                 ),
@@ -171,9 +178,9 @@ class _RegisterDealerScreenState
                                 onEditingComplete: () => node.nextFocus(),
                                 keyboardType: TextInputType.visiblePassword,
                                 onChanged: (val) =>
-                                    widget.bloc.changePassword(val),
-                                controller: widget.bloc.passwordController,
-                                obscureText: obscureSnapshot.data,
+                                    widget.bloc!.changePassword(val),
+                                controller: widget.bloc!.passwordController,
+                                obscureText: obscureSnapshot.data!,
                               );
                             });
                       }),
@@ -182,19 +189,20 @@ class _RegisterDealerScreenState
                       Text('text_confirm_pass'.tr,
                               style: TextStyle(
                                   fontSize: 14, color: Colors.grey.shade600))
-                          .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
+                          .addPaddingOnly(
+                              right: 8, left: 8, top: 15, bottom: 5),
                       Text('*',
-                          style: TextStyle(fontSize: 14, color: Colors.red))
-                          .addPaddingOnly( top: 15),
+                              style: TextStyle(fontSize: 14, color: Colors.red))
+                          .addPaddingOnly(top: 15),
                     ],
                   ),
                   StreamBuilder<bool>(
-                      stream: widget.bloc.confirmePasswordSubject.stream,
+                      stream: widget.bloc!.confirmePasswordSubject.stream,
                       initialData: true,
                       builder: (context, snapshot) {
                         return StreamBuilder<bool>(
                             stream: widget
-                                .bloc.obscureConfirmePasswordSubject.stream,
+                                .bloc!.obscureConfirmePasswordSubject.stream,
                             initialData: true,
                             builder: (context, obscureCoSnapshot) {
                               return TextField(
@@ -238,19 +246,18 @@ class _RegisterDealerScreenState
                                           color: Colors.red.shade800)),
                                   hintStyle: const TextStyle(
                                       fontSize: 14, color: Color(0xFF9797AD)),
-                                  errorText: snapshot.data
-                                      ? null
-                                      : 'pass_error'.tr,
+                                  errorText:
+                                      snapshot.data! ? null : 'pass_error'.tr,
                                   suffixIcon: GestureDetector(
                                       onTap: () {
-                                        widget.bloc
+                                        widget.bloc!
                                             .obscureConfirmePasswordSubject.sink
                                             .add(!widget
-                                                .bloc
+                                                .bloc!
                                                 .obscureConfirmePasswordSubject
                                                 .value);
                                       },
-                                      child: Icon(obscureCoSnapshot.data
+                                      child: Icon(obscureCoSnapshot.data!
                                           ? Icons.visibility
                                           : Icons.visibility_off)),
                                 ),
@@ -258,10 +265,10 @@ class _RegisterDealerScreenState
                                 onEditingComplete: () => node.nextFocus(),
                                 keyboardType: TextInputType.visiblePassword,
                                 onChanged: (val) =>
-                                    widget.bloc.changeConfirmePassword(val),
+                                    widget.bloc!.changeConfirmePassword(val),
                                 controller:
-                                    widget.bloc.confirmePasswordController,
-                                obscureText: obscureCoSnapshot.data,
+                                    widget.bloc!.confirmePasswordController,
+                                obscureText: obscureCoSnapshot.data!,
                               );
                             });
                       }),
@@ -341,12 +348,12 @@ class _RegisterDealerScreenState
                         style: kTextStyle.copyWith(color: Colors.white),
                       ),
                       height: 50,
-                      controller: widget.bloc.loadingButtonController,
+                      controller: widget.bloc!.loadingButtonController,
                       color: Colors.blue.shade800,
                       onPressed: () async {
-                        widget.bloc.loadingButtonController.start();
-                        await widget.bloc.confirmSignUp(context);
-                        widget.bloc.loadingButtonController.stop();
+                        widget.bloc!.loadingButtonController.start();
+                        await widget.bloc!.confirmSignUp(context);
+                        widget.bloc!.loadingButtonController.stop();
                       },
                     ),
                   )

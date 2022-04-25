@@ -11,9 +11,9 @@ class AboutUSBloc {
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
   Future<void> fetchAboutUS() async {
     try {
-      String token = await _helper.getToken();
+      String? token = await _helper.getToken();
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final Response res = await _dio.get(
         '/about-us/?country_id=$countryID',
         options: Options(
@@ -22,9 +22,7 @@ class AboutUSBloc {
       );
 
       if (res.statusCode == 200 && res.data['status'] == 200) {
-
         dataOfAboutUSSubject.sink.add(AboutUs.fromJson(res.data['data']));
-
       } else if (res.data['status'] == 400) {
         dataOfAboutUSSubject.sink.addError(res.data['message']);
       } else {

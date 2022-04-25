@@ -21,15 +21,15 @@ import 'package:al_murafiq/models/categories.dart';
 import 'package:al_murafiq/models/countries.dart';
 
 class SocialItem {
-  final String name;
-  final IconData icon;
+  final String? name;
+  final IconData? icon;
 
   SocialItem({this.name, this.icon});
 }
 
 class SocialController {
-  TextEditingController urlController;
-  SocialItem socialItem;
+  TextEditingController? urlController;
+  SocialItem? socialItem;
 
   SocialController({this.urlController, this.socialItem}) {
     urlController = TextEditingController();
@@ -48,8 +48,8 @@ class RegisterMerchantBloc {
   final Dio _dio = GetIt.instance.get<Dio>();
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
   final BehaviorSubject<int> tapBarSubject = BehaviorSubject<int>.seeded(0);
-  final BehaviorSubject<dynamic> longSubject =
-      BehaviorSubject<dynamic>.seeded(0.0);//lng:await _helper.getLng(),lat: await _helper.getLat()
+  final BehaviorSubject<dynamic> longSubject = BehaviorSubject<dynamic>.seeded(
+      0.0); //lng:await _helper.getLng(),lat: await _helper.getLat()
 
   final BehaviorSubject<dynamic> latSubject =
       BehaviorSubject<dynamic>.seeded(0.0);
@@ -70,7 +70,7 @@ class RegisterMerchantBloc {
       BehaviorSubject<DateTime>.seeded(DateTime.now());
 
   Future<void> birthDateChanged(BuildContext context) async {
-    final DateTime dateTime = await _gatDateFromPicker(context);
+    final DateTime? dateTime = await _gatDateFromPicker(context);
     if (dateTime != null) {
       birthDateSubject.add(dateTime);
     }
@@ -188,13 +188,12 @@ class RegisterMerchantBloc {
   final selectedCities = BehaviorSubject<CitiesData>();
 
   final BehaviorSubject<String> workDaysSubjectFrom =
-  BehaviorSubject<String>.seeded('Saturday'.tr);
+      BehaviorSubject<String>.seeded('Saturday'.tr);
   final BehaviorSubject<String> workDaysSubjectTo =
-  BehaviorSubject<String>.seeded('Saturday'.tr);
+      BehaviorSubject<String>.seeded('Saturday'.tr);
   final BehaviorSubject<dynamic> workTimeSubjectFrom =
-  BehaviorSubject<dynamic>();
-  final BehaviorSubject<dynamic> workTimeSubjectTo =
-  BehaviorSubject<dynamic>();
+      BehaviorSubject<dynamic>();
+  final BehaviorSubject<dynamic> workTimeSubjectTo = BehaviorSubject<dynamic>();
   final getAllCategoriesSubject = BehaviorSubject<List<Categories_Data>>();
   final getSortAllCategoriesSubject = BehaviorSubject<List<Categories_Data>>();
 
@@ -204,9 +203,9 @@ class RegisterMerchantBloc {
   Future<void> fetchDataAllCategories(int id) async {
     try {
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final List<Categories_Data> categoriesData = [];
-      final  res = await _dio.get(
+      final res = await _dio.get(
         '/categories/all?country_id=$countryID',
         options: Options(
           headers: {"lang": "$lang"},
@@ -217,10 +216,10 @@ class RegisterMerchantBloc {
         //   categoriesData.add(Categories_Data.fromJson(obj));
         // }
         for (var obj in res.data['data']) {
-          Categories_Data categories_data =Categories_Data.fromJson(obj);
-          if(categories_data.id == id){
+          Categories_Data categories_data = Categories_Data.fromJson(obj);
+          if (categories_data.id == id) {
             selectCategoriesSubject.sink.add(categories_data);
-            selectedSubCategories.sink.add(categories_data.sub_categories[0]);
+            selectedSubCategories.sink.add(categories_data.sub_categories![0]);
           }
           categoriesData.add(categories_data);
         }
@@ -234,22 +233,27 @@ class RegisterMerchantBloc {
     }
   }
 
-  sortAllCategories(String AllCategoriesName) async{
+  sortAllCategories(String AllCategoriesName) async {
     getSortAllCategoriesSubject.add([]);
     List<Categories_Data> li = [];
-    await getAllCategoriesSubject.value.forEach((element) {
-      if(element.name.toLowerCase().contains(AllCategoriesName.toLowerCase())){
+    getAllCategoriesSubject.value.forEach((element) {
+      if (element.name!
+          .toLowerCase()
+          .contains(AllCategoriesName.toLowerCase())) {
         li.add(element);
       }
     });
     print('ss ${li.toString()}');
     getSortAllCategoriesSubject.add(li);
   }
-  sortSubCategories(String subCategoriesName) async{
+
+  sortSubCategories(String subCategoriesName) async {
     getSortAllSubCategories.add([]);
     List<SubCategories> li = [];
-    await selectCategoriesSubject.value.sub_categories.forEach((element) {
-      if(element.name.toLowerCase().contains(subCategoriesName.toLowerCase())){
+    selectCategoriesSubject.value.sub_categories!.forEach((element) {
+      if (element.name!
+          .toLowerCase()
+          .contains(subCategoriesName.toLowerCase())) {
         li.add(element);
       }
     });
@@ -257,17 +261,20 @@ class RegisterMerchantBloc {
     getSortAllSubCategories.add(li);
   }
 
-  sortSubSubCategories(String subSubCategoriesName) async{
+  sortSubSubCategories(String subSubCategoriesName) async {
     getSortAllSubSubCategories.add([]);
     List<SubSubCategories> li = [];
-    await selectedSubCategories.value.sub_sub_categories.forEach((element) {
-      if(element.name.toLowerCase().contains(subSubCategoriesName.toLowerCase())){
+    selectedSubCategories.value.sub_sub_categories!.forEach((element) {
+      if (element.name!
+          .toLowerCase()
+          .contains(subSubCategoriesName.toLowerCase())) {
         li.add(element);
       }
     });
     print('ss ${li.toString()}');
     getSortAllSubSubCategories.add(li);
   }
+
   final selectedLanguage = BehaviorSubject<Languages>();
   final allCountriesSubject = BehaviorSubject<List<CountriesData>>();
   final allSortCountriesSubject = BehaviorSubject<List<CountriesData>>();
@@ -278,7 +285,7 @@ class RegisterMerchantBloc {
   Future<void> fetchAllCountries(int id) async {
     try {
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final List<CountriesData> countries = [];
       final List<Languages> languages = [];
       final res = await _dio.get(
@@ -312,22 +319,23 @@ class RegisterMerchantBloc {
     }
   }
 
-  sortCountry(String countryName) async{
+  sortCountry(String countryName) async {
     allSortCountriesSubject.add([]);
     List<CountriesData> li = [];
-    await allCountriesSubject.value.forEach((element) {
-      if(element.name.toLowerCase().contains(countryName.toLowerCase())){
+    allCountriesSubject.value.forEach((element) {
+      if (element.name!.toLowerCase().contains(countryName.toLowerCase())) {
         li.add(element);
       }
     });
     print('ss ${li.toString()}');
     allSortCountriesSubject.add(li);
   }
-  sortCities(String cityName) async{
+
+  sortCities(String cityName) async {
     allSortCitiesSubject.add([]);
     List<CitiesData> li = [];
-    await selectedCountry.value.cities.forEach((element) {
-      if(element.name.toLowerCase().contains(cityName.toLowerCase())){
+    selectedCountry.value.cities!.forEach((element) {
+      if (element.name!.toLowerCase().contains(cityName.toLowerCase())) {
         li.add(element);
       }
     });
@@ -351,18 +359,15 @@ class RegisterMerchantBloc {
 
   changeMobile2(String val) =>
       mobile2Subject.sink.add(validateText(mobile2Controller));
-  changeFax(String val) =>
-      faxSubject.sink.add(validateText(faxController));
+  changeFax(String val) => faxSubject.sink.add(validateText(faxController));
   Future<void> confirmSignUp(BuildContext context) async {
     if (validatePassword(confirmePasswordController) &&
-        validatePassword(passwordController)
-        ) {
-
+        validatePassword(passwordController)) {
       final PackgDio.FormData formData = PackgDio.FormData.fromMap({
         'password': passwordController.text,
         //"name": nameController.text,
         'password_confirmation': confirmePasswordController.text,
-       // "default_lang": selectedLanguage.value != null?selectedLanguage.value.code:allDefultLanguageSubject.value,
+        // "default_lang": selectedLanguage.value != null?selectedLanguage.value.code:allDefultLanguageSubject.value,
         'default_lang': await _helper.getCodeLang() ?? 'ar',
         // "national_id": nationalIDController.text,
         'type': 'Company',
@@ -392,54 +397,45 @@ class RegisterMerchantBloc {
       //   );
       // }
 
-      if (imageCompanyController.value != null ) {
-        var img=await PackgDio.MultipartFile.fromFileSync(imageCompanyController.value.path);
-        formData.files.add(
-            MapEntry('image', img)
-        );
+      if (imageCompanyController.value != null) {
+        var img = await PackgDio.MultipartFile.fromFileSync(
+            imageCompanyController.value.path);
+        formData.files.add(MapEntry('image', img));
       }
-      if (avatarController.value != null ) {
-        var img=await PackgDio.MultipartFile.fromFileSync(avatarController.value.path);
-        formData.files.add(
-            MapEntry('avatar', img)
-        );
+      if (avatarController.value != null) {
+        var img = await PackgDio.MultipartFile.fromFileSync(
+            avatarController.value.path);
+        formData.files.add(MapEntry('avatar', img));
       }
 
-      if (selectedCountry.value != null ) {
-        formData.fields.add(
-            MapEntry('country_id', '${selectedCountry.value.id}')
-        );
+      if (selectedCountry.value != null) {
+        formData.fields
+            .add(MapEntry('country_id', '${selectedCountry.value.id}'));
       }
-      if (selectedCities.value != null ) {
-        formData.fields.add(
-            MapEntry('city_id', '${selectedCities.value.id}')
-        );
+      if (selectedCities.value != null) {
+        formData.fields.add(MapEntry('city_id', '${selectedCities.value.id}'));
       }
-      if (selectCategoriesSubject.value != null ) {
-        formData.fields.add(
-            MapEntry('cat_id', '${selectCategoriesSubject.value.id}')
-        );
+      if (selectCategoriesSubject.value != null) {
+        formData.fields
+            .add(MapEntry('cat_id', '${selectCategoriesSubject.value.id}'));
       }
-      if (selectedSubCategories.value != null ) {
-        formData.fields.add(
-            MapEntry('sub_cat_id', '${selectedSubCategories.value.id}')
-        );
+      if (selectedSubCategories.value != null) {
+        formData.fields
+            .add(MapEntry('sub_cat_id', '${selectedSubCategories.value.id}'));
       }
-      if (selectedSubSubCategories.value != null ) {
+      if (selectedSubSubCategories.value != null) {
         formData.fields.add(
-            MapEntry('sub_sub_cat_id', '${selectedSubSubCategories.value.id}')
-        );
+            MapEntry('sub_sub_cat_id', '${selectedSubSubCategories.value.id}'));
       }
-      if (await FirebaseNotifications().generateFcmToken() != null ) {
-        formData.fields.add(
-            MapEntry('fcm_token', await FirebaseNotifications().generateFcmToken())
-        );
+      if (await FirebaseNotifications().generateFcmToken() != null) {
+        formData.fields.add(MapEntry(
+            'fcm_token', await FirebaseNotifications().generateFcmToken()));
       }
 
       if (passwordController.text == confirmePasswordController.text) {
         try {
           String lang = await _helper.getCodeLang();
-          int countryID = await _helper.getCountryId();
+          int? countryID = await _helper.getCountryId();
           print('do rregester');
           print('do ${formData}');
           final res = await _dio.post(
@@ -462,7 +458,8 @@ class RegisterMerchantBloc {
             await _helper.setMarketer(res.data['data']['marketer_id']);
             await _helper.setAvatar(res.data['data']['avatar']);
             await _helper.setActive(res.data['data']['active']);
-            await _helper.setActivationMessage(res.data['data']['activation_message']);
+            await _helper
+                .setActivationMessage(res.data['data']['activation_message']);
             // await _helper.setFirst(res.data['data']['first']);activation_message
             await _helper.setDefaultLang(allDefultLanguageSubject.value);
             //
@@ -471,7 +468,10 @@ class RegisterMerchantBloc {
             // await _helper.setAvatar(res.data['data']['avatar']);
             // await _helper.setDefaultLang(await _helper.getDefaultLang());
 
-            await Get.to(PayPlansScreen(company_id: res.data['data']['company_id'],typeAdsOrPlan: 0,));
+            await Get.to(PayPlansScreen(
+              company_id: res.data['data']['company_id'],
+              typeAdsOrPlan: 0,
+            ));
             // await Get.snackbar(
             //   null,
             //   '${res.data['message']}',
@@ -488,40 +488,51 @@ class RegisterMerchantBloc {
 
             // await Get.offAll(BottomNavBar());
 
-
           } else if (res.data['status'] == 500) {
-
             await showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
-                return ShowMessageDialog(type: 400,message: '${res.data['message']}',show_but: true,);
+                return ShowMessageDialog(
+                  type: 400,
+                  message: '${res.data['message']}',
+                  show_but: true,
+                );
               },
             );
-          }else if (res.data['status'] == 300) {
-
+          } else if (res.data['status'] == 300) {
             await showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
-                return ShowMessageDialog(type: 400,message: '${res.data['message']}',show_but: true,);
+                return ShowMessageDialog(
+                  type: 400,
+                  message: '${res.data['message']}',
+                  show_but: true,
+                );
               },
             );
           }
-        // ignore: avoid_catches_without_on_clauses
+          // ignore: avoid_catches_without_on_clauses
         } catch (e) {
           await showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
-              return ShowMessageDialog(type: 400,message: 'e'.tr,show_but: true,);
+              return ShowMessageDialog(
+                type: 400,
+                message: 'e'.tr,
+                show_but: true,
+              );
             },
           );
         }
-      }
-      else {
-
+      } else {
         await showModalBottomSheet<void>(
           context: context,
           builder: (BuildContext context) {
-            return ShowMessageDialog(type: 400,message: 'text_pass_not_similer'.tr,show_but: true,);
+            return ShowMessageDialog(
+              type: 400,
+              message: 'text_pass_not_similer'.tr,
+              show_but: true,
+            );
           },
         );
       }
@@ -534,19 +545,16 @@ class RegisterMerchantBloc {
 
   Future<void> accountDealerPageOne(
       BuildContext context, RegisterMerchantBloc bloc) async {
-
-
-    if (
-        validateText(nameCompanyLang1Controller)&&
-        validateText(desLang1Controller)&&
-        validateText(addressController)&&
-            validateText(phoneController)) {
-
+    if (validateText(nameCompanyLang1Controller) &&
+        validateText(desLang1Controller) &&
+        validateText(addressController) &&
+        validateText(phoneController)) {
       await Get.to(AccountInformationMerchantPageTwoScreen(
         bloc: bloc,
       ));
-    }else{
-      nameCompanyLang1Subject.sink.add(validateText(nameCompanyLang1Controller));
+    } else {
+      nameCompanyLang1Subject.sink
+          .add(validateText(nameCompanyLang1Controller));
       desLang1Subject.sink.add(validateText(desLang1Controller));
       addressSubject.sink.add(validateText(addressController));
       phoneSubject.sink.add(validateText(phoneController));
@@ -555,42 +563,55 @@ class RegisterMerchantBloc {
 
   Future<void> accountDealerPageTwo(
       BuildContext context, RegisterMerchantBloc bloc) async {
-    if ( selectedCountry.value == null || selectedCities.value == null) {
+    if (selectedCountry.value == null || selectedCities.value == null) {
       // Get.snackbar(null, 'اختر صورة  ثم حاول مرة اخري',
       //     snackPosition: SnackPosition.BOTTOM);
       await showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) {
-          return ShowMessageDialog(type: 400,message: 'text_select_country_msg'.tr,show_but: true,);
+          return ShowMessageDialog(
+            type: 400,
+            message: 'text_select_country_msg'.tr,
+            show_but: true,
+          );
         },
       );
-      return false;
-    }else if ( selectedSubCategories.value == null || selectCategoriesSubject.value == null) {
+      return;
+    } else if (selectedSubCategories.value == null ||
+        selectCategoriesSubject.value == null) {
       // Get.snackbar(null, 'اختر صورة  ثم حاول مرة اخري',
       //     snackPosition: SnackPosition.BOTTOM);
       await showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) {
-          return ShowMessageDialog(type: 400,message: 'text_select_categore_msg'.tr,show_but: true,);
+          return ShowMessageDialog(
+            type: 400,
+            message: 'text_select_categore_msg'.tr,
+            show_but: true,
+          );
         },
       );
-      return false;
-    }else if ( workTimeSubjectFrom.value == null || workTimeSubjectTo.value == null) {
+      return;
+    } else if (workTimeSubjectFrom.value == null ||
+        workTimeSubjectTo.value == null) {
       // Get.snackbar(null, 'اختر صورة  ثم حاول مرة اخري',
       //     snackPosition: SnackPosition.BOTTOM);
       await showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) {
-          return ShowMessageDialog(type: 400,message: 'text_select_time_msg'.tr,show_but: true,);
+          return ShowMessageDialog(
+            type: 400,
+            message: 'text_select_time_msg'.tr,
+            show_but: true,
+          );
         },
       );
-      return false;
-    }else{
+      return;
+    } else {
       await Get.to(AccountInformationMerchantPageThreeScreen(
         bloc: bloc,
       ));
     }
-
   }
 
   dispose() async {
@@ -646,9 +667,9 @@ class RegisterMerchantBloc {
     phoneController.dispose();
   }
 
-  Future<DateTime> _gatDateFromPicker(BuildContext context) async {
+  Future<DateTime?> _gatDateFromPicker(BuildContext context) async {
     return await showDatePicker(
-      locale:  Locale('${Get.locale}'),
+      locale: Locale('${Get.locale}'),
       context: context,
       initialDate: DateTime.now().subtract(
         const Duration(days: 1),
@@ -659,14 +680,14 @@ class RegisterMerchantBloc {
       lastDate: DateTime.now().subtract(
         const Duration(days: 1),
       ),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData().copyWith(
             colorScheme: const ColorScheme.light(
               primary: kAccentColor,
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     );

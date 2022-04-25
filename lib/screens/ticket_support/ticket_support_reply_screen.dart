@@ -11,31 +11,34 @@ import 'package:get/get.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class TicketSupportReplyScreen extends StatefulWidget {
-  final int ticket_id;
+  final int? ticket_id;
 
-  const TicketSupportReplyScreen({Key key, this.ticket_id}) : super(key: key);
+  const TicketSupportReplyScreen({Key? key, this.ticket_id}) : super(key: key);
   @override
-  _TicketSupportReplyScreenState createState() => _TicketSupportReplyScreenState();
+  _TicketSupportReplyScreenState createState() =>
+      _TicketSupportReplyScreenState();
 }
 
 class _TicketSupportReplyScreenState extends State<TicketSupportReplyScreen> {
-  TicketSupportReplayBloc _ticketSupportReplayBloc=TicketSupportReplayBloc();
+  TicketSupportReplayBloc _ticketSupportReplayBloc = TicketSupportReplayBloc();
 
   @override
   void initState() {
-    _ticketSupportReplayBloc.fetchAllTicketsSupportReplay(ticket_id: widget.ticket_id);
+    _ticketSupportReplayBloc.fetchAllTicketsSupportReplay(
+        ticket_id: widget.ticket_id);
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GradientAppbar(title: 'text_technical_support'.tr),
-
+      appBar: GradientAppbar(title: 'text_technical_support'.tr),
       body: Stack(
         children: [
           StreamBuilder<TicketsSupportReplay>(
-              stream: _ticketSupportReplayBloc.dataofAllTicketSupportReplaySubject.stream,
+              stream: _ticketSupportReplayBloc
+                  .dataofAllTicketSupportReplaySubject.stream,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return SingleChildScrollView(
@@ -61,40 +64,63 @@ class _TicketSupportReplyScreenState extends State<TicketSupportReplyScreen> {
                         //     ),
                         //   ],
                         // ).addPaddingOnly(top: 30, bottom: 10),
-                        SizedBox(height: 20,),
+                        SizedBox(
+                          height: 20,
+                        ),
                         TicketSupport(
                           subTicket: false,
-                          ticket_id: snapshot.data.data[0].id,
-                          name: snapshot.data.data[0].subject,
-                          message:
-                          snapshot.data.data[0].details,
-                          date: snapshot.data.data[0].created_at,
-                          status: snapshot.data.data[0].status.name,
+                          ticket_id: snapshot.data!.data![0].id,
+                          name: snapshot.data!.data![0].subject,
+                          message: snapshot.data!.data![0].details,
+                          date: snapshot.data!.data![0].created_at,
+                          status: snapshot.data!.data![0].status!.name,
                         ).addPaddingOnly(left: 10, right: 10, bottom: 20),
 
-                        if (snapshot.data.data[0].data != null)
+                        if (snapshot.data!.data![0].data != null)
                           Container(
-                            height: Get.height*0.5,
+                            height: Get.height * 0.5,
                             child: ListView.builder(
                               physics: ClampingScrollPhysics(),
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
-                              itemCount: snapshot.data.data[0].data.length,
-                              itemBuilder: (BuildContext context, int index) => Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 0),
-                                  child:
-                                  TicketSupportReplay(
-                                    type: snapshot.data.data[0].data[index].user.type,
-                                    name: snapshot.data.data[0].data[index].user.name,
-                                    message:
-                                    snapshot.data.data[0].data[index].reply,
-                                    date: snapshot.data.data[0].data[index].created_at,
-                                  ).addPaddingOnly(left: snapshot.data.data[0].data[index].user.type=='Admin'?10:50,
-                                      right: snapshot.data.data[0].data[index].user.type=='Admin'?50:10,
-                                      bottom: 20)
-                              ),
+                              itemCount: snapshot.data!.data![0].data!.length,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 0),
+                                      child: TicketSupportReplay(
+                                        type: snapshot.data!.data![0]
+                                            .data![index].user!.type,
+                                        name: snapshot.data!.data![0]
+                                            .data![index].user!.name,
+                                        message: snapshot
+                                            .data!.data![0].data![index].reply,
+                                        date: snapshot.data!.data![0]
+                                            .data![index].created_at,
+                                      ).addPaddingOnly(
+                                          left: snapshot
+                                                      .data!
+                                                      .data![0]
+                                                      .data![index]
+                                                      .user!
+                                                      .type ==
+                                                  'Admin'
+                                              ? 10
+                                              : 50,
+                                          right: snapshot
+                                                      .data!
+                                                      .data![0]
+                                                      .data![index]
+                                                      .user!
+                                                      .type ==
+                                                  'Admin'
+                                              ? 50
+                                              : 10,
+                                          bottom: 20)),
                             ),
-                          ) else SizedBox() ,
+                          )
+                        else
+                          SizedBox(),
                         // Align(
                         //   alignment: Alignment.bottomCenter,
                         //   child: Column(
@@ -147,7 +173,6 @@ class _TicketSupportReplyScreenState extends State<TicketSupportReplyScreen> {
                         //     ],
                         //   ),
                         // ),
-
                       ],
                     ),
                   );
@@ -156,8 +181,8 @@ class _TicketSupportReplyScreenState extends State<TicketSupportReplyScreen> {
                       height: Get.height,
                       child: const Center(
                           child: CircularProgressIndicator(
-                            backgroundColor: kPrimaryColor,
-                          )));
+                        backgroundColor: kPrimaryColor,
+                      )));
                 }
                 // return SingleChildScrollView(
                 //   physics: iosScrollPhysics(),
@@ -251,8 +276,7 @@ class _TicketSupportReplyScreenState extends State<TicketSupportReplyScreen> {
                 //     ],
                 //   ),
                 // );
-              }
-          ),
+              }),
           Align(
             alignment: Alignment.bottomCenter,
             child: Column(
@@ -264,32 +288,33 @@ class _TicketSupportReplyScreenState extends State<TicketSupportReplyScreen> {
                       initialData: true,
                       builder: (context, snapshot) {
                         return TextField(
-                          onChanged: (val) => _ticketSupportReplayBloc.changeDetail(val),
-                          controller: _ticketSupportReplayBloc.sendReplayController,
+                          onChanged: (val) =>
+                              _ticketSupportReplayBloc.changeDetail(val),
+                          controller:
+                              _ticketSupportReplayBloc.sendReplayController,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
-                            errorText: snapshot.data
-                                ? null
-                                :'enter message',
-                            contentPadding: const EdgeInsets.only(top: 20, bottom: 20),
+                            errorText: snapshot.data! ? null : 'enter message',
+                            contentPadding:
+                                const EdgeInsets.only(top: 20, bottom: 20),
                             hintText: 'hint_your_problem'.tr,
                             hintStyle: const TextStyle(color: Colors.grey),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide:
-                              BorderSide(color: Colors.grey.shade400, width: 0.7),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10.0)),
+                              borderSide: BorderSide(
+                                  color: Colors.grey.shade400, width: 0.7),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide:
-                              BorderSide(color: Colors.grey.shade400, width: 0.7),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10.0)),
+                              borderSide: BorderSide(
+                                  color: Colors.grey.shade400, width: 0.7),
                             ),
                           ),
                         ).addPaddingAll(10);
-                      }
-                  ),
+                      }),
                 ),
-
                 RoundedLoadingButton(
                   child: Text(
                     'bt_send'.tr,
@@ -299,7 +324,8 @@ class _TicketSupportReplyScreenState extends State<TicketSupportReplyScreen> {
                   color: Color(0xff2E5BFF),
                   onPressed: () async {
                     _ticketSupportReplayBloc.loadingButtonController.start();
-                    await _ticketSupportReplayBloc.addsendReplay(ticket_id: widget.ticket_id,context: context);
+                    await _ticketSupportReplayBloc.addsendReplay(
+                        ticket_id: widget.ticket_id, context: context);
                     _ticketSupportReplayBloc.loadingButtonController.stop();
                   },
                 ),
@@ -310,7 +336,6 @@ class _TicketSupportReplyScreenState extends State<TicketSupportReplyScreen> {
             ),
           ),
         ],
-
       ),
     );
   }

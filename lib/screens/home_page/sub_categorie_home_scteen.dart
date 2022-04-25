@@ -10,8 +10,7 @@ import 'package:al_murafiq/screens/home_page/sub_categores/sub_sub_categorie_sct
 import 'package:al_murafiq/widgets/show_check_login_dialog.dart';
 import 'package:al_murafiq/widgets/show_message_emty_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:get/get.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:get_it/get_it.dart';
@@ -19,12 +18,12 @@ import 'package:al_murafiq/models/categories.dart' as adsCate;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SubCategorieHomeScreen extends StatefulWidget {
-  final String name_Categories;
-  final int id;
-  final HomePageBloc bloc;
+  final String? name_Categories;
+  final int? id;
+  final HomePageBloc? bloc;
 
   const SubCategorieHomeScreen(
-      {Key key, this.name_Categories, this.id, this.bloc})
+      {Key? key, this.name_Categories, this.id, this.bloc})
       : super(key: key);
 
   @override
@@ -56,7 +55,7 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
             ? _blocSearch.searchController.text
             : ''),
         actions: [
-          StreamBuilder<String>(
+          StreamBuilder<String?>(
               stream: Stream.fromFuture(getIsLogIn()),
               builder: (context, snapshotToken) {
                 if (snapshotToken.hasData) {
@@ -74,7 +73,7 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                             size: 30,
                           ),
                         ),
-                        StreamBuilder<int>(
+                        StreamBuilder<int?>(
                             stream: Stream.fromFuture(getNumberOfNotfiction()),
                             builder: (context, snapshotNumNotif) {
                               if (snapshotNumNotif.hasData &&
@@ -258,11 +257,11 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
               height: 10,
             ),
             StreamBuilder<SubCategories_Data>(
-                stream: widget.bloc.getAllSubCategoriesSubject.stream,
+                stream: widget.bloc!.getAllSubCategoriesSubject.stream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    if (snapshot.data.ads.length > 0) {
-                      if (snapshot.data.ads.isNotEmpty) {
+                    if (snapshot.data!.ads!.length > 0) {
+                      if (snapshot.data!.ads!.isNotEmpty) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Container(
@@ -338,7 +337,7 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                             BouncingScrollPhysics(),
                                                                         child:
                                                                             Text(
-                                                                          '${snapshot.data.ads[config.activeIndex].name} ',
+                                                                          '${snapshot.data!.ads![config.activeIndex].name} ',
                                                                           style:
                                                                               const TextStyle(fontSize: 16.0),
                                                                         ),
@@ -366,34 +365,34 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                         MainAxisAlignment
                                                                             .end,
                                                                     children: [
-                                                                      RatingBar(
-                                                                        rating: snapshot
-                                                                            .data
-                                                                            .ads[config.activeIndex]
-                                                                            .total_rating
-                                                                            .toDouble(),
-                                                                        icon:
-                                                                            const Icon(
-                                                                          Icons
-                                                                              .star,
-                                                                          size:
-                                                                              20,
-                                                                          color:
-                                                                              Colors.grey,
-                                                                        ),
-                                                                        starCount:
-                                                                            5,
-                                                                        spacing:
-                                                                            2,
-                                                                        size:
-                                                                            15,
-                                                                        isIndicator:
-                                                                            true,
-                                                                        allowHalfRating:
-                                                                            true,
-                                                                        color: Colors
-                                                                            .amber,
-                                                                      ),
+                                                                      // RatingBar(
+                                                                      //   rating: snapshot
+                                                                      //       .data
+                                                                      //       .ads[config.activeIndex]
+                                                                      //       .total_rating
+                                                                      //       .toDouble(),
+                                                                      //   icon:
+                                                                      //       const Icon(
+                                                                      //     Icons
+                                                                      //         .star,
+                                                                      //     size:
+                                                                      //         20,
+                                                                      //     color:
+                                                                      //         Colors.grey,
+                                                                      //   ),
+                                                                      //   starCount:
+                                                                      //       5,
+                                                                      //   spacing:
+                                                                      //       2,
+                                                                      //   size:
+                                                                      //       15,
+                                                                      //   isIndicator:
+                                                                      //       true,
+                                                                      //   allowHalfRating:
+                                                                      //       true,
+                                                                      //   color: Colors
+                                                                      //       .amber,
+                                                                      // ),
                                                                     ],
                                                                   ),
                                                                 ),
@@ -429,10 +428,10 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                         BouncingScrollPhysics(),
                                                                     child: Text(
                                                                       snapshot
-                                                                          .data
-                                                                          .ads[config
-                                                                              .activeIndex]
-                                                                          .address,
+                                                                          .data!
+                                                                          .ads![
+                                                                              config.activeIndex]
+                                                                          .address!,
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               13,
@@ -456,8 +455,8 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                           .end,
                                                                   children: [
                                                                     if (snapshot
-                                                                            .data
-                                                                            .ads[config.activeIndex]
+                                                                            .data!
+                                                                            .ads![config.activeIndex]
                                                                             .distance !=
                                                                         null)
                                                                       Container(
@@ -480,7 +479,7 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                               BouncingScrollPhysics(),
                                                                           child:
                                                                               Text(
-                                                                            snapshot.data.ads[config.activeIndex].distance,
+                                                                            snapshot.data!.ads![config.activeIndex].distance!,
                                                                             style:
                                                                                 TextStyle(fontSize: 10, color: Colors.white),
                                                                           ),
@@ -492,8 +491,8 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                       width: 5,
                                                                     ),
                                                                     if (snapshot
-                                                                            .data
-                                                                            .ads[config.activeIndex]
+                                                                            .data!
+                                                                            .ads![config.activeIndex]
                                                                             .city !=
                                                                         null)
                                                                       Container(
@@ -516,7 +515,7 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                               BouncingScrollPhysics(),
                                                                           child:
                                                                               Text(
-                                                                            snapshot.data.ads[config.activeIndex].city,
+                                                                            snapshot.data!.ads![config.activeIndex].city!,
                                                                             style:
                                                                                 TextStyle(fontSize: 10, color: Colors.white),
                                                                           ),
@@ -525,8 +524,8 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                     else
                                                                       SizedBox(),
                                                                     if (snapshot
-                                                                            .data
-                                                                            .ads[config.activeIndex]
+                                                                            .data!
+                                                                            .ads![config.activeIndex]
                                                                             .visit_count !=
                                                                         null)
                                                                       Container(
@@ -559,11 +558,11 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                                 width: 5,
                                                                               ),
                                                                               Text(
-                                                                                snapshot.data.ads[config.activeIndex].visit_count > 999
-                                                                                    ? '${snapshot.data.ads[config.activeIndex].visit_count / 1000}K'
-                                                                                    : snapshot.data.ads[config.activeIndex].visit_count > 999999
-                                                                                        ? '${snapshot.data.ads[config.activeIndex].visit_count / 1000000}M'
-                                                                                        : '${snapshot.data.ads[config.activeIndex].visit_count}',
+                                                                                snapshot.data!.ads![config.activeIndex].visit_count! > 999
+                                                                                    ? '${snapshot.data!.ads![config.activeIndex].visit_count! / 1000}K'
+                                                                                    : snapshot.data!.ads![config.activeIndex].visit_count! > 999999
+                                                                                        ? '${snapshot.data!.ads![config.activeIndex].visit_count! / 1000000}M'
+                                                                                        : '${snapshot.data!.ads![config.activeIndex].visit_count}',
                                                                                 style: TextStyle(fontSize: 12, color: Colors.black),
                                                                               ),
                                                                             ],
@@ -656,10 +655,12 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                                 10.0),
                                                       ),
                                                       child: Image.network(
-                                                        snapshot.data.ads[index]
+                                                        snapshot
+                                                                    .data!
+                                                                    .ads![index]
                                                                     .image !=
                                                                 null
-                                                            ? '$ImgUrl${snapshot.data.ads[index].image}'
+                                                            ? '$ImgUrl${snapshot.data!.ads![index].image}'
                                                             : defaultImgUrl,
                                                         fit: BoxFit.fill,
                                                         height:
@@ -697,7 +698,7 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                                             color: Colors.amber,
                                                           ),
                                                           Text(
-                                                            '${snapshot.data.ads[index].total_rating.toStringAsFixed(1)}',
+                                                            '${snapshot.data!.ads![index].total_rating.toStringAsFixed(1)}',
                                                             style: TextStyle(
                                                                 fontSize: 12,
                                                                 color: Colors
@@ -709,16 +710,16 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                                               ],
                                             );
                                           },
-                                          itemCount: snapshot.data.ads.length,
+                                          itemCount: snapshot.data!.ads!.length,
                                           //itemWidth: 100.0,
                                           //autoplayDelay: 2500,
                                           onTap: (int index) {
                                             Get.to(ResturantPageScreen(
                                               flagBranch: false,
                                               compaine_id: snapshot
-                                                  .data.ads[index].company_id,
+                                                  .data!.ads![index].company_id,
                                               ad_id:
-                                                  snapshot.data.ads[index].id,
+                                                  snapshot.data!.ads![index].id,
                                             ));
                                           },
 
@@ -741,7 +742,7 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                     }
                   } else if (snapshot.hasError) {
                     return ShowMessageEmtyDialog(
-                      message: snapshot.error,
+                      message: 'snapshot.error',
                       pathImg: 'assets/images/file.png',
                     );
                   } else {
@@ -776,7 +777,7 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                               scrollDirection: Axis.horizontal,
                               physics: BouncingScrollPhysics(),
                               child: Text(
-                                widget.name_Categories,
+                                widget.name_Categories!,
                                 style: TextStyle(fontSize: 15),
                               ),
                             ),
@@ -796,10 +797,10 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             children: _buildGridTileList(widget
-                                .bloc
+                                .bloc!
                                 .getAllSubCategoriesSubject
                                 .value
-                                .sub_categories
+                                .sub_categories!
                                 .length),
                           ),
                         ),
@@ -817,23 +818,26 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
 
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
     return await helper.getToken();
   }
 
-  Future<int> getNumberOfNotfiction() async {
+  Future<int?> getNumberOfNotfiction() async {
     return await helper.getNumberOfNotfiction();
   }
 
   List<Widget> _buildGridTileList(int count) => List.generate(
       count,
       (i) => BuildSubCategorie(
-          widget.bloc.getAllSubCategoriesSubject.value.sub_categories[i].name,
-          widget.bloc.getAllSubCategoriesSubject.value.sub_categories[i].image,
-          widget.bloc.getAllSubCategoriesSubject.value.sub_categories[i].id,
-          widget.bloc.getAllSubCategoriesSubject.value.sub_categories[i].color,
-          widget.bloc.getAllSubCategoriesSubject.value.sub_categories[i],
-          widget.bloc.getAllSubCategoriesSubject.value.ads));
+          widget
+              .bloc!.getAllSubCategoriesSubject.value.sub_categories![i].name!,
+          widget
+              .bloc!.getAllSubCategoriesSubject.value.sub_categories![i].image!,
+          widget.bloc!.getAllSubCategoriesSubject.value.sub_categories![i].id!,
+          widget
+              .bloc!.getAllSubCategoriesSubject.value.sub_categories![i].color!,
+          widget.bloc!.getAllSubCategoriesSubject.value.sub_categories![i],
+          widget.bloc!.getAllSubCategoriesSubject.value.ads!));
 
   Widget BuildSubCategorie(
     String name,
@@ -854,7 +858,7 @@ class _SubCategorieScreenState extends State<SubCategorieHomeScreen> {
           //   subCategoriesID: subCategoriesID,
           //   targert: 1,
           // ));
-          sub_categori.sub_sub_categories.length == 0
+          sub_categori.sub_sub_categories!.length == 0
               ? Get.to(ResturantsScreen(
                   bloc: _blocSearch,
                   subCategoriesID: subCategoriesID,

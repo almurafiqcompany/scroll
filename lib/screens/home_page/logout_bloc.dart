@@ -1,4 +1,3 @@
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart' as gett;
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -13,10 +12,10 @@ class LogoutBloc {
 
   Future<void> logOut() async {
     try {
-      String token = await _helper.getToken();
+      String? token = await _helper.getToken();
 
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
 
       final Response res = await _dio.post(
         '/logout?country_id=$countryID',
@@ -27,10 +26,10 @@ class LogoutBloc {
 
       if (res.statusCode == 200 && res.data['status'] == 200) {
         // await _helper.cleanData();
-        await _helper.setToken(null);
-        await _helper.setAvatar(null);
-        await _helper.setCode(null);
-        await _helper.setType(null);
+        await _helper.setToken(null!);
+        await _helper.setAvatar(null!);
+        await _helper.setCode(null!);
+        await _helper.setType(null!);
         await _helper.setActive(-1);
 
         // try{
@@ -40,8 +39,7 @@ class LogoutBloc {
         //   print('logout facebook');
         // }catch(e){}
 
-        try{
-
+        try {
           GoogleSignIn _googleSignIn = GoogleSignIn(
             scopes: [
               'email',
@@ -49,15 +47,16 @@ class LogoutBloc {
           );
           await _googleSignIn.signOut();
           print('logout google');
-        }catch(e){}
+        } catch (e) {}
 
         await gett.Get.offAll(BottomNavBar());
       } else {
-        gett.Get.snackbar(null, '${res.data['message']}',
+        gett.Get.snackbar(null!, '${res.data['message']}',
             snackPosition: gett.SnackPosition.BOTTOM);
       }
     } catch (e) {
-      gett.Get.snackbar(null, 'e'.tr, snackPosition: gett.SnackPosition.BOTTOM);
+      gett.Get.snackbar(null!, 'e'.tr,
+          snackPosition: gett.SnackPosition.BOTTOM);
     }
   }
 }

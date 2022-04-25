@@ -11,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:readmore/readmore.dart';
 import 'package:al_murafiq/screens/home_page/nav_bar.dart';
+
 class NotificationScreen extends StatefulWidget {
   @override
   _NotificationScreenState createState() => _NotificationScreenState();
@@ -25,6 +26,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     super.initState();
     // setNotf();
   }
+
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
   Future<void> setNotf() async {
     try {
@@ -33,9 +35,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
       // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       print('error $e');
-
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,12 +52,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 setNotf();
-                if (snapshot.data.notification.length > 0) {
+                if (snapshot.data!.notification!.length > 0) {
                   return SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
                         Container(
-                          height: Get.height*0.1,
+                          height: Get.height * 0.1,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: <Color>[
@@ -73,7 +75,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     Get.offAll(BottomNavBar());
                                   },
                                   child: Icon(
-                                    Get.locale.languageCode == 'ar' ? MdiIcons.chevronRight : MdiIcons.chevronLeft,
+                                    Get.locale!.languageCode == 'ar'
+                                        ? MdiIcons.chevronRight
+                                        : MdiIcons.chevronLeft,
                                     size: 40,
                                     color: Colors.white,
                                   ),
@@ -87,70 +91,73 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           shrinkWrap: true,
                           reverse: true,
                           scrollDirection: Axis.vertical,
-                          itemCount:  snapshot.data.notification.length,
+                          itemCount: snapshot.data!.notification!.length,
                           itemBuilder: (BuildContext context, int index) =>
-                              BuildNotifictinCard( snapshot.data.notification[index]),
+                              BuildNotifictinCard(
+                                  snapshot.data!.notification![index]),
                         ),
-
                       ],
                     ),
                   );
-                }else{
+                } else {
                   return SizedBox(
                       height: Get.height,
                       child: Center(
                           child: Column(
-                            children: [
-                              Icon(Icons.notifications_off,size: 40,color: Colors.grey.withOpacity(0.7),),
-                              Text(
-                                'Not Found Notification',
-                              ),
-                            ],
-                          )));
+                        children: [
+                          Icon(
+                            Icons.notifications_off,
+                            size: 40,
+                            color: Colors.grey.withOpacity(0.7),
+                          ),
+                          Text(
+                            'Not Found Notification',
+                          ),
+                        ],
+                      )));
                 }
-              }  else if (snapshot.hasError){
-                return  Center(child: ShowMessageEmtyDialog(message: snapshot.error,pathImg:'assets/images/noNotification.png',));
-              }else {
+              } else if (snapshot.hasError) {
+                return Center(
+                    child: ShowMessageEmtyDialog(
+                  message: 'snapshot.error',
+                  pathImg: 'assets/images/noNotification.png',
+                ));
+              } else {
                 return SizedBox(
                     height: Get.height,
                     child: const Center(
                         child: CircularProgressIndicator(
-                          backgroundColor: kPrimaryColor,
-                        )));
+                      backgroundColor: kPrimaryColor,
+                    )));
               }
             }),
       ),
     );
   }
-  Widget BuildNotifictinCard(not.Notification notification){
+
+  Widget BuildNotifictinCard(not.Notification notification) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Container(
           // height: 80,
-          padding: const EdgeInsets.symmetric(
-              vertical: 5, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.2),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Column(
-            mainAxisAlignment:
-            MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
                       flex: 4,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: Text(
-                          notification.title,
+                          notification.title!,
                           style: TextStyle(fontSize: 17),
                         ),
                       )),
@@ -163,7 +170,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               ReadMoreText(
                 '${notification.data}',
                 trimLines: 2,

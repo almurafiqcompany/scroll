@@ -11,8 +11,8 @@ import 'package:al_murafiq/widgets/build_last_addtion.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:al_murafiq/constants.dart';
-import 'package:flutter_simple_rating_bar/flutter_simple_rating_bar.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -87,8 +87,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
     final newVersion = NewVersion(
       iOSId: 'io.krito.al_murafiq',
       androidId: 'io.krito.al_murafiq',
-      context: context,
-
     );
 
     // You can let the plugin handle fetching the status and showing a dialog,
@@ -96,7 +94,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
     const simpleBehavior = true;
 
     if (simpleBehavior) {
-
       basicStatusCheck(newVersion);
     } else {
       advancedStatusCheck(newVersion);
@@ -104,7 +101,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   }
 
   basicStatusCheck(NewVersion newVersion) {
-    newVersion.showAlertIfNecessary();
+    newVersion.showAlertIfNecessary(context: context);
   }
 
   advancedStatusCheck(NewVersion newVersion) async {
@@ -116,18 +113,18 @@ class _HomePageScreenState extends State<HomePageScreen> {
       print(status.localVersion);
       print(status.storeVersion);
       print(status.canUpdate.toString());
-      newVersion.showUpdateDialog(
-          // context: context,
-          // versionStatus: status,
-          // dialogTitle: 'Custom Title',
-          // dialogText: 'Custom Text',
-          VersionStatus(
-              canUpdate: status.canUpdate,
-              localVersion: status.localVersion,
-              storeVersion: status.storeVersion,
-          )
+      // newVersion.showUpdateDialog(
+      //     // context: context,
+      //     // versionStatus: status,
+      //     // dialogTitle: 'Custom Title',
+      //     // dialogText: 'Custom Text',
+      //     VersionStatus(
+      //         canUpdate: status.canUpdate,
+      //         localVersion: status.localVersion,
+      //         storeVersion: status.storeVersion,
+      //     )
 
-      );
+      // );
     }
   }
 
@@ -148,11 +145,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   return Column(
                     children: [
                       AppBarHome(),
-                      StreamBuilder<String>(
+                      StreamBuilder<String?>(
                           stream: Stream.fromFuture(getIsLogIn()),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              if (snapshot.data.isNotEmpty) {
+                              if (snapshot.data!.isNotEmpty) {
                                 FirebaseNotifications().configFcm();
                                 _notificationBloc.fetchNumberOfNotifications();
                               }
@@ -161,13 +158,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               return SizedBox();
                             }
                           }),
-                      StreamBuilder<int>(
+                      StreamBuilder<int?>(
                           stream: Stream.fromFuture(getActiveAccount()),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               print('sas ${snapshot.data}');
                               if (snapshot.data == 0) {
-                                return StreamBuilder<String>(
+                                return StreamBuilder<String?>(
                                     stream:
                                         Stream.fromFuture(getMessageActive()),
                                     builder: (context, snapshotMessageActive) {
@@ -175,7 +172,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                         print(
                                             'wwe ${snapshotMessageActive.data}');
                                         if (snapshotMessageActive
-                                            .data.isNotEmpty) {
+                                            .data!.isNotEmpty) {
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8),
@@ -331,14 +328,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   stream: _bloc.homeDataSubject.stream,
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
-                                      if (snapshot.data.slider.length > 0) {
+                                      if (snapshot.data!.slider!.length > 0) {
                                         return SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: List.generate(
-                                                snapshot.data.slider.length,
+                                                snapshot.data!.slider!.length,
                                                 (index) {
                                               return ZoomIn(
                                                 duration:
@@ -350,13 +347,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                             : index * 120),
                                                 child: BuildSlider(
                                                   slider: snapshot
-                                                      .data.slider[index],
+                                                      .data!.slider![index],
                                                 ),
                                               );
                                             }),
                                           ),
                                         );
-                                      } else if (snapshot.data.slider.isEmpty) {
+                                      } else if (snapshot
+                                          .data!.slider!.isEmpty) {
                                         return SizedBox(
                                           height: Get.height * 0.32,
                                         );
@@ -376,7 +374,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       );
                                     }
                                   }),
-                              _bloc.homeDataSubject.value.slider.length > 2
+                              _bloc.homeDataSubject.value.slider!.length > 2
                                   ? const Icon(
                                       FontAwesomeIcons.arrowsAltH,
                                       color: Colors.grey,
@@ -390,15 +388,16 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   stream: _bloc.homeDataSubject.stream,
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
-                                      if (snapshot.data.categories.length > 0) {
+                                      if (snapshot.data!.categories!.length >
+                                          0) {
                                         return SizedBox(
                                           height: Get.height * 0.08,
                                           child: ListView.builder(
                                             physics: ClampingScrollPhysics(),
                                             shrinkWrap: true,
                                             scrollDirection: Axis.horizontal,
-                                            itemCount:
-                                                snapshot.data.categories.length,
+                                            itemCount: snapshot
+                                                .data!.categories!.length,
                                             itemBuilder: (BuildContext context,
                                                     int index) =>
                                                 ZoomIn(
@@ -410,14 +409,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                           ? 600
                                                           : index * 120),
                                               child: BulidCategiro(
-                                                name: snapshot.data
-                                                    .categories[index].name,
-                                                id: snapshot
-                                                    .data.categories[index].id,
-                                                image: snapshot.data
-                                                    .categories[index].image,
-                                                color: snapshot.data
-                                                    .categories[index].color,
+                                                name: snapshot.data!
+                                                    .categories![index].name,
+                                                id: snapshot.data!
+                                                    .categories![index].id,
+                                                image: snapshot.data!
+                                                    .categories![index].image,
+                                                color: snapshot.data!
+                                                    .categories![index].color,
                                               ),
                                             ),
                                           ),
@@ -454,7 +453,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           stream: _bloc.homeDataSubject.stream,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              if (snapshot.data.banner.length > 0) {
+                              if (snapshot.data!.banner!.length > 0) {
                                 return Container(
                                   color: Colors.transparent,
                                   height: Get.height * 0.24,
@@ -510,19 +509,19 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                             vertical: 12),
                                         child: BuildCard(
                                           bannerData:
-                                              snapshot.data.banner[index],
+                                              snapshot.data!.banner![index],
                                         ),
                                       );
                                     },
-                                    itemCount: snapshot.data.banner.length,
+                                    itemCount: snapshot.data!.banner!.length,
                                     //itemWidth: 100.0,
                                     //autoplayDelay: 3000,
                                     onTap: (int index) {
                                       Get.to(ResturantPageScreen(
                                         flagBranch: false,
                                         compaine_id: snapshot
-                                            .data.banner[index].company_id,
-                                        ad_id: snapshot.data.banner[index].id,
+                                            .data!.banner![index].company_id,
+                                        ad_id: snapshot.data!.banner![index].id,
                                       ));
                                     },
 
@@ -574,7 +573,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               stream: _bloc.homeDataSubject.stream,
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  if (snapshot.data.latest_companies.length >
+                                  if (snapshot.data!.latest_companies!.length >
                                       0) {
                                     return Container(
                                       color: Colors.transparent,
@@ -633,19 +632,20 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                             child: BuildLastAddtion(
                                               textDirection: TextDirection.rtl,
                                               latestCompaniesData: snapshot
-                                                  .data.latest_companies[index],
+                                                  .data!
+                                                  .latest_companies![index],
                                             ),
                                           );
                                         },
                                         itemCount: snapshot
-                                            .data.latest_companies.length,
+                                            .data!.latest_companies!.length,
                                         //itemWidth: 100.0,
                                         //autoplayDelay: 3000,
                                         onTap: (int index) {
                                           Get.to(ResturantPageScreen(
                                             flagBranch: false,
-                                            compaine_id: snapshot.data
-                                                .latest_companies[index].id,
+                                            compaine_id: snapshot.data!
+                                                .latest_companies![index].id,
                                             ad_id: 0,
                                           ));
                                         },
@@ -697,7 +697,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               stream: _bloc.homeDataSubject.stream,
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  if (snapshot.data.reviews.length > 0) {
+                                  if (snapshot.data!.reviews!.length > 0) {
                                     return Container(
                                       color: Colors.transparent,
                                       height: Get.height * 0.24,
@@ -755,19 +755,20 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                                 vertical: 10),
                                             child: BuildComment(
                                               textDirection: TextDirection.rtl,
-                                              reviewsData:
-                                                  snapshot.data.reviews[index],
+                                              reviewsData: snapshot
+                                                  .data!.reviews![index],
                                             ),
                                           );
                                         },
-                                        itemCount: snapshot.data.reviews.length,
+                                        itemCount:
+                                            snapshot.data!.reviews!.length,
                                         //itemWidth: 100.0,
                                         autoplayDelay: 4000,
                                         onTap: (int index) {
                                           Get.to(ResturantPageScreen(
                                             flagBranch: false,
-                                            compaine_id: snapshot
-                                                .data.reviews[index].company.id,
+                                            compaine_id: snapshot.data!
+                                                .reviews![index].company!.id,
                                             ad_id: 0,
                                           ));
                                         },
@@ -821,23 +822,23 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   SharedPreferenceHelper helper = GetIt.instance.get<SharedPreferenceHelper>();
 
-  Future<String> getIsLogIn() async {
+  Future<String?> getIsLogIn() async {
     return await helper.getToken();
   }
 
-  Future<String> getMessageActive() async {
+  Future<String?> getMessageActive() async {
     return await helper.getActivationMessage();
   }
 
-  Future<int> getActiveAccount() async {
+  Future<int?> getActiveAccount() async {
     return await helper.getActive();
   }
 }
 
 class BuildSlider extends StatelessWidget {
-  final SliderData slider;
+  final SliderData? slider;
 
-  const BuildSlider({Key key, this.slider}) : super(key: key);
+  const BuildSlider({Key? key, this.slider}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -847,8 +848,8 @@ class BuildSlider extends StatelessWidget {
         onTap: () {
           Get.to(ResturantPageScreen(
             flagBranch: false,
-            compaine_id: slider.company_id,
-            ad_id: slider.id,
+            compaine_id: slider!.company_id,
+            ad_id: slider!.id,
           ));
         },
         child: Stack(
@@ -887,7 +888,7 @@ class BuildSlider extends StatelessWidget {
                         bottomLeft: Radius.circular(15.0),
                       ),
                       child: Image.network(
-                        '$ImgUrl${slider.image}',
+                        '$ImgUrl${slider!.image}',
                         fit: BoxFit.fill,
                         height: 135,
                         width: 165,
@@ -911,7 +912,7 @@ class BuildSlider extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                                 physics: BouncingScrollPhysics(),
                                 child: Text(
-                                  slider.name,
+                                  slider!.name!,
                                   style: const TextStyle(fontSize: 16.0),
                                   //overflow: TextOverflow.ellipsis,
                                 ),
@@ -935,20 +936,20 @@ class BuildSlider extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        RatingBar(
-                          rating: slider.total_rating.toDouble(),
-                          icon: const Icon(
-                            Icons.star,
-                            size: 17,
-                            color: Colors.grey,
-                          ),
-                          starCount: 5,
-                          spacing: 1.0,
-                          size: 12,
-                          isIndicator: true,
-                          allowHalfRating: true,
-                          color: Color(0xffFFAC41),
-                        ),
+                        // RatingBar(
+                        //   rating: slider.total_rating.toDouble(),
+                        //   icon: const Icon(
+                        //     Icons.star,
+                        //     size: 17,
+                        //     color: Colors.grey,
+                        //   ),
+                        //   starCount: 5,
+                        //   spacing: 1.0,
+                        //   size: 12,
+                        //   isIndicator: true,
+                        //   allowHalfRating: true,
+                        //   color: Color(0xffFFAC41),
+                        // ),
                       ],
                     ),
                   ),
@@ -956,7 +957,7 @@ class BuildSlider extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     physics: BouncingScrollPhysics(),
                     child: Text(
-                      slider.address,
+                      slider!.address!,
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                   ),
@@ -967,7 +968,7 @@ class BuildSlider extends StatelessWidget {
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       // mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        if (slider.distance != null)
+                        if (slider!.distance != null)
                           Container(
                             width: 50,
                             height: 20,
@@ -981,7 +982,7 @@ class BuildSlider extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               physics: BouncingScrollPhysics(),
                               child: Text(
-                                slider.distance,
+                                slider!.distance!,
                                 style: const TextStyle(
                                     fontSize: 12, color: Colors.white),
                               ),
@@ -992,7 +993,7 @@ class BuildSlider extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        if (slider.city != null)
+                        if (slider!.city != null)
                           Container(
                             width: 50,
                             height: 20,
@@ -1006,7 +1007,7 @@ class BuildSlider extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               physics: BouncingScrollPhysics(),
                               child: Text(
-                                slider.city,
+                                slider!.city!,
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.white),
                               ),
@@ -1036,7 +1037,7 @@ class BuildSlider extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${slider.total_rating.toStringAsFixed(1)}',
+                        '${slider!.total_rating.toStringAsFixed(1)}',
                         style: TextStyle(fontSize: 14, color: Colors.black),
                       ),
                       const Icon(

@@ -8,23 +8,33 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get/get.dart';
 import 'package:al_murafiq/screens/home_page/nav_bar.dart';
 import 'package:al_murafiq/widgets/show_message_dialog.dart';
-class CardViewPaypal extends StatefulWidget {
-  CardViewPaypal({Key key, this.url, this.paymentPlan, this.company_id, this.pay_method_id, this.way_pay_id, this.type_payment, this.bank_or_address_id}) : super(key: key);
-  final String url;
-  final PaymentPlans paymentPlan;
-  final int company_id;
-  final int pay_method_id;
-  final int way_pay_id;
-  final String type_payment;
 
-  final int bank_or_address_id;
+class CardViewPaypal extends StatefulWidget {
+  CardViewPaypal(
+      {Key? key,
+      this.url,
+      this.paymentPlan,
+      this.company_id,
+      this.pay_method_id,
+      this.way_pay_id,
+      this.type_payment,
+      this.bank_or_address_id})
+      : super(key: key);
+  final String? url;
+  final PaymentPlans? paymentPlan;
+  final int? company_id;
+  final int? pay_method_id;
+  final int? way_pay_id;
+  final String? type_payment;
+
+  final int? bank_or_address_id;
   @override
   _CardViewState createState() => _CardViewState();
 }
 
 class _CardViewState extends State<CardViewPaypal> {
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
-  CheckOutBloc _checkOutBloc=CheckOutBloc();
+  CheckOutBloc _checkOutBloc = CheckOutBloc();
   @override
   void initState() {
     super.initState();
@@ -32,7 +42,7 @@ class _CardViewState extends State<CardViewPaypal> {
     flutterWebviewPlugin.onUrlChanged.listen((String url) async {
       print('url $url');
       if (url.startsWith('https://almurafiq.com/paypal/')) {
-      // if (url.startsWith('${TapUrl}/paytabs_response')) {
+        // if (url.startsWith('${TapUrl}/paytabs_response')) {
         print('payment url ${url}');
         if (url.contains('success')) {
           print('payment A');
@@ -90,7 +100,6 @@ class _CardViewState extends State<CardViewPaypal> {
           if (widget.paymentPlan != null) {
             print('init WillPopScope');
             await Get.offAll(BottomNavBar());
-
           } else {
             Get.back();
           }
@@ -115,7 +124,9 @@ class _CardViewState extends State<CardViewPaypal> {
                     appBar: PreferredSize(
                         child: AppBar(
                           centerTitle: true,
-                           title: Text('al_murafiq'.tr,),
+                          title: Text(
+                            'al_murafiq'.tr,
+                          ),
                           // ignore: prefer_const_literals_to_create_immutables
                           // actions: [
                           //   GestureDetector(

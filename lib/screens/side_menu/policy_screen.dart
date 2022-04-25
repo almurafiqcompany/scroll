@@ -16,7 +16,7 @@ class PolicyScreen extends StatefulWidget {
 }
 
 class _PolicyScreenState extends State<PolicyScreen> {
-  PolicyBloc _policyBloc=PolicyBloc();
+  PolicyBloc _policyBloc = PolicyBloc();
 
   @override
   void initState() {
@@ -24,10 +24,10 @@ class _PolicyScreenState extends State<PolicyScreen> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: const GradientAppbar(),
       body: SingleChildScrollView(
         physics: iosScrollPhysics(),
@@ -48,59 +48,63 @@ class _PolicyScreenState extends State<PolicyScreen> {
                         ),
                         const SizedBox(width: 22),
                         Text(
-                          snapshot.data.name,
-                          style: const TextStyle(fontSize: 17, color: Colors.black),
+                          snapshot.data!.name!,
+                          style: const TextStyle(
+                              fontSize: 17, color: Colors.black),
                         ),
                       ],
-                    ).addPaddingOnly(top: 30, bottom: 10,left: 10,right: 10),
+                    ).addPaddingOnly(top: 30, bottom: 10, left: 10, right: 10),
                     // Image.asset(Assets.GOOGLE,
                     //   height: 220,
                     //   width: (Get.width)-10,
                     //   fit: BoxFit.cover,
                     // ),
                     Image.network(
-                      '$ImgUrl${snapshot.data.image}',
+                      '$ImgUrl${snapshot.data!.image}',
                       height: 220,
-                      width: (Get.width)-10,
+                      width: (Get.width) - 10,
                       fit: BoxFit.cover,
                     ),
                     Container(
-                        padding: const EdgeInsets.only(
-                            top: 15, bottom: 22, right: 12, left: 12),
-                        decoration: BoxDecoration(
-                          color: Color(0xffFFFFFF),
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Text(
-                              snapshot.data.desc,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w400, color: Colors.black),
+                            padding: const EdgeInsets.only(
+                                top: 15, bottom: 22, right: 12, left: 12),
+                            decoration: BoxDecoration(
+                              color: Color(0xffFFFFFF),
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
-
-                          ],
-                        )).addPaddingHorizontalVertical(horizontal: 15,vertical: 15)
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Text(
+                                  snapshot.data!.desc!,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ))
+                        .addPaddingHorizontalVertical(
+                            horizontal: 15, vertical: 15)
                   ],
                 ).addPaddingOnly(bottom: 15);
               } else if (snapshot.hasError) {
                 return Container(
-                    height: Get.height*0.8,
-                    child: Center(child: ShowMessageEmtyDialog(message: snapshot.error,pathImg:'assets/images/noDocument.png',)));
+                    height: Get.height * 0.8,
+                    child: Center(
+                        child: ShowMessageEmtyDialog(
+                      message: 'snapshot.error',
+                      pathImg: 'assets/images/noDocument.png',
+                    )));
               } else {
                 //return SizedBox();
                 return SizedBox(
                     height: Get.height,
                     child: const Center(
                         child: CircularProgressIndicator(
-                          backgroundColor: kPrimaryColor,
-                        )));
+                      backgroundColor: kPrimaryColor,
+                    )));
               }
-
-            }
-        ),
-
+            }),
       ),
     );
   }

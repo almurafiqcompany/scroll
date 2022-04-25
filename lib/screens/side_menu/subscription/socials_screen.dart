@@ -21,7 +21,6 @@ import 'package:get_it/get_it.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SocialsMediaScreen extends StatefulWidget {
-
   @override
   _SocialsMediaScreenState createState() => _SocialsMediaScreenState();
 }
@@ -39,14 +38,14 @@ class _SocialsMediaScreenState extends State<SocialsMediaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GradientAppbar(title: 'side_social'.tr),
+      appBar: GradientAppbar(title: 'side_social'.tr),
       body: SingleChildScrollView(
           physics: iosScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Container(
               width: Get.width,
-              height: Get.height*0.85,
+              height: Get.height * 0.85,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
                 //gradient: kAdsHomeGradient,
@@ -71,9 +70,8 @@ class _SocialsMediaScreenState extends State<SocialsMediaScreen> {
                   //     .addPaddingOnly(top: 50),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Text(
-                        'select_company'.tr,
-                        style: TextStyle(color: Colors.black, fontSize: 16))
+                    child: Text('select_company'.tr,
+                            style: TextStyle(color: Colors.black, fontSize: 16))
                         .addPaddingOnly(top: 5, bottom: 20),
                   ),
 
@@ -84,31 +82,32 @@ class _SocialsMediaScreenState extends State<SocialsMediaScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 25),
                           child: Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.grey.shade300,),
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.grey.shade300,
+                            ),
                             child: StreamBuilder<List<SubscriptionData>>(
                                 stream: _bloc.allSubscriptionSubject.stream,
                                 builder: (context, countriesSnapshot) {
                                   if (countriesSnapshot.hasData) {
                                     return StreamBuilder<SubscriptionData>(
-                                        stream: _bloc.selectedSubscription.stream,
-
+                                        stream:
+                                            _bloc.selectedSubscription.stream,
                                         builder: (context, snapshot) {
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 10, vertical: 2),
                                             child: DropdownButton<
-                                                SubscriptionData>(
+                                                    SubscriptionData>(
                                                 dropdownColor: Colors.white,
                                                 iconEnabledColor: Colors.grey,
                                                 iconSize: 32,
                                                 elevation: 3,
                                                 icon: Icon(Icons
                                                     .arrow_drop_down_outlined),
-                                                items: countriesSnapshot.data
+                                                items: countriesSnapshot.data!
                                                     .map((item) {
                                                   return DropdownMenuItem<
-                                                      SubscriptionData>(
+                                                          SubscriptionData>(
                                                       value: item,
                                                       child: AutoSizeText(
                                                         item.name,
@@ -138,12 +137,11 @@ class _SocialsMediaScreenState extends State<SocialsMediaScreen> {
                                                 underline: SizedBox(),
                                                 value: snapshot.data,
                                                 onChanged:
-                                                    (SubscriptionData item) {
-
+                                                    (SubscriptionData? item) {
                                                   // _bloc.selectedLanguage.sink.add(null);
-                                                  _bloc.selectedSubscription.sink
-                                                      .add(item);
-
+                                                  _bloc
+                                                      .selectedSubscription.sink
+                                                      .add(item!);
                                                 }),
                                           );
                                         });
@@ -168,34 +166,29 @@ class _SocialsMediaScreenState extends State<SocialsMediaScreen> {
                     height: 30,
                   ),
 
-
-
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
                     child: RoundedLoadingButton(
                       child: Text(
                         'bt_done'.tr,
                         // context.translate('bt_done'),
-                        style: kTextStyle.copyWith(fontSize: 20,color: Color(0xffFFFFFF)),
+                        style: kTextStyle.copyWith(
+                            fontSize: 20, color: Color(0xffFFFFFF)),
                       ),
                       height: 50,
                       controller: _bloc.loadingButtonController,
                       color: Colors.blue.shade800,
                       onPressed: () async {
-                        if(!_bloc.selectedSubscription.value.isNull){
+                        if (!_bloc.selectedSubscription.value.isNull) {
                           _bloc.loadingButtonController.start();
                           await Get.to(SocialsScreen(
                             company_id: _bloc.selectedSubscription.value.id,
                           ));
                           _bloc.loadingButtonController.stop();
                         }
-
-
                       },
                     ),
                   ),
-
-
                 ],
               ),
             ),

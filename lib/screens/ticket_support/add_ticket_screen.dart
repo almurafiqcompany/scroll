@@ -6,13 +6,14 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:al_murafiq/extensions/extensions.dart';
 import 'package:get/get.dart';
+
 class AddTicket extends StatefulWidget {
   @override
   _AddTicketState createState() => _AddTicketState();
 }
 
 class _AddTicketState extends State<AddTicket> {
-  AddTicketBloc _addTicketBloc=AddTicketBloc();
+  AddTicketBloc _addTicketBloc = AddTicketBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,6 @@ class _AddTicketState extends State<AddTicket> {
                 padding: EdgeInsets.all(10),
                 child: Column(
                   children: [
-
                     StreamBuilder<bool>(
                         stream: _addTicketBloc.subjectSubject.stream,
                         initialData: true,
@@ -60,46 +60,53 @@ class _AddTicketState extends State<AddTicket> {
                               contentPadding: EdgeInsets.all(9),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius:
-                                const BorderRadius.all(Radius.circular(6)),
+                                    const BorderRadius.all(Radius.circular(6)),
                                 borderSide:
-                                BorderSide(width: 1, color: kAccentColor),
+                                    BorderSide(width: 1, color: kAccentColor),
                               ),
                               disabledBorder: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                                borderSide: BorderSide(width: 1, color: Colors.black54),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
+                                borderSide:
+                                    BorderSide(width: 1, color: Colors.black54),
                               ),
                               enabledBorder: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                                borderSide:
-                                BorderSide(width: 1, color: Color(0xFFC2C3DF)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
+                                borderSide: BorderSide(
+                                    width: 1, color: Color(0xFFC2C3DF)),
                               ),
                               border: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(6)),
                                   borderSide: BorderSide(width: 1)),
                               errorBorder: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(6)),
-                                  borderSide: BorderSide(width: 1, color: Colors.red)),
-                              focusedErrorBorder: OutlineInputBorder(
                                   borderRadius:
-                                  const BorderRadius.all(Radius.circular(6)),
+                                      BorderRadius.all(Radius.circular(6)),
                                   borderSide:
-                                  BorderSide(width: 1, color: Colors.red.shade800)),
+                                      BorderSide(width: 1, color: Colors.red)),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(6)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.red.shade800)),
                               hintText: 'hint_subject'.tr,
                               hintStyle: const TextStyle(
                                   fontSize: 14, color: Color(0xFF9797AD)),
-                              errorText: snapshot.data
+                              errorText: snapshot.data!
                                   ? null
-                                  :'hint_subject_error'.tr,
+                                  : 'hint_subject_error'.tr,
                             ),
                             textInputAction: TextInputAction.next,
                             onEditingComplete: () => node.nextFocus(),
-                            onChanged: (val) => _addTicketBloc.changesubject(val),
+                            onChanged: (val) =>
+                                _addTicketBloc.changesubject(val),
                             controller: _addTicketBloc.subjectController,
                           );
                         }),
                     SizedBox(height: 25),
                     StreamBuilder<bool>(
-                      stream: _addTicketBloc.detailSubject.stream,
+                        stream: _addTicketBloc.detailSubject.stream,
                         initialData: true,
                         builder: (context, snapshot) {
                           return TextField(
@@ -113,41 +120,48 @@ class _AddTicketState extends State<AddTicket> {
                               contentPadding: EdgeInsets.all(9),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius:
-                                const BorderRadius.all(Radius.circular(6)),
+                                    const BorderRadius.all(Radius.circular(6)),
                                 borderSide:
-                                BorderSide(width: 1, color: kAccentColor),
+                                    BorderSide(width: 1, color: kAccentColor),
                               ),
                               disabledBorder: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                                borderSide: BorderSide(width: 1, color: Colors.black54),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
+                                borderSide:
+                                    BorderSide(width: 1, color: Colors.black54),
                               ),
                               enabledBorder: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(6)),
-                                borderSide:
-                                BorderSide(width: 1, color: Color(0xFFC2C3DF)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6)),
+                                borderSide: BorderSide(
+                                    width: 1, color: Color(0xFFC2C3DF)),
                               ),
                               border: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(6)),
                                   borderSide: BorderSide(width: 1)),
                               errorBorder: const OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(6)),
-                                  borderSide: BorderSide(width: 1, color: Colors.red)),
-                              focusedErrorBorder: OutlineInputBorder(
                                   borderRadius:
-                                  const BorderRadius.all(Radius.circular(6)),
+                                      BorderRadius.all(Radius.circular(6)),
                                   borderSide:
-                                  BorderSide(width: 1, color: Colors.red.shade800)),
+                                      BorderSide(width: 1, color: Colors.red)),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(6)),
+                                  borderSide: BorderSide(
+                                      width: 1, color: Colors.red.shade800)),
                               hintText: 'hint_details'.tr,
                               hintStyle: const TextStyle(
                                   fontSize: 14, color: Color(0xFF9797AD)),
-                              errorText: snapshot.data
+                              errorText: snapshot.data!
                                   ? null
-                                  :'hint_details_error'.tr,
+                                  : 'hint_details_error'.tr,
                             ),
                             textInputAction: TextInputAction.done,
                             onSubmitted: (_) => node.unfocus(),
-                            onChanged: (val) => _addTicketBloc.changeDetail(val),
-                             controller: _addTicketBloc.detailsController,
+                            onChanged: (val) =>
+                                _addTicketBloc.changeDetail(val),
+                            controller: _addTicketBloc.detailsController,
                           );
                         }),
                   ],
@@ -159,7 +173,7 @@ class _AddTicketState extends State<AddTicket> {
             ),
             RoundedLoadingButton(
               child: Text(
-               'bt_add'.tr,
+                'bt_add'.tr,
                 style: kTextStyle.copyWith(color: Colors.white),
               ),
               controller: _addTicketBloc.loadingButtonController,

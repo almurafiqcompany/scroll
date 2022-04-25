@@ -36,7 +36,7 @@ class RegisterDelegateBloc {
       BehaviorSubject<DateTime>.seeded(DateTime.now());
 
   Future<void> birthDateChanged(BuildContext context) async {
-    final DateTime dateTime = await _gatDateFromPicker(context);
+    final DateTime? dateTime = await _gatDateFromPicker(context);
     if (dateTime != null) {
       birthDateSubject.add(dateTime);
     }
@@ -106,27 +106,27 @@ class RegisterDelegateBloc {
   //   return phoneExp.hasMatch(controller.text);
   // }
   final BehaviorSubject<dynamic> longSubject =
-  BehaviorSubject<dynamic>.seeded(0.0);
+      BehaviorSubject<dynamic>.seeded(0.0);
   final BehaviorSubject<dynamic> latSubject =
-  BehaviorSubject<dynamic>.seeded(0.0);
+      BehaviorSubject<dynamic>.seeded(0.0);
   final avatarController = BehaviorSubject<File>();
   Future<void> confirmSignUp(BuildContext context) async {
-
-
-
     if (validateEmailOrPhone(emailOrPhoneController) &&
         validatePassword(passwordController) &&
-        validateText(phoneController)&&
-        validateText(nameController)
-    ) {
+        validateText(phoneController) &&
+        validateText(nameController)) {
       if (selectedCountry.value == null || selectedCities.value == null) {
         await showModalBottomSheet<void>(
           context: context,
           builder: (BuildContext context) {
-            return ShowMessageDialog(type: 400,message: 'text_select_country_msg'.tr,show_but: true,);
+            return ShowMessageDialog(
+              type: 400,
+              message: 'text_select_country_msg'.tr,
+              show_but: true,
+            );
           },
         );
-        return false;
+        return;
       }
 
       final PackgDio.FormData formData = PackgDio.FormData.fromMap({
@@ -144,32 +144,26 @@ class RegisterDelegateBloc {
         'lng': await _helper.getLng(),
         'source': SourceDevice,
       });
-      if (avatarController.value != null ) {
-        var img=await PackgDio.MultipartFile.fromFileSync(avatarController.value.path);
-        formData.files.add(
-            MapEntry('avatar', img)
-        );
+      if (avatarController.value != null) {
+        var img = await PackgDio.MultipartFile.fromFileSync(
+            avatarController.value.path);
+        formData.files.add(MapEntry('avatar', img));
       }
-      if (selectedCountry.value != null ) {
-        formData.fields.add(
-            MapEntry('country_id', '${selectedCountry.value.id}')
-        );
+      if (selectedCountry.value != null) {
+        formData.fields
+            .add(MapEntry('country_id', '${selectedCountry.value.id}'));
       }
-      if (selectedCities.value != null ) {
-        formData.fields.add(
-            MapEntry('city_id', '${selectedCities.value.id}')
-        );
+      if (selectedCities.value != null) {
+        formData.fields.add(MapEntry('city_id', '${selectedCities.value.id}'));
       }
-      if (await FirebaseNotifications().generateFcmToken() != null ) {
-        formData.fields.add(
-            MapEntry('fcm_token', await FirebaseNotifications().generateFcmToken())
-        );
+      if (await FirebaseNotifications().generateFcmToken() != null) {
+        formData.fields.add(MapEntry(
+            'fcm_token', await FirebaseNotifications().generateFcmToken()));
       }
       if (passwordController.text == confirmePasswordController.text) {
-
         try {
           String lang = await _helper.getCodeLang();
-          int countryID = await _helper.getCountryId();
+          int? countryID = await _helper.getCountryId();
           final res = await _dio.post(
             '/registers/store?country_id=$countryID',
             options: Options(
@@ -190,31 +184,42 @@ class RegisterDelegateBloc {
             await _helper.setMarketer(res.data['data']['marketer_id']);
             await _helper.setAvatar(res.data['data']['avatar']);
             await _helper.setActive(res.data['data']['active']);
-            await _helper.setActivationMessage(res.data['data']['activation_message']);
+            await _helper
+                .setActivationMessage(res.data['data']['activation_message']);
             await _helper.setDefaultLang(allDefultLanguageSubject.value);
             // await _helper.setDefaultLang(await _helper.getDefaultLang());
 
             await showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
-                return ShowMessageDialog(type: 200,message: '${res.data['message']}',show_but: true,);
+                return ShowMessageDialog(
+                  type: 200,
+                  message: '${res.data['message']}',
+                  show_but: true,
+                );
               },
             );
             await Get.offAll(BottomNavBar());
           } else if (res.data['status'] == 500) {
-
             await showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
-                return ShowMessageDialog(type: 400,message: '${res.data['message']}',show_but: true,);
+                return ShowMessageDialog(
+                  type: 400,
+                  message: '${res.data['message']}',
+                  show_but: true,
+                );
               },
             );
-          }else if (res.data['status'] == 300) {
-
+          } else if (res.data['status'] == 300) {
             await showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
-                return ShowMessageDialog(type: 400,message: '${res.data['message']}',show_but: true,);
+                return ShowMessageDialog(
+                  type: 400,
+                  message: '${res.data['message']}',
+                  show_but: true,
+                );
               },
             );
           }
@@ -223,7 +228,11 @@ class RegisterDelegateBloc {
           await showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
-              return ShowMessageDialog(type: 400,message: '${e}',show_but: true,);
+              return ShowMessageDialog(
+                type: 400,
+                message: '${e}',
+                show_but: true,
+              );
             },
           );
         }
@@ -231,7 +240,11 @@ class RegisterDelegateBloc {
         await showModalBottomSheet<void>(
           context: context,
           builder: (BuildContext context) {
-            return ShowMessageDialog(type: 400,message: 'text_pass_not_similer'.tr,show_but: true,);
+            return ShowMessageDialog(
+              type: 400,
+              message: 'text_pass_not_similer'.tr,
+              show_but: true,
+            );
           },
         );
       }
@@ -293,7 +306,7 @@ class RegisterDelegateBloc {
   Future<void> fetchAllCountries(int id) async {
     try {
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final List<CountriesData> countries = [];
       final List<Languages> languages = [];
       final res = await _dio.get(
@@ -309,15 +322,15 @@ class RegisterDelegateBloc {
           //   selectedCountry.sink.add(country);
           //   selectedCities.sink.add(country.cities[0]);
           // }
-          if(selectedCountry.value !=null){
-            if(country.id == selectedCountry.value.id){
+          if (selectedCountry.value != null) {
+            if (country.id == selectedCountry.value.id) {
               selectedCountry.sink.add(country);
-              for (var objCity in selectedCountry.value.cities) {
-                if(objCity.id == selectedCities.value.id){
+              for (var objCity in selectedCountry.value.cities!) {
+                if (objCity.id == selectedCities.value.id) {
                   selectedCities.sink.add(objCity);
                 }
               }
-              print('cityid ${selectedCountry.value.cities.length}');
+              print('cityid ${selectedCountry.value.cities!.length}');
               // selectedCities.sink.add(country.cities[0]);
             }
           }
@@ -326,7 +339,6 @@ class RegisterDelegateBloc {
         for (var obj in res.data['data']['language']) {
           languages.add(Languages.fromJson(obj));
         }
-
 
         allCountriesSubject.sink.add(countries);
         allLanguageSubject.sink.add(languages);
@@ -338,6 +350,7 @@ class RegisterDelegateBloc {
       allCountriesSubject.sink.addError('');
     }
   }
+
   dispose() async {
     await emailOrPhoneSubject.stream.drain();
     await emailOrPhoneSubject.close();
@@ -375,9 +388,9 @@ class RegisterDelegateBloc {
     phoneController.dispose();
   }
 
-  Future<DateTime> _gatDateFromPicker(BuildContext context) async {
+  Future<DateTime?> _gatDateFromPicker(BuildContext context) async {
     return await showDatePicker(
-      locale:  Locale('${Get.locale}'),
+      locale: Locale('${Get.locale}'),
       context: context,
       initialDate: DateTime.now().subtract(
         const Duration(days: 1),
@@ -388,14 +401,14 @@ class RegisterDelegateBloc {
       lastDate: DateTime.now().subtract(
         const Duration(days: 1),
       ),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData().copyWith(
             colorScheme: const ColorScheme.light(
               primary: kAccentColor,
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     );

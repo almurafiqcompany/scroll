@@ -38,7 +38,7 @@ class ProfileEditUserAndDelegateBloc {
       BehaviorSubject<DateTime>.seeded(DateTime.now());
 
   Future<void> birthDateChanged(BuildContext context) async {
-    final DateTime dateTime = await _gatDateFromPicker(context);
+    final DateTime? dateTime = await _gatDateFromPicker(context);
     if (dateTime != null) {
       birthDateSubject.add(dateTime);
     }
@@ -52,6 +52,7 @@ class ProfileEditUserAndDelegateBloc {
   validateText(TextEditingController controller) {
     return controller.text.isNotEmpty;
   }
+
   TextEditingController nationalIDController = TextEditingController();
   final BehaviorSubject<bool> nationalIDSubject = BehaviorSubject<bool>();
 
@@ -60,6 +61,7 @@ class ProfileEditUserAndDelegateBloc {
   validateNationalID(TextEditingController controller) {
     return (phoneExp.hasMatch(controller.text) || controller.text.length >= 14);
   }
+
   final BehaviorSubject<bool> emailOrPhoneSubject = BehaviorSubject<bool>();
   final BehaviorSubject<bool> passwordSubject =
       BehaviorSubject<bool>.seeded(true);
@@ -103,7 +105,8 @@ class ProfileEditUserAndDelegateBloc {
       phoneSubject.sink.add(validateText(phoneController));
 
   final imageController = BehaviorSubject<File>();
-  Future<void> confirmEditProfileUserAndDelegate({BuildContext context,bool bedelegate}) async {
+  Future<void> confirmEditProfileUserAndDelegate(
+      {BuildContext? context, bool? bedelegate}) async {
     if (validateEmailOrPhone(emailOrPhoneController) &&
         validateText(nameController) &&
         validateText(phoneController)) {
@@ -122,104 +125,109 @@ class ProfileEditUserAndDelegateBloc {
         // "birth_date": DateFormat('dd-MM-yyyy').format(birthDateSubject.value),
         // "gender": genderSubject.value,
       });
-      if (imageController.value != null ) {
-        var img=await PackgDio.MultipartFile.fromFileSync(imageController.value.path);
-        formData.files.add(
-            MapEntry('avatar', img)
-        );
+      if (imageController.value != null) {
+        var img = await PackgDio.MultipartFile.fromFileSync(
+            imageController.value.path);
+        formData.files.add(MapEntry('avatar', img));
       }
       if (passwordController.text.isNotEmpty) {
-        formData.fields.add(
-          MapEntry('password', '${passwordController.text}')
-        );
+        formData.fields.add(MapEntry('password', '${passwordController.text}'));
       }
-      if (selectedLanguage.value != null ) {
-        formData.fields.add(
-          MapEntry('default_lang', '${selectedLanguage.value.code}')
-        );
+      if (selectedLanguage.value != null) {
+        formData.fields
+            .add(MapEntry('default_lang', '${selectedLanguage.value.code}'));
       }
-      if (selectedCountry.value != null ) {
-        formData.fields.add(
-          MapEntry('country_id', '${selectedCountry.value.id}')
-        );
+      if (selectedCountry.value != null) {
+        formData.fields
+            .add(MapEntry('country_id', '${selectedCountry.value.id}'));
       }
-      if (selectedCities.value != null ) {
-        formData.fields.add(
-          MapEntry('city_id', '${selectedCities.value.id}')
-        );
+      if (selectedCities.value != null) {
+        formData.fields.add(MapEntry('city_id', '${selectedCities.value.id}'));
       }
-      if (birthDateSubject.value != null ) {
-        formData.fields.add(
-          MapEntry('birth_date', DateFormat('dd-MM-yyyy').format(birthDateSubject.value))
-        );
+      if (birthDateSubject.value != null) {
+        formData.fields.add(MapEntry('birth_date',
+            DateFormat('dd-MM-yyyy').format(birthDateSubject.value)));
       }
-      if (genderSubject.value != null ) {
-        formData.fields.add(
-          MapEntry('gender', genderSubject.value)
-        );
+      if (genderSubject.value != null) {
+        formData.fields.add(MapEntry('gender', genderSubject.value));
       }
-        try {
-          String lang = await _helper.getCodeLang();
-          String token = await _helper.getToken();
-          int countryID = await _helper.getCountryId();
-          final res = await _dio.post(
-            bedelegate?'/become-affilator?country_id=$countryID':'/profiles/update?country_id=$countryID',
-            options: Options(
-              headers: {"Authorization": "Bearer $token",
-                'lang': '$lang'},
-            ),
-            data: formData,
-          );
-          if (res.statusCode == 200 && res.data['status'] == 200) {
-
-            if(bedelegate){
-
-              await showModalBottomSheet<void>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ShowMessageDialog(type: 200,message: '${res.data['message']}',show_but: true,);
-                },
-              );
-              await _helper.cleanData();
-              await Get.offAll(BottomNavBar());
-            }
-            await _helper.setEmail(emailOrPhoneController.text);
-            await _helper.setName(nameController.text);
-            await _helper.setAvatar(res.data['data']['avatar']);
-            // await _helper.setAvatar(nameController.text);
-            // await _helper.setDefaultLang(await _helper.getDefaultLang());
-            // await _helper.setDefaultLang(await _helper.getDefaultLang());
-            if (selectedLanguage.value != null ) {
-              await _helper.setDefaultLang(selectedLanguage.value.code);
-          }
-
+      try {
+        String lang = await _helper.getCodeLang();
+        String? token = await _helper.getToken();
+        int? countryID = await _helper.getCountryId();
+        final res = await _dio.post(
+          bedelegate!
+              ? '/become-affilator?country_id=$countryID'
+              : '/profiles/update?country_id=$countryID',
+          options: Options(
+            headers: {"Authorization": "Bearer $token", 'lang': '$lang'},
+          ),
+          data: formData,
+        );
+        if (res.statusCode == 200 && res.data['status'] == 200) {
+          if (bedelegate) {
             await showModalBottomSheet<void>(
-              context: context,
+              context: context!,
               builder: (BuildContext context) {
-                return ShowMessageDialog(type: 200,message: '${res.data['message']}',show_but: true,);
+                return ShowMessageDialog(
+                  type: 200,
+                  message: '${res.data['message']}',
+                  show_but: true,
+                );
               },
             );
-            // await Get.back();
-            await Get.offAll(BottomNavBar(page: 4,));
-          } else if (res.data['status'] == 500) {
-
-            await showModalBottomSheet<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return ShowMessageDialog(type: 400,message: '${res.data['message']}',show_but: true,);
-              },
-            );
+            await _helper.cleanData();
+            await Get.offAll(BottomNavBar());
           }
-          // ignore: avoid_catches_without_on_clauses
-        } catch (e) {
+          await _helper.setEmail(emailOrPhoneController.text);
+          await _helper.setName(nameController.text);
+          await _helper.setAvatar(res.data['data']['avatar']);
+          // await _helper.setAvatar(nameController.text);
+          // await _helper.setDefaultLang(await _helper.getDefaultLang());
+          // await _helper.setDefaultLang(await _helper.getDefaultLang());
+          if (selectedLanguage.value != null) {
+            await _helper.setDefaultLang(selectedLanguage.value.code!);
+          }
+
           await showModalBottomSheet<void>(
-            context: context,
+            context: context!,
             builder: (BuildContext context) {
-              return ShowMessageDialog(type: 400,message: 'e'.tr,show_but: true,);
+              return ShowMessageDialog(
+                type: 200,
+                message: '${res.data['message']}',
+                show_but: true,
+              );
+            },
+          );
+          // await Get.back();
+          await Get.offAll(BottomNavBar(
+            page: 4,
+          ));
+        } else if (res.data['status'] == 500) {
+          await showModalBottomSheet<void>(
+            context: context!,
+            builder: (BuildContext context) {
+              return ShowMessageDialog(
+                type: 400,
+                message: '${res.data['message']}',
+                show_but: true,
+              );
             },
           );
         }
-
+        // ignore: avoid_catches_without_on_clauses
+      } catch (e) {
+        await showModalBottomSheet<void>(
+          context: context!,
+          builder: (BuildContext context) {
+            return ShowMessageDialog(
+              type: 400,
+              message: 'e'.tr,
+              show_but: true,
+            );
+          },
+        );
+      }
     } else {
       emailOrPhoneSubject.sink
           .add(validateEmailOrPhone(emailOrPhoneController));
@@ -237,10 +245,11 @@ class ProfileEditUserAndDelegateBloc {
   final selectedCountry = BehaviorSubject<CountriesData>();
   final selectedLanguage = BehaviorSubject<Languages>();
   final selectedCities = BehaviorSubject<CitiesData>();
-  Future<void> fetchAllCountries(int country_id,int city_id, String default_lang) async {
+  Future<void> fetchAllCountries(
+      int country_id, int city_id, String default_lang) async {
     try {
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final List<CountriesData> countries = [];
       final List<Languages> languages = [];
       final res = await _dio.get(
@@ -252,18 +261,17 @@ class ProfileEditUserAndDelegateBloc {
       if (res.statusCode == 200) {
         for (var obj in res.data['data']['countries']) {
           CountriesData country = CountriesData.fromJson(obj);
-          if(country.id == country_id){
+          if (country.id == country_id) {
             selectedCountry.sink.add(country);
-            for (var objCity in country.cities) {
-              if(objCity.id ==city_id)
-                 selectedCities.sink.add(objCity);
+            for (var objCity in country.cities!) {
+              if (objCity.id == city_id) selectedCities.sink.add(objCity);
             }
           }
           countries.add(country);
         }
         for (var obj in res.data['data']['language']) {
-          Languages language=Languages.fromJson(obj);
-          if(language.code == default_lang){
+          Languages language = Languages.fromJson(obj);
+          if (language.code == default_lang) {
             selectedLanguage.sink.add(language);
           }
           languages.add(language);
@@ -283,23 +291,24 @@ class ProfileEditUserAndDelegateBloc {
   Future<void> fetchProfileData(BuildContext context) async {
     try {
       String lang = await _helper.getCodeLang();
-      String token = await _helper.getToken();
-      int countryID = await _helper.getCountryId();
+      String? token = await _helper.getToken();
+      int? countryID = await _helper.getCountryId();
       final res = await _dio.get(
         '/profiles/show?country_id=$countryID',
         options: Options(
-          headers: {"Authorization": "Bearer $token",
-            'lang': '$lang'},
+          headers: {"Authorization": "Bearer $token", 'lang': '$lang'},
         ),
       );
-      if (res.statusCode == 200 && res.data['status']==200) {
+      if (res.statusCode == 200 && res.data['status'] == 200) {
         showAlertDialog(context);
-        ProfileEditUserAndDelegate profile = ProfileEditUserAndDelegate.fromJson(res.data['data']);
+        ProfileEditUserAndDelegate profile =
+            ProfileEditUserAndDelegate.fromJson(res.data['data']);
         getProfileData.sink.add(profile);
-        await fetchAllCountries(profile.country_id,profile.city_id,profile.default_lang);
-        nameController.text=profile.name;
-        emailOrPhoneController.text=profile.email;
-        phoneController.text=profile.phone;
+        await fetchAllCountries(
+            profile.country_id!, profile.city_id!, profile.default_lang!);
+        nameController.text = profile.name!;
+        emailOrPhoneController.text = profile.email!;
+        phoneController.text = profile.phone!;
         Get.back();
       } else {
         getProfileData.sink.addError('');
@@ -308,6 +317,7 @@ class ProfileEditUserAndDelegateBloc {
       getProfileData.sink.addError('');
     }
   }
+
   dispose() async {
     await emailOrPhoneSubject.stream.drain();
     await emailOrPhoneSubject.close();
@@ -353,9 +363,9 @@ class ProfileEditUserAndDelegateBloc {
     phoneController.dispose();
   }
 
-  Future<DateTime> _gatDateFromPicker(BuildContext context) async {
+  Future<DateTime?> _gatDateFromPicker(BuildContext context) async {
     return await showDatePicker(
-      locale:  Locale('${Get.locale}'),
+      locale: Locale('${Get.locale}'),
       context: context,
       initialDate: DateTime.now().subtract(
         const Duration(days: 1),
@@ -366,14 +376,14 @@ class ProfileEditUserAndDelegateBloc {
       lastDate: DateTime.now().subtract(
         const Duration(days: 1),
       ),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData().copyWith(
             colorScheme: const ColorScheme.light(
               primary: kAccentColor,
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     );

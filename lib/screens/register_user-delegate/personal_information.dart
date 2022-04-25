@@ -15,27 +15,28 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:get/get.dart';
-class PersonalInformation extends StatefulWidget {
-  final RegisterUserBloc bloc;
 
-  const PersonalInformation({Key key, this.bloc}) : super(key: key);
+class PersonalInformation extends StatefulWidget {
+  final RegisterUserBloc? bloc;
+
+  const PersonalInformation({Key? key, this.bloc}) : super(key: key);
 
   @override
   _PersonalInformationState createState() => _PersonalInformationState();
 }
 
 class _PersonalInformationState extends State<PersonalInformation> {
-
   @override
   void initState() {
     // TODO: implement initState
-    widget.bloc.fetchAllCountries(1);
+    widget.bloc!.fetchAllCountries(1);
     // widget.bloc.selectedLanguage.sink.add(null);
     // widget.bloc.selectedCountry.sink.add(null);
     // widget.bloc.selectedCities.sink.add(null);
     super.initState();
   }
-   List<String> LIST_KIND = <String>[
+
+  List<String> LIST_KIND = <String>[
     'Male'.tr,
     'Female'.tr,
   ];
@@ -52,7 +53,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
               height: 10,
             ),
             StreamBuilder<File>(
-                stream: widget.bloc.avatarController.stream,
+                stream: widget.bloc!.avatarController.stream,
                 initialData: null,
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
@@ -73,7 +74,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(25),
                               child: Image.file(
-                                snapshot.data,
+                                snapshot.data!,
                                 fit: BoxFit.fitHeight,
                               ),
                             ),
@@ -81,22 +82,24 @@ class _PersonalInformationState extends State<PersonalInformation> {
                               child: GestureDetector(
                                 onTap: () async {
                                   try {
-                                    FilePickerResult res =
-                                    await FilePicker.platform
-                                        .pickFiles(
-                                        type: FileType.custom,
-                                        allowedExtensions: ['jpg','png','jpeg','gif']
-                                    );
-                                    File img = res != null
-                                        ? File(res.files.single.path)
+                                    FilePickerResult? res =
+                                        await FilePicker.platform.pickFiles(
+                                            type: FileType.custom,
+                                            allowedExtensions: [
+                                          'jpg',
+                                          'png',
+                                          'jpeg',
+                                          'gif'
+                                        ]);
+                                    File? img = res != null
+                                        ? File(res.files.single.path!)
                                         : null;
 
                                     if (img != null) {
-                                      widget.bloc.avatarController.sink
+                                      widget.bloc!.avatarController.sink
                                           .add(img);
                                     }
                                   } catch (e) {
-
                                     print(e.toString());
                                   }
                                 },
@@ -135,23 +138,21 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           child: GestureDetector(
                             onTap: () async {
                               try {
-                                FilePickerResult res = await FilePicker
+                                FilePickerResult? res = await FilePicker
                                     .platform
                                     .pickFiles(type: FileType.image);
-                                File img = res != null
-                                    ? File(res.files.single.path)
+                                File? img = res != null
+                                    ? File(res.files.single.path!)
                                     : null;
                                 if (img != null) {
-                                  widget.bloc.avatarController.sink.add(img);
+                                  widget.bloc!.avatarController.sink.add(img);
                                 }
                               } catch (e) {
-
                                 print(e.toString());
                               }
                             },
                             child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Card(
                                   elevation: 0,
@@ -170,7 +171,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                   height: 2,
                                 ),
                                 AutoSizeText(
-                                 'bt_profile_photo'.tr,
+                                  'bt_profile_photo'.tr,
                                   style: kTextStyle,
                                   softWrap: true,
                                   maxFontSize: 16,
@@ -234,16 +235,14 @@ class _PersonalInformationState extends State<PersonalInformation> {
             //   },
             // ),
 
-
-
             Row(
               children: [
                 Text('text_country'.tr,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
-                    .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
-                Text('*',
-                    style: TextStyle(fontSize: 14, color: Colors.red))
-                    .addPaddingOnly( top: 15),
+                        style: TextStyle(
+                            fontSize: 14, color: Colors.grey.shade600))
+                    .addPaddingOnly(right: 8, left: 8, top: 15, bottom: 5),
+                Text('*', style: TextStyle(fontSize: 14, color: Colors.red))
+                    .addPaddingOnly(top: 15),
               ],
             ),
 
@@ -257,11 +256,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           borderRadius: BorderRadius.circular(10),
                           color: Color(0xffE0E7FF)),
                       child: StreamBuilder<List<CountriesData>>(
-                          stream: widget.bloc.allCountriesSubject.stream,
+                          stream: widget.bloc!.allCountriesSubject.stream,
                           builder: (context, countriesSnapshot) {
                             if (countriesSnapshot.hasData) {
                               return StreamBuilder<CountriesData>(
-                                  stream: widget.bloc.selectedCountry.stream,
+                                  stream: widget.bloc!.selectedCountry.stream,
                                   builder: (context, snapshot) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -273,28 +272,31 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                           elevation: 3,
                                           icon: const Icon(
                                               Icons.arrow_drop_down_outlined),
-                                          items: countriesSnapshot.data
+                                          items: countriesSnapshot.data!
                                               .map((item) {
                                             return DropdownMenuItem<
-                                                CountriesData>(
+                                                    CountriesData>(
                                                 value: item,
                                                 child: Row(
                                                   children: [
                                                     if (item.icon != null)
                                                       Image.network(
-                                                      '$ImgUrl${item.icon}',
-                                                      width: 32,
-                                                      height: 32,
-                                                    ) else const SizedBox(
-                                                      width: 32,
-                                                    ),
+                                                        '$ImgUrl${item.icon}',
+                                                        width: 32,
+                                                        height: 32,
+                                                      )
+                                                    else
+                                                      const SizedBox(
+                                                        width: 32,
+                                                      ),
                                                     const SizedBox(
                                                       width: 5,
                                                     ),
                                                     AutoSizeText(
                                                       item.name,
-                                                      style: kTextStyle.copyWith(
-                                                          fontSize: 14),
+                                                      style:
+                                                          kTextStyle.copyWith(
+                                                              fontSize: 14),
                                                       minFontSize: 12,
                                                       maxFontSize: 14,
                                                     ),
@@ -311,10 +313,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                               color: Colors.black),
                                           underline: SizedBox(),
                                           value: snapshot.data,
-                                          onChanged: (CountriesData item) {
-                                            widget.bloc.selectedCities.sink.add(null);
-                                            widget.bloc.selectedCountry.sink
-                                                .add(item);
+                                          onChanged: (CountriesData? item) {
+                                            widget.bloc!.selectedCities.sink
+                                                .add(null!);
+                                            widget.bloc!.selectedCountry.sink
+                                                .add(item!);
                                           }),
                                     );
                                   });
@@ -323,9 +326,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                 padding: EdgeInsets.all(8.0),
                                 child: Center(
                                     child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          kAccentColor),
-                                    )),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      kAccentColor),
+                                )),
                               );
                             }
                           }),
@@ -348,11 +351,11 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           borderRadius: BorderRadius.circular(10),
                           color: Color(0xffE0E7FF)),
                       child: StreamBuilder<CountriesData>(
-                          stream: widget.bloc.selectedCountry.stream,
+                          stream: widget.bloc!.selectedCountry.stream,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return StreamBuilder<CitiesData>(
-                                  stream: widget.bloc.selectedCities.stream,
+                                  stream: widget.bloc!.selectedCities.stream,
                                   builder: (context, citySnapshot) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -364,8 +367,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                           elevation: 3,
                                           icon: Icon(
                                               Icons.arrow_drop_down_outlined),
-                                          items:
-                                          snapshot.data.cities.map((item) {
+                                          items: snapshot.data!.cities!
+                                              .map((item) {
                                             return DropdownMenuItem<CitiesData>(
                                                 value: item,
                                                 child: AutoSizeText(
@@ -378,7 +381,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                           }).toList(),
                                           isExpanded: true,
                                           hint: Text(
-                                              'select_city'.tr,
+                                            'select_city'.tr,
                                             style: kTextStyle.copyWith(
                                                 color: Colors.black),
                                           ),
@@ -386,9 +389,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                               color: Colors.black),
                                           underline: SizedBox(),
                                           value: citySnapshot.data,
-                                          onChanged: (CitiesData item) {
-                                            widget.bloc.selectedCities.sink.add(item);
-
+                                          onChanged: (CitiesData? item) {
+                                            widget.bloc!.selectedCities.sink
+                                                .add(item!);
                                           }),
                                     );
                                   });
@@ -407,16 +410,16 @@ class _PersonalInformationState extends State<PersonalInformation> {
             Row(
               children: [
                 Text('text_full_name'.tr,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
-                    .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
-                Text('*',
-                    style: TextStyle(fontSize: 14, color: Colors.red))
-                    .addPaddingOnly( top: 15),
+                        style: TextStyle(
+                            fontSize: 14, color: Colors.grey.shade600))
+                    .addPaddingOnly(right: 8, left: 8, top: 15, bottom: 5),
+                Text('*', style: TextStyle(fontSize: 14, color: Colors.red))
+                    .addPaddingOnly(top: 15),
               ],
             ),
 
             StreamBuilder<bool>(
-                stream: widget.bloc.nameSubject.stream,
+                stream: widget.bloc!.nameSubject.stream,
                 initialData: true,
                 builder: (context, snapshot) {
                   return TextField(
@@ -427,9 +430,9 @@ class _PersonalInformationState extends State<PersonalInformation> {
                       contentPadding: EdgeInsets.all(9),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(6)),
+                            const BorderRadius.all(Radius.circular(6)),
                         borderSide:
-                        BorderSide(width: 1, color: context.accentColor),
+                            BorderSide(width: 1, color: context.accentColor),
                       ),
                       disabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -438,7 +441,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6)),
                         borderSide:
-                        BorderSide(width: 1, color: Color(0xFFC2C3DF)),
+                            BorderSide(width: 1, color: Color(0xFFC2C3DF)),
                       ),
                       border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -448,19 +451,20 @@ class _PersonalInformationState extends State<PersonalInformation> {
                           borderSide: BorderSide(width: 1, color: Colors.red)),
                       focusedErrorBorder: OutlineInputBorder(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(6)),
+                              const BorderRadius.all(Radius.circular(6)),
                           borderSide:
-                          BorderSide(width: 1, color: Colors.red.shade800)),
+                              BorderSide(width: 1, color: Colors.red.shade800)),
                       hintText: 'murafiq'.tr,
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText: snapshot.data ? null : 'text_full_name_error'.tr,
+                      errorText:
+                          snapshot.data! ? null : 'text_full_name_error'.tr,
                     ),
                     textInputAction: TextInputAction.next,
                     onEditingComplete: () => node.nextFocus(),
                     keyboardType: TextInputType.text,
-                    onChanged: (val) => widget.bloc.changeName(val),
-                    controller: widget.bloc.nameController,
+                    onChanged: (val) => widget.bloc!.changeName(val),
+                    controller: widget.bloc!.nameController,
                   );
                 }),
             // Text(context.translate('text_defalut_languages'),

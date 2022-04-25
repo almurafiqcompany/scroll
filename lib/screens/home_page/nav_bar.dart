@@ -5,17 +5,17 @@ import 'package:al_murafiq/screens/home_page/special_ads/special_ads_screen.dart
 import 'package:al_murafiq/screens/home_page/setting_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart' ;
-class BottomNavBar extends StatefulWidget {
-   int page;
+import 'package:get/get.dart';
 
-   BottomNavBar({Key key, this.page=0}) : super(key: key);
+class BottomNavBar extends StatefulWidget {
+  int page;
+
+  BottomNavBar({Key? key, this.page = 0}) : super(key: key);
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-
   final List<Widget> _tabItems = [
     HomePageScreen(),
     SpecialAdsScreen(),
@@ -26,22 +26,23 @@ class _BottomNavBarState extends State<BottomNavBar> {
   // int _page = 0;
   GlobalKey _bottomNavigationKey = GlobalKey();
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop:() async => showDialog(
-          context: context,
-          builder: (context) =>
-              AlertDialog(title: Text('quit_app'.tr), actions: <Widget>[
-                RaisedButton(
-                    child: Text('Exit'.tr),
-                    onPressed: () => Navigator.of(context).pop(true)),
-                RaisedButton(
-                    child: Text('bt_cancel'.tr),
-                    onPressed: () => Navigator.of(context).pop(false)),
-              ])),
-          // () => _popCamera(context),
+      onWillPop: () {
+        return null!;
+      },
+      // context: context,
+      // builder: (context) =>
+      //     AlertDialog(title: Text('quit_app'.tr), actions: <Widget>[
+      //       RaisedButton(
+      //           child: Text('Exit'.tr),
+      //           onPressed: () => Navigator.of(context).pop(true)),
+      //       RaisedButton(
+      //           child: Text('bt_cancel'.tr),
+      //           onPressed: () => Navigator.of(context).pop(false)),
+      //     ])),
+      // () => _popCamera(context),
       child: Scaffold(
         //appBar: const GradientAppbar(),
         bottomNavigationBar: CurvedNavigationBar(
@@ -50,7 +51,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
             index: widget.page,
             height: 70.0,
             items: <Widget>[
-
               Icon(
                 Icons.home,
                 size: 30,
@@ -93,7 +93,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
     );
   }
-   Future<bool> _popCamera(BuildContext context) {
+
+  Future<bool> _popCamera(BuildContext context) {
     debugPrint("_popCamera");
     showDialog(
         context: context,
@@ -104,18 +105,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 }
 
-
 class ExitCameraDialog extends StatelessWidget {
   const ExitCameraDialog({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text('Leaving camera forever'),
-      content:
-      Text('Are you S-U-R-E, S-I-R?'),
+      content: Text('Are you S-U-R-E, S-I-R?'),
       actions: <Widget>[
         FlatButton(
           child: Text('no'),

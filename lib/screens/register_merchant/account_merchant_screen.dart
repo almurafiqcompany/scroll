@@ -11,7 +11,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:map/map.dart';
 import 'package:latlng/latlng.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -21,12 +20,13 @@ import 'package:al_murafiq/screens/home_page/categories/categories_bloc.dart';
 import 'package:al_murafiq/models/categories.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:google_map_location_picker/google_map_location_picker.dart' as locationPicker;
 import 'package:google_maps_flutter/google_maps_flutter.dart' as lng;
-class AccountInformationMerchantScreen extends StatefulWidget {
-  final RegisterMerchantBloc bloc;
 
-  const AccountInformationMerchantScreen({Key key, this.bloc}) : super(key: key);
+class AccountInformationMerchantScreen extends StatefulWidget {
+  final RegisterMerchantBloc? bloc;
+
+  const AccountInformationMerchantScreen({Key? key, this.bloc})
+      : super(key: key);
 
   @override
   _AccountInformationMerchantScreenState createState() =>
@@ -46,21 +46,21 @@ class _AccountInformationMerchantScreenState
     setLocation();
     super.initState();
   }
-   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
+
+  SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
   // dynamic lat =await _helper.getLat();
   // dynamic lng= await _helper.getLng();
 
   Future<void> setLocation() async {
-
     try {
-      widget.bloc.latSubject.value= await _helper.getLat()??0.0;
-      widget.bloc.longSubject.value= await _helper.getLng()??0.0;
+      widget.bloc!.latSubject.value = await _helper.getLat() ?? 0.0;
+      widget.bloc!.longSubject.value = await _helper.getLng() ?? 0.0;
       // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       print('error set location');
-
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final node = FocusScope.of(context);
@@ -70,9 +70,11 @@ class _AccountInformationMerchantScreenState
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 4,),
+            SizedBox(
+              height: 4,
+            ),
             StreamBuilder<File>(
-                stream: widget.bloc.imageCompanyController.stream,
+                stream: widget.bloc!.imageCompanyController.stream,
                 initialData: null,
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
@@ -93,7 +95,7 @@ class _AccountInformationMerchantScreenState
                             ClipRRect(
                               borderRadius: BorderRadius.circular(25),
                               child: Image.file(
-                                snapshot.data,
+                                snapshot.data!,
                                 fit: BoxFit.fitHeight,
                               ),
                             ),
@@ -101,22 +103,24 @@ class _AccountInformationMerchantScreenState
                               child: GestureDetector(
                                 onTap: () async {
                                   try {
-                                    FilePickerResult res =
-                                    await FilePicker.platform
-                                        .pickFiles(
-                                        type: FileType.custom,
-                                        allowedExtensions: ['jpg','png','jpeg','gif']
-                                    );
-                                    File img = res != null
-                                        ? File(res.files.single.path)
+                                    FilePickerResult? res =
+                                        await FilePicker.platform.pickFiles(
+                                            type: FileType.custom,
+                                            allowedExtensions: [
+                                          'jpg',
+                                          'png',
+                                          'jpeg',
+                                          'gif'
+                                        ]);
+                                    File? img = res != null
+                                        ? File(res.files.single.path!)
                                         : null;
 
                                     if (img != null) {
-                                      widget.bloc.imageCompanyController.sink
+                                      widget.bloc!.imageCompanyController.sink
                                           .add(img);
                                     }
                                   } catch (e) {
-
                                     print(e.toString());
                                   }
                                 },
@@ -155,22 +159,22 @@ class _AccountInformationMerchantScreenState
                           child: GestureDetector(
                             onTap: () async {
                               try {
-                                FilePickerResult res = await FilePicker
+                                FilePickerResult? res = await FilePicker
                                     .platform
                                     .pickFiles(type: FileType.image);
-                                File img = res != null
-                                    ? File(res.files.single.path)
+                                File? img = res != null
+                                    ? File(res.files.single.path!)
                                     : null;
                                 if (img != null) {
-                                  widget.bloc.imageCompanyController.sink.add(img);
+                                  widget.bloc!.imageCompanyController.sink
+                                      .add(img);
                                 }
                               } catch (e) {
                                 print(e.toString());
                               }
                             },
                             child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Card(
                                   elevation: 0,
@@ -205,75 +209,16 @@ class _AccountInformationMerchantScreenState
                 }),
             Row(
               children: [
-
                 Text('text_place_name'.tr,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
-                    .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
-                Text('*',
-                    style: TextStyle(fontSize: 14, color: Colors.red))
-                    .addPaddingOnly( top: 15),
+                        style: TextStyle(
+                            fontSize: 14, color: Colors.grey.shade600))
+                    .addPaddingOnly(right: 8, left: 8, top: 15, bottom: 5),
+                Text('*', style: TextStyle(fontSize: 14, color: Colors.red))
+                    .addPaddingOnly(top: 15),
               ],
             ),
             StreamBuilder<bool>(
-                stream: widget.bloc.nameCompanyLang1Subject.stream,
-                initialData: true,
-                builder: (context, snapshot) {
-                  return TextField(
-                    style: TextStyle(fontSize: 14),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xFFE0E7FF),
-                        contentPadding: EdgeInsets.all(9),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                        const BorderRadius.all(Radius.circular(6)),
-                        borderSide:
-                        BorderSide(width: 1, color: context.accentColor),
-                      ),
-                      disabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(6)),
-                        borderSide: BorderSide(width: 1, color: Colors.black54),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(6)),
-                        borderSide:
-                        BorderSide(width: 1, color: Color(0xFFC2C3DF)),
-                      ),
-                      border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
-                          borderSide: BorderSide(width: 1)),
-                      errorBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
-                          borderSide: BorderSide(width: 1, color: Colors.red)),
-                      focusedErrorBorder: OutlineInputBorder(
-                          borderRadius:
-                          const BorderRadius.all(Radius.circular(6)),
-                          borderSide:
-                          BorderSide(width: 1, color: Colors.red.shade800)),
-                      hintText: '',
-                      hintStyle: const TextStyle(
-                          fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText: snapshot.data ? null : 'text_place_name_error'.tr,
-                    ),
-                    textInputAction: TextInputAction.next,
-                    onEditingComplete: () => node.nextFocus(),
-                    keyboardType: TextInputType.text,
-                    onChanged: (val) => widget.bloc.changeNameCompanylang1(val),
-                    controller: widget.bloc.nameCompanyLang1Controller,
-                  );
-                }),
-            Row(
-              children: [
-                Text('text_description'.tr,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
-                    .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
-                Text('*',
-                    style: TextStyle(fontSize: 14, color: Colors.red))
-                    .addPaddingOnly( top: 15),
-              ],
-            ),
-            StreamBuilder<bool>(
-                stream: widget.bloc.desLang1Subject.stream,
+                stream: widget.bloc!.nameCompanyLang1Subject.stream,
                 initialData: true,
                 builder: (context, snapshot) {
                   return TextField(
@@ -284,9 +229,9 @@ class _AccountInformationMerchantScreenState
                       contentPadding: EdgeInsets.all(9),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(6)),
+                            const BorderRadius.all(Radius.circular(6)),
                         borderSide:
-                        BorderSide(width: 1, color: context.accentColor),
+                            BorderSide(width: 1, color: context.accentColor),
                       ),
                       disabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -295,7 +240,7 @@ class _AccountInformationMerchantScreenState
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6)),
                         borderSide:
-                        BorderSide(width: 1, color: Color(0xFFC2C3DF)),
+                            BorderSide(width: 1, color: Color(0xFFC2C3DF)),
                       ),
                       border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -305,34 +250,95 @@ class _AccountInformationMerchantScreenState
                           borderSide: BorderSide(width: 1, color: Colors.red)),
                       focusedErrorBorder: OutlineInputBorder(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(6)),
+                              const BorderRadius.all(Radius.circular(6)),
                           borderSide:
-                          BorderSide(width: 1, color: Colors.red.shade800)),
+                              BorderSide(width: 1, color: Colors.red.shade800)),
                       hintText: '',
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText: snapshot.data ? null : 'text_description_error'.tr,
+                      errorText:
+                          snapshot.data! ? null : 'text_place_name_error'.tr,
                     ),
                     textInputAction: TextInputAction.next,
                     onEditingComplete: () => node.nextFocus(),
                     keyboardType: TextInputType.text,
-                    onChanged: (val) => widget.bloc.changeDesLang1(val),
-                    controller: widget.bloc.desLang1Controller,
+                    onChanged: (val) =>
+                        widget.bloc!.changeNameCompanylang1(val),
+                    controller: widget.bloc!.nameCompanyLang1Controller,
+                  );
+                }),
+            Row(
+              children: [
+                Text('text_description'.tr,
+                        style: TextStyle(
+                            fontSize: 14, color: Colors.grey.shade600))
+                    .addPaddingOnly(right: 8, left: 8, top: 15, bottom: 5),
+                Text('*', style: TextStyle(fontSize: 14, color: Colors.red))
+                    .addPaddingOnly(top: 15),
+              ],
+            ),
+            StreamBuilder<bool>(
+                stream: widget.bloc!.desLang1Subject.stream,
+                initialData: true,
+                builder: (context, snapshot) {
+                  return TextField(
+                    style: TextStyle(fontSize: 14),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: const Color(0xFFE0E7FF),
+                      contentPadding: EdgeInsets.all(9),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: context.accentColor),
+                      ),
+                      disabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide: BorderSide(width: 1, color: Colors.black54),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: Color(0xFFC2C3DF)),
+                      ),
+                      border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          borderSide: BorderSide(width: 1)),
+                      errorBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          borderSide: BorderSide(width: 1, color: Colors.red)),
+                      focusedErrorBorder: OutlineInputBorder(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(6)),
+                          borderSide:
+                              BorderSide(width: 1, color: Colors.red.shade800)),
+                      hintText: '',
+                      hintStyle: const TextStyle(
+                          fontSize: 14, color: Color(0xFF9797AD)),
+                      errorText:
+                          snapshot.data! ? null : 'text_description_error'.tr,
+                    ),
+                    textInputAction: TextInputAction.next,
+                    onEditingComplete: () => node.nextFocus(),
+                    keyboardType: TextInputType.text,
+                    onChanged: (val) => widget.bloc!.changeDesLang1(val),
+                    controller: widget.bloc!.desLang1Controller,
                     maxLines: 3,
                   );
                 }),
             Row(
               children: [
                 Text('text_address'.tr,
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
-                    .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
-                Text('*',
-                    style: TextStyle(fontSize: 14, color: Colors.red))
-                    .addPaddingOnly( top: 15),
+                        style: TextStyle(
+                            fontSize: 14, color: Colors.grey.shade600))
+                    .addPaddingOnly(right: 8, left: 8, top: 15, bottom: 5),
+                Text('*', style: TextStyle(fontSize: 14, color: Colors.red))
+                    .addPaddingOnly(top: 15),
               ],
             ),
             StreamBuilder<bool>(
-                stream: widget.bloc.addressSubject.stream,
+                stream: widget.bloc!.addressSubject.stream,
                 initialData: true,
                 builder: (context, snapshot) {
                   return TextField(
@@ -343,9 +349,9 @@ class _AccountInformationMerchantScreenState
                       contentPadding: EdgeInsets.all(9),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(6)),
+                            const BorderRadius.all(Radius.circular(6)),
                         borderSide:
-                        BorderSide(width: 1, color: context.accentColor),
+                            BorderSide(width: 1, color: context.accentColor),
                       ),
                       disabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -354,7 +360,7 @@ class _AccountInformationMerchantScreenState
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(6)),
                         borderSide:
-                        BorderSide(width: 1, color: Color(0xFFC2C3DF)),
+                            BorderSide(width: 1, color: Color(0xFFC2C3DF)),
                       ),
                       border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(6)),
@@ -364,63 +370,63 @@ class _AccountInformationMerchantScreenState
                           borderSide: BorderSide(width: 1, color: Colors.red)),
                       focusedErrorBorder: OutlineInputBorder(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(6)),
+                              const BorderRadius.all(Radius.circular(6)),
                           borderSide:
-                          BorderSide(width: 1, color: Colors.red.shade800)),
+                              BorderSide(width: 1, color: Colors.red.shade800)),
                       hintText: '',
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText: snapshot.data ? null : 'text_address_error'.tr,
+                      errorText:
+                          snapshot.data! ? null : 'text_address_error'.tr,
                     ),
                     textInputAction: TextInputAction.next,
                     onEditingComplete: () => node.nextFocus(),
                     keyboardType: TextInputType.text,
-                    onChanged: (val) => widget.bloc.changeAddress(val),
-                    controller: widget.bloc.addressController,
+                    onChanged: (val) => widget.bloc!.changeAddress(val),
+                    controller: widget.bloc!.addressController,
                   );
                 }),
             GestureDetector(
               onTap: () async {
-                locationPicker.LocationResult result = await locationPicker.showLocationPicker(
-                  context,
-                  'AIzaSyCojvOL87lFBZWjfUGiu_aS22WY0QyudSA',
-                  initialCenter: lng.LatLng(widget.bloc.latSubject.value, widget.bloc.longSubject.value),
-                  //automaticallyAnimateToCurrentLocation: true,
-                  //mapStylePath: 'assets/mapStyle.json',
-                  myLocationButtonEnabled: true,
-                  // requiredGPS: true,
-                  layersButtonEnabled: true,
-                  // countries: ['AE', 'NG'],
-                  //resultCardAlignment: Alignment.bottomCenter,
-                  desiredAccuracy: LocationAccuracy.best,
-                );
+                // locationPicker.LocationResult result = await locationPicker.showLocationPicker(
+                //   context,
+                //   'AIzaSyCojvOL87lFBZWjfUGiu_aS22WY0QyudSA',
+                //   initialCenter: lng.LatLng(widget.bloc.latSubject.value, widget.bloc.longSubject.value),
+                //   //automaticallyAnimateToCurrentLocation: true,
+                //   //mapStylePath: 'assets/mapStyle.json',
+                //   myLocationButtonEnabled: true,
+                //   // requiredGPS: true,
+                //   layersButtonEnabled: true,
+                //   // countries: ['AE', 'NG'],
+                //   //resultCardAlignment: Alignment.bottomCenter,
+                //   desiredAccuracy: LocationAccuracy.best,
+                // );
 
-
-                setState(() {
-                  // _editCompanyBloc.lanSubject.value=result.latLng.latitude;
-                  // _editCompanyBloc.lngSubject.value=result.latLng.longitude;
-                  widget.bloc.longSubject.value =result.latLng.longitude;
-                  widget.bloc.latSubject.value =result.latLng.latitude;
-                  widget.bloc.addressController.text=result.address;
-                });
-
+                // setState(() {
+                //   // _editCompanyBloc.lanSubject.value=result.latLng.latitude;
+                //   // _editCompanyBloc.lngSubject.value=result.latLng.longitude;
+                //   widget.bloc.longSubject.value =result.latLng.longitude;
+                //   widget.bloc.latSubject.value =result.latLng.latitude;
+                //   widget.bloc.addressController.text=result.address;
+                // });
               },
-              child:BuildViewMap(widget.bloc.longSubject.value,widget.bloc.latSubject.value),),
+              child: BuildViewMap(widget.bloc!.longSubject.value,
+                  widget.bloc!.latSubject.value),
+            ),
             // BuildViewMap(widget.bloc.longSubject.value,widget.bloc.latSubject.value),
 
             Row(
               children: [
                 Text('text_phone'.tr,
-                    style: TextStyle(
-                        fontSize: 14, color: Colors.grey.shade600))
-                    .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
-                Text('*',
-                    style: TextStyle(fontSize: 14, color: Colors.red))
-                    .addPaddingOnly( top: 15),
+                        style: TextStyle(
+                            fontSize: 14, color: Colors.grey.shade600))
+                    .addPaddingOnly(right: 8, left: 8, top: 15, bottom: 5),
+                Text('*', style: TextStyle(fontSize: 14, color: Colors.red))
+                    .addPaddingOnly(top: 15),
               ],
             ),
             StreamBuilder<bool>(
-                stream: widget.bloc.phoneSubject.stream,
+                stream: widget.bloc!.phoneSubject.stream,
                 initialData: true,
                 builder: (context, snapshot) {
                   return TextField(
@@ -431,55 +437,47 @@ class _AccountInformationMerchantScreenState
                       contentPadding: EdgeInsets.all(9),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(6)),
-                        borderSide: BorderSide(
-                            width: 1, color: context.accentColor),
+                            const BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: context.accentColor),
                       ),
                       disabledBorder: const OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(6)),
-                        borderSide:
-                        BorderSide(width: 1, color: Colors.black54),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide: BorderSide(width: 1, color: Colors.black54),
                       ),
                       enabledBorder: const OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(6)),
-                        borderSide: BorderSide(
-                            width: 1, color: Color(0xFFC2C3DF)),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: Color(0xFFC2C3DF)),
                       ),
                       border: const OutlineInputBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(6)),
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
                           borderSide: BorderSide(width: 1)),
                       errorBorder: const OutlineInputBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(6)),
-                          borderSide:
-                          BorderSide(width: 1, color: Colors.red)),
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          borderSide: BorderSide(width: 1, color: Colors.red)),
                       focusedErrorBorder: OutlineInputBorder(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(6)),
-                          borderSide: BorderSide(
-                              width: 1, color: Colors.red.shade800)),
+                              const BorderRadius.all(Radius.circular(6)),
+                          borderSide:
+                              BorderSide(width: 1, color: Colors.red.shade800)),
                       hintText: '',
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText:
-                      snapshot.data ? null : 'text_phone_error'.tr,
+                      errorText: snapshot.data! ? null : 'text_phone_error'.tr,
                     ),
                     textInputAction: TextInputAction.next,
                     onEditingComplete: () => node.nextFocus(),
                     keyboardType: TextInputType.phone,
-                    onChanged: (val) => widget.bloc.changePhone(val),
-                    controller: widget.bloc.phoneController,
+                    onChanged: (val) => widget.bloc!.changePhone(val),
+                    controller: widget.bloc!.phoneController,
                   );
                 }),
             Text('text_phone2'.tr,
-                style: TextStyle(
-                    fontSize: 14, color: Colors.grey.shade600))
-                .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
+                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
+                .addPaddingOnly(right: 8, left: 8, top: 15, bottom: 5),
             StreamBuilder<bool>(
-               stream: widget.bloc.mobile2Subject.stream,
+                stream: widget.bloc!.mobile2Subject.stream,
                 initialData: true,
                 builder: (context, snapshot) {
                   return TextField(
@@ -490,58 +488,49 @@ class _AccountInformationMerchantScreenState
                       contentPadding: EdgeInsets.all(9),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(6)),
-                        borderSide: BorderSide(
-                            width: 1, color: context.accentColor),
+                            const BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: context.accentColor),
                       ),
                       disabledBorder: const OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(6)),
-                        borderSide:
-                        BorderSide(width: 1, color: Colors.black54),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide: BorderSide(width: 1, color: Colors.black54),
                       ),
                       enabledBorder: const OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(6)),
-                        borderSide: BorderSide(
-                            width: 1, color: Color(0xFFC2C3DF)),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: Color(0xFFC2C3DF)),
                       ),
                       border: const OutlineInputBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(6)),
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
                           borderSide: BorderSide(width: 1)),
                       errorBorder: const OutlineInputBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(6)),
-                          borderSide:
-                          BorderSide(width: 1, color: Colors.red)),
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          borderSide: BorderSide(width: 1, color: Colors.red)),
                       focusedErrorBorder: OutlineInputBorder(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(6)),
-                          borderSide: BorderSide(
-                              width: 1, color: Colors.red.shade800)),
+                              const BorderRadius.all(Radius.circular(6)),
+                          borderSide:
+                              BorderSide(width: 1, color: Colors.red.shade800)),
                       hintText: '',
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText:
-                      snapshot.data ? null : 'text_phone_error'.tr,
+                      errorText: snapshot.data! ? null : 'text_phone_error'.tr,
                     ),
                     textInputAction: TextInputAction.next,
                     onEditingComplete: () => node.nextFocus(),
                     keyboardType: TextInputType.phone,
-                    onChanged: (val) => widget.bloc.changeMobile2(val),
-                     controller: widget.bloc.mobile2Controller,
+                    onChanged: (val) => widget.bloc!.changeMobile2(val),
+                    controller: widget.bloc!.mobile2Controller,
                   );
                 }),
             Text('text_Tel'.tr,
-                style: TextStyle(
-                    fontSize: 14, color: Colors.grey.shade600))
-                .addPaddingOnly(right: 8,left: 8, top: 15, bottom: 5),
+                    style: TextStyle(fontSize: 14, color: Colors.grey.shade600))
+                .addPaddingOnly(right: 8, left: 8, top: 15, bottom: 5),
             StreamBuilder<bool>(
-               stream: widget.bloc.mobileSubject.stream,
+                stream: widget.bloc!.mobileSubject.stream,
                 initialData: true,
                 builder: (context, snapshot) {
-
                   return TextField(
                     style: TextStyle(fontSize: 14),
                     decoration: InputDecoration(
@@ -550,47 +539,40 @@ class _AccountInformationMerchantScreenState
                       contentPadding: EdgeInsets.all(9),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(6)),
-                        borderSide: BorderSide(
-                            width: 1, color: context.accentColor),
+                            const BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: context.accentColor),
                       ),
                       disabledBorder: const OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(6)),
-                        borderSide:
-                        BorderSide(width: 1, color: Colors.black54),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide: BorderSide(width: 1, color: Colors.black54),
                       ),
                       enabledBorder: const OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(6)),
-                        borderSide: BorderSide(
-                            width: 1, color: Color(0xFFC2C3DF)),
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderSide:
+                            BorderSide(width: 1, color: Color(0xFFC2C3DF)),
                       ),
                       border: const OutlineInputBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(6)),
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
                           borderSide: BorderSide(width: 1)),
                       errorBorder: const OutlineInputBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(6)),
-                          borderSide:
-                          BorderSide(width: 1, color: Colors.red)),
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          borderSide: BorderSide(width: 1, color: Colors.red)),
                       focusedErrorBorder: OutlineInputBorder(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(6)),
-                          borderSide: BorderSide(
-                              width: 1, color: Colors.red.shade800)),
+                              const BorderRadius.all(Radius.circular(6)),
+                          borderSide:
+                              BorderSide(width: 1, color: Colors.red.shade800)),
                       hintText: '',
                       hintStyle: const TextStyle(
                           fontSize: 14, color: Color(0xFF9797AD)),
-                      errorText:
-                      snapshot.data ? null : 'text_phone_error'.tr,
+                      errorText: snapshot.data! ? null : 'text_phone_error'.tr,
                     ),
                     textInputAction: TextInputAction.done,
                     onSubmitted: (_) => node.unfocus(),
                     keyboardType: TextInputType.phone,
-                    onChanged: (val) => widget.bloc.changeMobile(val),
-                     controller: widget.bloc.mobileController,
+                    onChanged: (val) => widget.bloc!.changeMobile(val),
+                    controller: widget.bloc!.mobileController,
                   );
                 }),
             // Text('text_fax'.tr,
@@ -651,7 +633,6 @@ class _AccountInformationMerchantScreenState
             //       );
             //     }),
 
-
             SizedBox(
               height: 15,
             ),
@@ -664,14 +645,14 @@ class _AccountInformationMerchantScreenState
     );
   }
 
-  Widget BuildViewMap(dynamic lng,dynamic lat) {
+  Widget BuildViewMap(dynamic lng, dynamic lat) {
     final controller = MapController(
       location: LatLng(lat, lng),
       // location: LatLng(37.4219983, -122.084),
     );
 
     void _gotoDefault() {
-      controller.center = LatLng(lat,lng);
+      controller.center = LatLng(lat, lng);
     }
 
     void _onDoubleTap() {
@@ -689,16 +670,16 @@ class _AccountInformationMerchantScreenState
       final scaleDiff = details.scale - _scaleStart;
       _scaleStart = details.scale;
 
-      if (scaleDiff > 0) {
-        controller.zoom += 0.02;
-      } else if (scaleDiff < 0) {
-        controller.zoom -= 0.02;
-      } else {
-        final now = details.focalPoint;
-        final diff = now - _dragStart;
-        _dragStart = now;
-        controller.drag(diff.dx, diff.dy);
-      }
+      // if (scaleDiff > 0) {
+      //   controller.zoom += 0.02;
+      // } else if (scaleDiff < 0) {
+      //   controller.zoom -= 0.02;
+      // } else {
+      //   final now = details.focalPoint;
+      //   final diff = now - _dragStart;
+      //   _dragStart = now;
+      //   controller.drag(diff.dx, diff.dy);
+      // }
     }
 
     return GestureDetector(
@@ -761,11 +742,10 @@ class _AccountInformationMerchantScreenState
 }
 
 class SocialWidget extends StatefulWidget {
-  final List<SocialItem> socialItems;
-  final SocialController controller;
+  final List<SocialItem>? socialItems;
+  final SocialController? controller;
 
-  const SocialWidget({Key key, this.socialItems, this.controller})
-      : super(key: key);
+  SocialWidget({Key? key, this.socialItems, this.controller}) : super(key: key);
 
   @override
   _SocialWidgetState createState() => _SocialWidgetState();
@@ -795,7 +775,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                     items: widget.socialItems,
                     hint: Text('text_social'.tr),
                     isExpanded: true,
-                    customWidgets: widget.socialItems.map((e) {
+                    customWidgets: widget.socialItems!.map((e) {
                       return Row(
                         children: [
                           Icon(e.icon),
@@ -806,7 +786,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                             children: [
                               Expanded(
                                   child: Text(
-                                e.name,
+                                e.name!,
                                 overflow: TextOverflow.ellipsis,
                               )),
                             ],
@@ -815,7 +795,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                       );
                     }).toList(),
                     onChanged: (SocialItem item) {
-                      widget.controller.socialItem = item;
+                      widget.controller!.socialItem = item;
                     },
                   ),
                 ),
@@ -828,8 +808,8 @@ class _SocialWidgetState extends State<SocialWidget> {
               flex: 8,
               child: TextFormField(
                 style: TextStyle(fontSize: 14),
-                validator: (String val) {
-                  if (val.isEmpty) {
+                validator: (String? val) {
+                  if (val!.isEmpty) {
                     return 'required';
                   }
                   return null;
@@ -865,7 +845,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                       const TextStyle(fontSize: 14, color: Color(0xFF9797AD)),
                 ),
                 keyboardType: TextInputType.text,
-                controller: widget.controller.urlController,
+                controller: widget.controller!.urlController,
               ),
             ),
           ],

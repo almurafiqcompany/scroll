@@ -1,4 +1,3 @@
-
 import 'package:al_murafiq/core/shared_pref_helper.dart';
 import 'package:al_murafiq/models/subscription.dart';
 import 'package:al_murafiq/widgets/show_message_dialog.dart';
@@ -20,14 +19,14 @@ class SubscriptionBloc {
       RoundedLoadingButtonController();
   Future<void> fetchAllSubscription(BuildContext context) async {
     try {
-       String langCode = await helper.getCodeLang();
-       int idCountry= await helper.getCountryId();
-       String token = await helper.getToken();
+      String langCode = await helper.getCodeLang();
+      int? idCountry = await helper.getCountryId();
+      String? token = await helper.getToken();
       final List<SubscriptionData> subscriptionData = [];
       final res = await _dio.get(
         '/companies/branches?type=1',
         options: Options(
-          headers: {"Authorization": "Bearer $token",'lang': '$langCode'},
+          headers: {"Authorization": "Bearer $token", 'lang': '$langCode'},
         ),
       );
       if (res.statusCode == 200 && res.data['status'] == 200) {
@@ -41,7 +40,6 @@ class SubscriptionBloc {
         }
         allSubscriptionSubject.sink.add(subscriptionData);
         selectedSubscription.sink.add(subscriptionData[0]);
-
       } else if (res.data['status'] == 400) {
         allSubscriptionSubject.sink.addError('');
 

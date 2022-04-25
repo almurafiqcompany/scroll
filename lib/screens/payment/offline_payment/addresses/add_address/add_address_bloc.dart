@@ -17,27 +17,29 @@ import 'package:al_murafiq/core/shared_pref_helper.dart';
 import 'package:dio/dio.dart' as PackgDio;
 import 'dart:io';
 import 'package:al_murafiq/models/payment_plans.dart';
+
 class AddAddressBloc {
   final Dio _dio = GetIt.instance.get<Dio>();
   SharedPreferenceHelper _helper = GetIt.instance.get<SharedPreferenceHelper>();
 
   RoundedLoadingButtonController loadingButtonController =
-  RoundedLoadingButtonController();
-
-
+      RoundedLoadingButtonController();
 
   validateText(TextEditingController controller) {
     return controller.text.isNotEmpty;
   }
+
   TextEditingController addressController = TextEditingController();
   final BehaviorSubject<bool> addressSubject = BehaviorSubject<bool>();
 
-  changeAdress(String val) => addressSubject.sink.add(validateText(addressController));
+  changeAdress(String val) =>
+      addressSubject.sink.add(validateText(addressController));
 
-    TextEditingController specialMarkController = TextEditingController();
+  TextEditingController specialMarkController = TextEditingController();
   final BehaviorSubject<bool> specialMarkSubject = BehaviorSubject<bool>();
 
-  changeSpecialMark(String val) => specialMarkSubject.sink.add(validateText(specialMarkController));
+  changeSpecialMark(String val) =>
+      specialMarkSubject.sink.add(validateText(specialMarkController));
 
   TextEditingController phoneController = TextEditingController();
   final BehaviorSubject<bool> phoneSubject = BehaviorSubject<bool>();
@@ -45,68 +47,71 @@ class AddAddressBloc {
   changePhone(String val) =>
       phoneSubject.sink.add(validateText(phoneController));
 
-
-  Future<void> confirmAddAddress({dynamic lat,dynamic lng,final int company_id,int pay_method_id,int way_pay_id,BuildContext context, PaymentPlans paymentPlans}) async {
-
-
-    if (validateText(addressController) &&
-        validateText(phoneController))
-    {
-
-
-      if ( selectedCountry.value == null || selectedCities.value == null) {
+  Future<void> confirmAddAddress(
+      {dynamic lat,
+      dynamic lng,
+      final int? company_id,
+      int? pay_method_id,
+      int? way_pay_id,
+      BuildContext? context,
+      PaymentPlans? paymentPlans}) async {
+    if (validateText(addressController) && validateText(phoneController)) {
+      if (selectedCountry.value == null || selectedCities.value == null) {
         // Get.snackbar(null, 'اختر صورة  ثم حاول مرة اخري',
         //     snackPosition: SnackPosition.BOTTOM);
         await showModalBottomSheet<void>(
-          context: context,
+          context: context!,
           builder: (BuildContext context) {
-            return ShowMessageDialog(type: 400,message: 'text_select_country_msg'.tr,show_but: true,);
+            return ShowMessageDialog(
+              type: 400,
+              message: 'text_select_country_msg'.tr,
+              show_but: true,
+            );
           },
         );
-        return false;
+        return;
       }
       final PackgDio.FormData formData = PackgDio.FormData.fromMap({
-
         "address_details": addressController.text,
         "phone": phoneController.text,
         "special_mark": specialMarkController.text,
         "lat": lat,
         "lng": lng,
-
       });
 
-      if (selectedCountry.value != null ) {
-        formData.fields.add(
-            MapEntry('country_id', '${selectedCountry.value.id}')
-        );
+      if (selectedCountry.value != null) {
+        formData.fields
+            .add(MapEntry('country_id', '${selectedCountry.value.id}'));
       }
-      if (selectedCities.value != null ) {
-        formData.fields.add(
-            MapEntry('city_id', '${selectedCities.value.id}')
-        );
+      if (selectedCities.value != null) {
+        formData.fields.add(MapEntry('city_id', '${selectedCities.value.id}'));
       }
 
       try {
         String lang = await _helper.getCodeLang();
-        String token = await _helper.getToken();
-        int countryID = await _helper.getCountryId();
+        String? token = await _helper.getToken();
+        int? countryID = await _helper.getCountryId();
 
         final res = await _dio.post(
           '/addresses/store?country_id=$countryID',
           options: Options(
-            headers: {"Authorization": "Bearer $token",
+            headers: {
+              "Authorization": "Bearer $token",
               // 'Content-Type' :"multipart/form-data",
-              'lang': '$lang'},
-
+              'lang': '$lang'
+            },
           ),
           data: formData,
         );
         if (res.statusCode == 200 && res.data['status'] == 200) {
-
           await showModalBottomSheet<void>(
-            context: context,
+            context: context!,
             builder: (BuildContext context) {
-              return ShowMessageDialog(type: 200,message: '${res.data['message']}',show_but: true,);
+              return ShowMessageDialog(
+                type: 200,
+                message: '${res.data['message']}',
+                show_but: true,
+              );
             },
           );
           await Get.to(CheckOut(
@@ -118,30 +123,35 @@ class AddAddressBloc {
             paymentPlans: paymentPlans,
           ));
         } else if (res.data['status'] == 500) {
-
           await showModalBottomSheet<void>(
-            context: context,
+            context: context!,
             builder: (BuildContext context) {
-              return ShowMessageDialog(type: 400,message: '${res.data['message']}',show_but: true,);
+              return ShowMessageDialog(
+                type: 400,
+                message: '${res.data['message']}',
+                show_but: true,
+              );
             },
           );
         }
         // ignore: avoid_catches_without_on_clauses
       } catch (e) {
         await showModalBottomSheet<void>(
-          context: context,
+          context: context!,
           builder: (BuildContext context) {
-            return ShowMessageDialog(type: 400,message: 'e'.tr,show_but: true,);
+            return ShowMessageDialog(
+              type: 400,
+              message: 'e'.tr,
+              show_but: true,
+            );
           },
         );
       }
-
     } else {
       phoneSubject.sink.add(validateText(phoneController));
       addressSubject.sink.add(validateText(addressController));
     }
   }
-
 
   final allCountriesSubject = BehaviorSubject<List<CountriesData>>();
   final allLanguageSubject = BehaviorSubject<List<Languages>>();
@@ -154,7 +164,7 @@ class AddAddressBloc {
   Future<void> fetchAllCountries(int id) async {
     try {
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final List<CountriesData> countries = [];
       final List<Languages> languages = [];
       final res = await _dio.get(
@@ -167,16 +177,15 @@ class AddAddressBloc {
       if (res.statusCode == 200) {
         for (var obj in res.data['data']['countries']) {
           CountriesData country = CountriesData.fromJson(obj);
-          if(country.id == id){
+          if (country.id == id) {
             selectedCountry.sink.add(country);
-            selectedCities.sink.add(country.cities[0]);
+            selectedCities.sink.add(country.cities![0]);
           }
           countries.add(country);
         }
         for (var obj in res.data['data']['language']) {
           languages.add(Languages.fromJson(obj));
         }
-
 
         allCountriesSubject.sink.add(countries);
         allLanguageSubject.sink.add(languages);
@@ -188,6 +197,7 @@ class AddAddressBloc {
       allCountriesSubject.sink.addError('');
     }
   }
+
   final getAllCategoriesSubject = BehaviorSubject<List<Categories_Data>>();
   final selectCategoriesSubject = BehaviorSubject<Categories_Data>();
   final selectedSubCategories = BehaviorSubject<SubCategories>();
@@ -209,5 +219,4 @@ class AddAddressBloc {
     await selectedCities.close();
     phoneController.dispose();
   }
-
 }

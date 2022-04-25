@@ -30,7 +30,7 @@ class _RegisterDelegateScreenState extends State<RegisterDelegateScreen> {
               return DefaultTabController(
                 key: UniqueKey(),
                 length: 2,
-                initialIndex: snapshot.data,
+                initialIndex: snapshot.data!,
                 child: Scaffold(
                     appBar: const GradientAppbar(),
                     body: Column(

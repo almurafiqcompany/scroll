@@ -28,17 +28,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:al_murafiq/screens/splash2/splash2.dart';
 import 'package:al_murafiq/screens/home_page/company/branches_screen.dart';
-class SideMenu extends StatefulWidget {
-  final SideMenuTypes sideMenuType;
 
-  SideMenu({Key key, @required this.sideMenuType}) : super(key: key);
+class SideMenu extends StatefulWidget {
+  final SideMenuTypes? sideMenuType;
+
+  SideMenu({Key? key, @required this.sideMenuType}) : super(key: key);
 
   @override
   _SideMenuState createState() => _SideMenuState();
 }
 
 class _SideMenuState extends State<SideMenu> {
-  SideMenuBloc sideMenuBloc=SideMenuBloc();
+  SideMenuBloc sideMenuBloc = SideMenuBloc();
 
   @override
   void initState() {
@@ -46,9 +47,10 @@ class _SideMenuState extends State<SideMenu> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    List<_SideMenuItem> _data;
+    List<_SideMenuItem>? _data;
     switch (widget.sideMenuType) {
       case SideMenuTypes.User:
         _data = _userData;
@@ -66,205 +68,204 @@ class _SideMenuState extends State<SideMenu> {
         break;
     }
     return Scaffold(
-
       // appBar: const GradientAppbar(title: 'sas',),
 
       body: SingleChildScrollView(
         child: StreamBuilder<Settings>(
-          stream: sideMenuBloc.dataOfSideMenuSubject.stream,
-          builder: (context, snapshot) {
-            if(snapshot.hasData){
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    child: Column(
-                      children: <Widget>[
-                        Stack(
-                          children: [
-                            Container(
-                              height: 75,
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: <Color>[
-                                    Color(0xFF03317C),
-                                    Color(0xFF05B3D6),
-                                  ],
+            stream: sideMenuBloc.dataOfSideMenuSubject.stream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      child: Column(
+                        children: <Widget>[
+                          Stack(
+                            children: [
+                              Container(
+                                height: 75,
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: <Color>[
+                                      Color(0xFF03317C),
+                                      Color(0xFF05B3D6),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              right: 20,
-                              top: 35,
-                              child: GestureDetector(
-                                  onTap: () async {
-                                  },
-                                  child:  AutoSizeText(
-                                    'al_murafiq'.tr,
-                                    maxFontSize: 18,
-                                    minFontSize: 14,
-                                    style: TextStyle(fontSize: 18, color: Colors.white),
-                                  )),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: double.maxFinite,
-                          height: 6,
-                          color: Colors.lime,
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (widget.sideMenuType==SideMenuTypes.defaultUser) Container(
-                    height: Get.height*0.17,
-                    decoration: BoxDecoration(
-                        color: Color(0xffFFFFFF),
-                        borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(20.0),
-                            bottomRight: Radius.circular(20.0)),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
+                              Positioned(
+                                right: 20,
+                                top: 35,
+                                child: GestureDetector(
+                                    onTap: () async {},
+                                    child: AutoSizeText(
+                                      'al_murafiq'.tr,
+                                      maxFontSize: 18,
+                                      minFontSize: 14,
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.white),
+                                    )),
+                              ),
+                            ],
                           ),
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        children: [
                           Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  width: 0.4,
-                                ),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(50.0)),
-                              ),
-                              child: const CircleAvatar(
-                                radius: 50,
-                                backgroundImage: AssetImage(
-                                  'assets/images/userImg.jpeg',
-                                ),
-                              )),
-                          const SizedBox(width: 15,),
-                          Text(
-                            'al_murafiq'.tr,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17),
+                            width: double.maxFinite,
+                            height: 6,
+                            color: Colors.lime,
                           ),
                         ],
                       ),
                     ),
-                  )
-                  else SideMenuContainer(),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-
-                    height: Get.height * 0.55,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF1F4FB),
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/backgroundImage.png'),
-                        fit: BoxFit.fill,
+                    if (widget.sideMenuType == SideMenuTypes.defaultUser)
+                      Container(
+                        height: Get.height * 0.17,
+                        decoration: BoxDecoration(
+                            color: Color(0xffFFFFFF),
+                            borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(20.0),
+                                bottomRight: Radius.circular(20.0)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(0, 3),
+                              ),
+                            ]),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      width: 0.4,
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(50.0)),
+                                  ),
+                                  child: const CircleAvatar(
+                                    radius: 50,
+                                    backgroundImage: AssetImage(
+                                      'assets/images/userImg.jpeg',
+                                    ),
+                                  )),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                'al_murafiq'.tr,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 17),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    else
+                      SideMenuContainer(),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      height: Get.height * 0.55,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFF1F4FB),
+                        image: DecorationImage(
+                          image:
+                              AssetImage('assets/images/backgroundImage.png'),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      child: SingleChildScrollView(
+                        physics: iosScrollPhysics(),
+                        child: Column(
+                            children: _data!
+                                .map(
+                                  (_SideMenuItem e) => ZoomIn(
+                                    duration: Duration(milliseconds: 600),
+                                    delay: Duration(milliseconds: 600),
+                                    child: InkWell(
+                                      onTap: e.onClick,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          CircleAvatar(
+                                            backgroundColor:
+                                                const Color(0xFFCDECF5),
+                                            radius: 20,
+                                            child: Icon(e.icon,
+                                                color: const Color(0xFF293DC1)),
+                                          ),
+                                          const SizedBox(width: 30),
+                                          Text(
+                                            '${e.textKey}'.tr,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black,
+                                                fontSize: 15),
+                                          ),
+                                        ],
+                                      ).addPaddingOnly(
+                                          right: 55, left: 55, bottom: 14),
+                                    ),
+                                  ),
+                                )
+                                .toList()),
                       ),
                     ),
-                    child: SingleChildScrollView(
-                      physics: iosScrollPhysics(),
-                      child: Column(
-                          children: _data
-                              .map(
-                                (_SideMenuItem e) => ZoomIn(
-                                  duration: Duration(milliseconds: 600),
-                                  delay: Duration(
-                                      milliseconds:
-                                       600 ),
-                                  child: InkWell(
-                              onTap: e.onClick,
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      backgroundColor: const Color(0xFFCDECF5),
-                                      radius: 20,
-                                      child: Icon(e.icon,
-                                          color: const Color(0xFF293DC1)),
-                                    ),
-                                    const SizedBox(width: 30),
-                                    Text(
-                                      '${e.textKey}'.tr,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black,
-                                          fontSize: 15),
-                                    ),
-                                  ],
-                              ).addPaddingOnly(right: 55, left: 55, bottom: 14),
+                    // Container(
+                    //   height: 50,
+                    //   child: SocialCircle(
+                    //     // socail: [
+                    //     //   Social(icon_type: 'instagram'),
+                    //     //   Social(icon_type: 'whatsapp'),
+                    //     //   Social(icon_type: 'facebook'),
+                    //     //   Social(icon_type: 'twitter'),
+                    //     // ],
+                    //
+                    //   )
+                    //       .addPaddingHorizontalVertical(horizontal: 40, vertical: 4),
+                    // ),
+                    StreamBuilder<void>(builder: (context, snapshotSoc) {
+                      if (snapshot.data!.social != null) {
+                        return Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                          child: Container(
+                            height: Get.height * 0.08,
+                            child: SocialCircleSideMenu(
+                              socail: snapshot.data!.social,
                             ),
-                                ),
-                          )
-                              .toList()),
-                    ),
-                  ),
-                  // Container(
-                  //   height: 50,
-                  //   child: SocialCircle(
-                  //     // socail: [
-                  //     //   Social(icon_type: 'instagram'),
-                  //     //   Social(icon_type: 'whatsapp'),
-                  //     //   Social(icon_type: 'facebook'),
-                  //     //   Social(icon_type: 'twitter'),
-                  //     // ],
-                  //
-                  //   )
-                  //       .addPaddingHorizontalVertical(horizontal: 40, vertical: 4),
-                  // ),
-                  StreamBuilder<void>(
-                      builder: (context, snapshotSoc) {
-                        if (snapshot.data.social!=null){
-                          return Padding(
-                            padding:
-                            EdgeInsets.symmetric(horizontal: 30,vertical: 5),
-                            child: Container(
-                              height: Get.height*0.08,
-                              child: SocialCircleSideMenu(
-                                socail: snapshot.data.social,
-                              ),
-                            ),
-                          );
-                        } else {
-                          return SizedBox();
-                        }
-                      }),
-                  // const Spacer(),
-                ],
-              );
-            }
-            else {
-              //return SizedBox();
-              return SizedBox(
-                  height: Get.height,
-                  child: const Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: kPrimaryColor,
-                      )));
-            }
-          }
-        ),
+                          ),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    }),
+                    // const Spacer(),
+                  ],
+                );
+              } else {
+                //return SizedBox();
+                return SizedBox(
+                    height: Get.height,
+                    child: const Center(
+                        child: CircularProgressIndicator(
+                      backgroundColor: kPrimaryColor,
+                    )));
+              }
+            }),
       ),
     );
   }
 
   final List<_SideMenuItem> _defaultUserData = <_SideMenuItem>[
-
     _SideMenuItem(
       textKey: 'side_policy',
       icon: FontAwesomeIcons.exclamationCircle,
@@ -294,7 +295,7 @@ class _SideMenuState extends State<SideMenu> {
       },
     ),
   ];
-final List<_SideMenuItem> _userData = <_SideMenuItem>[
+  final List<_SideMenuItem> _userData = <_SideMenuItem>[
     // _SideMenuItem(
     //   textKey: 'favourite',
     //   icon: Icons.fact_check,
@@ -309,7 +310,9 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
       textKey: 'side_edit_profile',
       icon: Icons.account_circle,
       onClick: () {
-        Get.to(ProfileEditUserDelegateScreen(bedelegate: false,));
+        Get.to(ProfileEditUserDelegateScreen(
+          bedelegate: false,
+        ));
       },
     ),
 
@@ -318,16 +321,15 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
       icon: Icons.web_outlined,
       onClick: () {
         Get.to(SearchStoreScreen());
-
       },
     ),
-  _SideMenuItem(
-    textKey: 'side_notifications',
-    icon: Icons.notifications,
-    onClick: () {
-      Get.to(NotificationScreen());
-    },
-  ),
+    _SideMenuItem(
+      textKey: 'side_notifications',
+      icon: Icons.notifications,
+      onClick: () {
+        Get.to(NotificationScreen());
+      },
+    ),
 // _SideMenuItem(
 //       textKey: 'side_be_delegate',
 //       icon: Icons.web_outlined,
@@ -372,7 +374,6 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
       icon: FontAwesomeIcons.exclamationCircle,
       onClick: () {
         Get.to(PolicyScreen());
-
       },
     ),
     _SideMenuItem(
@@ -401,7 +402,7 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
     ),
   ];
 
-  final List<_SideMenuItem>  _delegateData= <_SideMenuItem>[
+  final List<_SideMenuItem> _delegateData = <_SideMenuItem>[
     // _SideMenuItem(
     //   textKey: 'side_customers',
     //   icon: Icons.fact_check,
@@ -416,18 +417,19 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
     // ),
     _SideMenuItem(
       textKey: 'side_total_client',
-      icon:  Icons.article,
+      icon: Icons.article,
       onClick: () {
         Get.to(TotalClients());
       },
     ),
 
-
     _SideMenuItem(
       textKey: 'side_edit_profile',
       icon: Icons.account_circle,
       onClick: () {
-        Get.to(ProfileEditUserDelegateScreen(bedelegate: false,));
+        Get.to(ProfileEditUserDelegateScreen(
+          bedelegate: false,
+        ));
       },
     ),
     // _SideMenuItem(
@@ -441,7 +443,6 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
       icon: Icons.web_outlined,
       onClick: () {
         Get.to(SearchStoreScreen());
-
       },
     ),
     _SideMenuItem(
@@ -464,7 +465,6 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
       icon: FontAwesomeIcons.exclamationCircle,
       onClick: () {
         Get.to(PolicyScreen());
-
       },
     ),
     _SideMenuItem(
@@ -487,7 +487,6 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
       onClick: () async {
         LogoutBloc bloc = LogoutBloc();
         await bloc.logOut();
-
       },
     ),
   ];
@@ -511,7 +510,9 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
       textKey: 'side_edit_profile',
       icon: Icons.account_circle,
       onClick: () {
-        Get.to(ProfileEditUserDelegateScreen(bedelegate: false,));
+        Get.to(ProfileEditUserDelegateScreen(
+          bedelegate: false,
+        ));
       },
     ),
     _SideMenuItem(
@@ -525,14 +526,18 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
       textKey: 'side_eshtrakaty',
       icon: FontAwesomeIcons.dollarSign,
       onClick: () {
-        Get.to(SubscriptionScreen(sub_or_ads: 0,));
+        Get.to(SubscriptionScreen(
+          sub_or_ads: 0,
+        ));
       },
     ),
     _SideMenuItem(
       textKey: 'side_ads',
       icon: FontAwesomeIcons.handSparkles,
       onClick: () {
-        Get.to(SubscriptionScreen(sub_or_ads: 1,));
+        Get.to(SubscriptionScreen(
+          sub_or_ads: 1,
+        ));
       },
     ),
     _SideMenuItem(
@@ -549,13 +554,13 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
         Get.to(NotificationScreen());
       },
     ),
-   _SideMenuItem(
-        textKey: 'side_search_store',
-        icon: Icons.web_outlined,
-        onClick: () {
-          Get.to(SearchStoreScreen());
-        },
-      ),
+    _SideMenuItem(
+      textKey: 'side_search_store',
+      icon: Icons.web_outlined,
+      onClick: () {
+        Get.to(SearchStoreScreen());
+      },
+    ),
 
     _SideMenuItem(
       textKey: 'side_ask',
@@ -600,9 +605,9 @@ final List<_SideMenuItem> _userData = <_SideMenuItem>[
 }
 
 class _SideMenuItem {
-  final String textKey;
-  final IconData icon;
-  final VoidCallback onClick;
+  final String? textKey;
+  final IconData? icon;
+  final VoidCallback? onClick;
 
   _SideMenuItem({
     @required this.textKey,
@@ -631,5 +636,5 @@ extension SideMenuTypesExt on SideMenuTypes {
     print('$index $text');
   }
 
-  String get text => SideMenuTypesMap[this];
+  String get text => SideMenuTypesMap[this]!;
 }

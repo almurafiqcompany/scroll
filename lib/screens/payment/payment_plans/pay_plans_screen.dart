@@ -11,10 +11,11 @@ import 'package:get/get.dart';
 import 'package:al_murafiq/models/payment_plans.dart';
 
 class PayPlansScreen extends StatefulWidget {
-  final int company_id;
-  final int typeAdsOrPlan;
+  final int? company_id;
+  final int? typeAdsOrPlan;
 
-   PayPlansScreen({Key key, this.company_id, this.typeAdsOrPlan}) : super(key: key);
+  PayPlansScreen({Key? key, this.company_id, this.typeAdsOrPlan})
+      : super(key: key);
   @override
   _PayPlansScreenState createState() => _PayPlansScreenState();
 }
@@ -23,7 +24,7 @@ class _PayPlansScreenState extends State<PayPlansScreen> {
   PaymentPlansChooseBloc _paymentPlans = PaymentPlansChooseBloc();
   @override
   void initState() {
-    _paymentPlans.fetchPaymentPlansChoose(type:  widget.typeAdsOrPlan);
+    _paymentPlans.fetchPaymentPlansChoose(type: widget.typeAdsOrPlan);
     // TODO: implement initState
     super.initState();
   }
@@ -36,7 +37,6 @@ class _PayPlansScreenState extends State<PayPlansScreen> {
           AppBar(
         centerTitle: true,
         title: const Text(''),
-
         elevation: 0,
         flexibleSpace: Column(
           children: <Widget>[
@@ -111,27 +111,27 @@ class _PayPlansScreenState extends State<PayPlansScreen> {
                       stream: _paymentPlans.dataOfPaymentPlansSubject.stream,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          if (snapshot.data.length > 0) {
+                          if (snapshot.data!.length > 0) {
                             return ListView.builder(
                               physics: ClampingScrollPhysics(),
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
-                              itemCount: snapshot.data.length,
+                              itemCount: snapshot.data!.length,
                               itemBuilder: (BuildContext context, int index) =>
                                   ZoomIn(
-                                    duration: Duration(milliseconds: 600),
-                                    delay: Duration(
-                                        milliseconds:
+                                duration: Duration(milliseconds: 600),
+                                delay: Duration(
+                                    milliseconds:
                                         index * 100 > 1000 ? 600 : index * 120),
-                                    child: Padding(
-                                    padding:
+                                child: Padding(
+                                  padding:
                                       const EdgeInsets.symmetric(vertical: 0),
-                                    child: PlanPayContainer(
-                                    paymentPlans: snapshot.data[index],
+                                  child: PlanPayContainer(
+                                    paymentPlans: snapshot.data![index],
                                     company_id: widget.company_id,
+                                  ),
                                 ),
                               ),
-                                  ),
                             );
                           } else {
                             return SizedBox(
@@ -140,7 +140,11 @@ class _PayPlansScreenState extends State<PayPlansScreen> {
                             );
                           }
                         } else if (snapshot.hasError) {
-                          return Center(child: ShowMessageEmtyDialog(message: snapshot.error,pathImg:'assets/images/noDocument.png',));
+                          return Center(
+                              child: ShowMessageEmtyDialog(
+                            message: 'snapshot.error',
+                            pathImg: 'assets/images/noDocument.png',
+                          ));
                         } else {
                           //return SizedBox();
                           return SizedBox(

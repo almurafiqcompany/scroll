@@ -37,7 +37,7 @@ class RegisterUserBloc {
       BehaviorSubject<DateTime>.seeded(DateTime.now());
 
   Future<void> birthDateChanged(BuildContext context) async {
-    final DateTime dateTime = await _gatDateFromPicker(context);
+    final DateTime? dateTime = await _gatDateFromPicker(context);
     if (dateTime != null) {
       birthDateSubject.add(dateTime);
     }
@@ -107,17 +107,16 @@ class RegisterUserBloc {
   // }
 
   final BehaviorSubject<dynamic> longSubject =
-  BehaviorSubject<dynamic>.seeded(0.0);
+      BehaviorSubject<dynamic>.seeded(0.0);
   final BehaviorSubject<dynamic> latSubject =
-  BehaviorSubject<dynamic>.seeded(0.0);
+      BehaviorSubject<dynamic>.seeded(0.0);
   final avatarController = BehaviorSubject<File>();
 
   Future<void> confirmSignUp(BuildContext context) async {
     if (validateEmailOrPhone(emailOrPhoneController) &&
         validatePassword(passwordController) &&
-        validateText(phoneController)&&
-        validateText(nameController)
-    ) {
+        validateText(phoneController) &&
+        validateText(nameController)) {
       // if (avatarController.value==null) {
       //   Get.snackbar(null, 'اختر صورة  ثم حاول مرة اخري',
       //       snackPosition: SnackPosition.BOTTOM);
@@ -127,17 +126,21 @@ class RegisterUserBloc {
         await showModalBottomSheet<void>(
           context: context,
           builder: (BuildContext context) {
-            return ShowMessageDialog(type: 400,message: 'text_select_country_msg'.tr,show_but: true,);
+            return ShowMessageDialog(
+              type: 400,
+              message: 'text_select_country_msg'.tr,
+              show_but: true,
+            );
           },
         );
-        return false;
+        return;
       }
       final PackgDio.FormData formData = PackgDio.FormData.fromMap({
         "email": emailOrPhoneController.text,
         "password": passwordController.text,
         "name": nameController.text,
         'password_confirmation': confirmePasswordController.text,
-       // "default_lang": selectedLanguage.value != null?selectedLanguage.value.code:allDefultLanguageSubject.value,
+        // "default_lang": selectedLanguage.value != null?selectedLanguage.value.code:allDefultLanguageSubject.value,
         'default_lang': await _helper.getCodeLang() ?? 'ar',
         "phone": phoneController.text,
         "type": 'Customer',
@@ -147,31 +150,26 @@ class RegisterUserBloc {
         'lng': await _helper.getLng(),
         'source': SourceDevice,
       });
-      if (avatarController.value != null ) {
-        var img=await PackgDio.MultipartFile.fromFileSync(avatarController.value.path);
-        formData.files.add(
-            MapEntry('avatar', img)
-        );
+      if (avatarController.value != null) {
+        var img = await PackgDio.MultipartFile.fromFileSync(
+            avatarController.value.path);
+        formData.files.add(MapEntry('avatar', img));
       }
-      if (selectedCountry.value != null ) {
-        formData.fields.add(
-            MapEntry('country_id', '${selectedCountry.value.id}')
-        );
+      if (selectedCountry.value != null) {
+        formData.fields
+            .add(MapEntry('country_id', '${selectedCountry.value.id}'));
       }
-      if (selectedCities.value != null ) {
-        formData.fields.add(
-            MapEntry('city_id', '${selectedCities.value.id}')
-        );
+      if (selectedCities.value != null) {
+        formData.fields.add(MapEntry('city_id', '${selectedCities.value.id}'));
       }
-      if (await FirebaseNotifications().generateFcmToken() != null ) {
-        formData.fields.add(
-            MapEntry('fcm_token', await FirebaseNotifications().generateFcmToken())
-        );
+      if (await FirebaseNotifications().generateFcmToken() != null) {
+        formData.fields.add(MapEntry(
+            'fcm_token', await FirebaseNotifications().generateFcmToken()));
       }
       if (passwordController.text == confirmePasswordController.text) {
         try {
           String lang = await _helper.getCodeLang();
-          int countryID = await _helper.getCountryId();
+          int? countryID = await _helper.getCountryId();
           final res = await _dio.post(
             '/registers/store?country_id=$countryID',
             options: Options(
@@ -193,18 +191,26 @@ class RegisterUserBloc {
             await _helper.setDefaultLang(allDefultLanguageSubject.value);
             // await _helper.setDefaultLang(await _helper.getDefaultLang());
             await Get.offAll(BottomNavBar());
-          }else if (res.data['status'] == 500) {
+          } else if (res.data['status'] == 500) {
             await showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
-                return ShowMessageDialog(type: 400,message: '${res.data['message']}',show_but: true,);
+                return ShowMessageDialog(
+                  type: 400,
+                  message: '${res.data['message']}',
+                  show_but: true,
+                );
               },
             );
-          }else if (res.data['status'] == 300) {
+          } else if (res.data['status'] == 300) {
             await showModalBottomSheet<void>(
               context: context,
               builder: (BuildContext context) {
-                return ShowMessageDialog(type: 400,message: '${res.data['message']}',show_but: true,);
+                return ShowMessageDialog(
+                  type: 400,
+                  message: '${res.data['message']}',
+                  show_but: true,
+                );
               },
             );
           }
@@ -213,16 +219,23 @@ class RegisterUserBloc {
           await showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
-              return ShowMessageDialog(type: 400,message: 'e'.tr,show_but: true,);
+              return ShowMessageDialog(
+                type: 400,
+                message: 'e'.tr,
+                show_but: true,
+              );
             },
           );
         }
       } else {
-
         await showModalBottomSheet<void>(
           context: context,
           builder: (BuildContext context) {
-            return ShowMessageDialog(type: 400,message: 'text_p_select_photo'.tr,show_but: true,);
+            return ShowMessageDialog(
+              type: 400,
+              message: 'text_p_select_photo'.tr,
+              show_but: true,
+            );
           },
         );
       }
@@ -273,6 +286,7 @@ class RegisterUserBloc {
       phoneController.dispose();
     }
   }
+
   final selectedLanguage = BehaviorSubject<Languages>();
   final allCountriesSubject = BehaviorSubject<List<CountriesData>>();
   final selectedCountry = BehaviorSubject<CountriesData>();
@@ -283,7 +297,7 @@ class RegisterUserBloc {
   Future<void> fetchAllCountries(int id) async {
     try {
       String lang = await _helper.getCodeLang();
-      int countryID = await _helper.getCountryId();
+      int? countryID = await _helper.getCountryId();
       final List<CountriesData> countries = [];
       final List<Languages> languages = [];
       final res = await _dio.get(
@@ -295,15 +309,15 @@ class RegisterUserBloc {
       if (res.statusCode == 200) {
         for (var obj in res.data['data']['countries']) {
           CountriesData country = CountriesData.fromJson(obj);
-          if(selectedCountry.value !=null){
-            if(country.id == selectedCountry.value.id){
+          if (selectedCountry.value != null) {
+            if (country.id == selectedCountry.value.id) {
               selectedCountry.sink.add(country);
-              for (var objCity in selectedCountry.value.cities) {
-                if(objCity.id == selectedCities.value.id){
+              for (var objCity in selectedCountry.value.cities!) {
+                if (objCity.id == selectedCities.value.id) {
                   selectedCities.sink.add(objCity);
                 }
               }
-              print('cityid ${selectedCountry.value.cities.length}');
+              print('cityid ${selectedCountry.value.cities!.length}');
               // selectedCities.sink.add(country.cities[0]);
             }
           }
@@ -324,12 +338,12 @@ class RegisterUserBloc {
     }
   }
 
-  Future<DateTime> _gatDateFromPicker(BuildContext context) async {
+  Future<DateTime?> _gatDateFromPicker(BuildContext context) async {
     return await showDatePicker(
       context: context,
 
       //locale : Get.locale,${Get.locale}
-       locale:  Locale('${Get.locale}'),
+      locale: Locale('${Get.locale}'),
       initialDate: DateTime.now().subtract(
         const Duration(days: 1),
       ),
@@ -339,14 +353,14 @@ class RegisterUserBloc {
       lastDate: DateTime.now().subtract(
         const Duration(days: 1),
       ),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData().copyWith(
             colorScheme: const ColorScheme.light(
               primary: kAccentColor,
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     );

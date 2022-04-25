@@ -8,23 +8,33 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get/get.dart';
 import 'package:al_murafiq/screens/home_page/nav_bar.dart';
 import 'package:al_murafiq/widgets/show_message_dialog.dart';
-class CardView extends StatefulWidget {
-  CardView({Key key, this.url, this.paymentPlan, this.company_id, this.pay_method_id, this.way_pay_id, this.type_payment, this.bank_or_address_id}) : super(key: key);
-  final String url;
-  final PaymentPlans paymentPlan;
-  final int company_id;
-  final int pay_method_id;
-  final int way_pay_id;
-  final String type_payment;
 
-  final int bank_or_address_id;
+class CardView extends StatefulWidget {
+  CardView(
+      {Key? key,
+      this.url,
+      this.paymentPlan,
+      this.company_id,
+      this.pay_method_id,
+      this.way_pay_id,
+      this.type_payment,
+      this.bank_or_address_id})
+      : super(key: key);
+  final String? url;
+  final PaymentPlans? paymentPlan;
+  final int? company_id;
+  final int? pay_method_id;
+  final int? way_pay_id;
+  final String? type_payment;
+
+  final int? bank_or_address_id;
   @override
   _CardViewState createState() => _CardViewState();
 }
 
 class _CardViewState extends State<CardView> {
   final flutterWebviewPlugin = new FlutterWebviewPlugin();
-  CheckOutBloc _checkOutBloc=CheckOutBloc();
+  CheckOutBloc _checkOutBloc = CheckOutBloc();
   @override
   void initState() {
     super.initState();
@@ -32,7 +42,7 @@ class _CardViewState extends State<CardView> {
     flutterWebviewPlugin.onUrlChanged.listen((String url) async {
       print('url $url');
       if (url.startsWith('https://almurafiq.com/api/pay-tap-response?')) {
-      // if (url.startsWith('${TapUrl}/paytabs_response')) {
+        // if (url.startsWith('${TapUrl}/paytabs_response')) {
         print('payment url ${url}');
         if (url.contains('pay-tap-response')) {
           print('payment A');
@@ -54,16 +64,14 @@ class _CardViewState extends State<CardView> {
           //     return alert;
           //   },
           // );
-            await _checkOutBloc.checkPaymentURL(
+          await _checkOutBloc.checkPaymentURL(
               context: context,
               company_id: widget.company_id,
               pay_method_id: widget.pay_method_id,
               way_pay_id: widget.way_pay_id,
               bank_or_address_id: widget.bank_or_address_id,
               type_payment: widget.type_payment,
-              URLCheck: url
-            );
-
+              URLCheck: url);
 
           // } else {
           //   Get.back();
@@ -79,16 +87,15 @@ class _CardViewState extends State<CardView> {
     });
   }
 
-
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text("My title"),
     content: Text("This is my message."),
     actions: [
       FlatButton(
-          child: Text("OK"),
-          onPressed: () { },
-        )
+        child: Text("OK"),
+        onPressed: () {},
+      )
     ],
   );
   @override
@@ -102,7 +109,6 @@ class _CardViewState extends State<CardView> {
           if (widget.paymentPlan != null) {
             print('init WillPopScope');
             await Get.offAll(BottomNavBar());
-
           } else {
             Get.back();
           }
@@ -127,7 +133,9 @@ class _CardViewState extends State<CardView> {
                     appBar: PreferredSize(
                         child: AppBar(
                           centerTitle: true,
-                           title: Text('al_murafiq'.tr,),
+                          title: Text(
+                            'al_murafiq'.tr,
+                          ),
                           // ignore: prefer_const_literals_to_create_immutables
                           // actions: [
                           //   GestureDetector(

@@ -20,9 +20,9 @@ import 'package:get_it/get_it.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SubscriptionScreen extends StatefulWidget {
-  final int sub_or_ads;
+  final int? sub_or_ads;
 
-  const SubscriptionScreen({Key key, this.sub_or_ads}) : super(key: key);
+  const SubscriptionScreen({Key? key, this.sub_or_ads}) : super(key: key);
   @override
   _SubscriptionScreenState createState() => _SubscriptionScreenState();
 }
@@ -40,14 +40,16 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GradientAppbar(title: widget.sub_or_ads==0?'side_eshtrakaty'.tr:'side_ads'.tr,),
+      appBar: GradientAppbar(
+        title: widget.sub_or_ads == 0 ? 'side_eshtrakaty'.tr : 'side_ads'.tr,
+      ),
       body: SingleChildScrollView(
           physics: iosScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Container(
               width: Get.width,
-              height: Get.height*0.85,
+              height: Get.height * 0.85,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
                 //gradient: kAdsHomeGradient,
@@ -58,7 +60,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Image.asset(
-                    widget.sub_or_ads==0?'assets/images/subscription.png':'assets/images/ads.png',
+                    widget.sub_or_ads == 0
+                        ? 'assets/images/subscription.png'
+                        : 'assets/images/ads.png',
                     color: Colors.grey,
                     width: 120,
                   ),
@@ -72,9 +76,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                   //     .addPaddingOnly(top: 50),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Text(
-                        'p_choose_company'.tr,
-                        style: TextStyle(color: Colors.black, fontSize: 16))
+                    child: Text('p_choose_company'.tr,
+                            style: TextStyle(color: Colors.black, fontSize: 16))
                         .addPaddingOnly(top: 5, bottom: 20),
                   ),
 
@@ -85,31 +88,32 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 25),
                           child: Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.grey.shade300,),
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.grey.shade300,
+                            ),
                             child: StreamBuilder<List<SubscriptionData>>(
                                 stream: _bloc.allSubscriptionSubject.stream,
                                 builder: (context, countriesSnapshot) {
                                   if (countriesSnapshot.hasData) {
                                     return StreamBuilder<SubscriptionData>(
-                                        stream: _bloc.selectedSubscription.stream,
-
+                                        stream:
+                                            _bloc.selectedSubscription.stream,
                                         builder: (context, snapshot) {
                                           return Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 10, vertical: 2),
                                             child: DropdownButton<
-                                                SubscriptionData>(
+                                                    SubscriptionData>(
                                                 dropdownColor: Colors.white,
                                                 iconEnabledColor: Colors.grey,
                                                 iconSize: 32,
                                                 elevation: 3,
                                                 icon: Icon(Icons
                                                     .arrow_drop_down_outlined),
-                                                items: countriesSnapshot.data
+                                                items: countriesSnapshot.data!
                                                     .map((item) {
                                                   return DropdownMenuItem<
-                                                      SubscriptionData>(
+                                                          SubscriptionData>(
                                                       value: item,
                                                       child: AutoSizeText(
                                                         item.name,
@@ -139,12 +143,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                                                 underline: SizedBox(),
                                                 value: snapshot.data,
                                                 onChanged:
-                                                    (SubscriptionData item) {
-
+                                                    (SubscriptionData? item) {
                                                   // _bloc.selectedLanguage.sink.add(null);
-                                                  _bloc.selectedSubscription.sink
-                                                      .add(item);
-
+                                                  _bloc
+                                                      .selectedSubscription.sink
+                                                      .add(item!);
                                                 }),
                                           );
                                         });
@@ -169,21 +172,20 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     height: 30,
                   ),
 
-
-
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
                     child: RoundedLoadingButton(
                       child: Text(
                         'bt_done'.tr,
                         // context.translate('bt_done'),
-                        style: kTextStyle.copyWith(fontSize: 20,color: Color(0xffFFFFFF)),
+                        style: kTextStyle.copyWith(
+                            fontSize: 20, color: Color(0xffFFFFFF)),
                       ),
                       height: 50,
                       controller: _bloc.loadingButtonController,
                       color: Colors.blue.shade800,
                       onPressed: () async {
-                        if(!_bloc.selectedSubscription.value.isNull){
+                        if (!_bloc.selectedSubscription.value.isNull) {
                           _bloc.loadingButtonController.start();
 
                           Get.to(Eshtrkaty(
@@ -192,13 +194,9 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           ));
                           _bloc.loadingButtonController.stop();
                         }
-
-
                       },
                     ),
                   ),
-
-
                 ],
               ),
             ),
