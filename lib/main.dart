@@ -36,7 +36,7 @@ void main() async {
   setupLocator();
   final SharedPreferenceHelper _helper =
       GetIt.instance.get<SharedPreferenceHelper>();
-  final String langCode = await _helper.getCodeLang() ?? 'ar';
+  final String langCode = await _helper.getCodeLang();
   runApp(MyApps(langCode: langCode));
   setupDio();
 }
