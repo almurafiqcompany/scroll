@@ -118,7 +118,7 @@ class _CardViewState extends State<CardViewPaypal> {
                     color: Color(0xffDFDFDF),
                   ),
                   child: WebviewScaffold(
-                    url: widget.url,
+                    url: widget.url!,
                     withZoom: true,
                     hidden: true,
                     appBar: PreferredSize(

@@ -1275,7 +1275,8 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintText: '',
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
-                        errorText: snapshot.data! ? null : 'text_phone_error'.tr,
+                        errorText:
+                            snapshot.data! ? null : 'text_phone_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -1329,7 +1330,8 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintText: '',
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
-                        errorText: snapshot.data! ? null : 'text_phone_error'.tr,
+                        errorText:
+                            snapshot.data! ? null : 'text_phone_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -1384,7 +1386,8 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                         hintText: '',
                         hintStyle: const TextStyle(
                             fontSize: 14, color: Color(0xFF9797AD)),
-                        errorText: snapshot.data! ? null : 'text_phone_error'.tr,
+                        errorText:
+                            snapshot.data! ? null : 'text_phone_error'.tr,
                       ),
                       textInputAction: TextInputAction.next,
                       onEditingComplete: () => node.nextFocus(),
@@ -2173,9 +2176,8 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                       ),
                       mode: DateTimeFieldPickerMode.time,
                       autovalidateMode: AutovalidateMode.always,
-                      validator: (e) => (e.day) == 1
-                          ? 'Please not the first day'
-                          : null,
+                      validator: (e) =>
+                          (e!.day) == 1 ? 'Please not the first day' : null,
                       onDateSelected: (DateTime value) {
                         print(value);
                         _addBranchesOfCompanyBloc.workTimeSubjectFrom.sink
@@ -2532,8 +2534,8 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                       true,
                                                                   itemCount:
                                                                       countriesSnapshot
-                                                                          .data
-                                                                          !.length);
+                                                                          .data!
+                                                                          .length);
                                                         } else {
                                                           return const Padding(
                                                             padding:
@@ -2885,8 +2887,8 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                           shrinkWrap:
                                                                               true,
                                                                           itemCount: citiesSnapshot
-                                                                              .data
-                                                                              !.length);
+                                                                              .data!
+                                                                              .length);
                                                                 } else {
                                                                   return const Padding(
                                                                     padding:
@@ -3235,8 +3237,8 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                       true,
                                                                   itemCount:
                                                                       countriesSnapshot
-                                                                          .data
-                                                                          !.length);
+                                                                          .data!
+                                                                          .length);
                                                         } else {
                                                           return const Padding(
                                                             padding:
@@ -3599,8 +3601,8 @@ class _AddBranchOfCompanyScreenState extends State<AddBranchOfCompanyScreen> {
                                                                           shrinkWrap:
                                                                               true,
                                                                           itemCount: subCategoriesSnapshot
-                                                                              .data
-                                                                              !.length);
+                                                                              .data!
+                                                                              .length);
                                                                 } else {
                                                                   return const Padding(
                                                                     padding:
@@ -4298,7 +4300,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                   child: DropDown<SocialItem>(
-                    items: widget.socialItems,
+                    items: widget.socialItems!,
                     hint: Text('Social'),
                     isExpanded: true,
                     customWidgets: widget.socialItems!.map((e) {
@@ -4316,7 +4318,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                         ],
                       );
                     }).toList(),
-                    onChanged: (SocialItem item) {
+                    onChanged: (SocialItem? item) {
                       widget.controller!.socialItem = item;
                     },
                   ),

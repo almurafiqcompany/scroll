@@ -772,7 +772,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                   child: DropDown<SocialItem>(
-                    items: widget.socialItems,
+                    items: widget.socialItems!,
                     hint: Text('text_social'.tr),
                     isExpanded: true,
                     customWidgets: widget.socialItems!.map((e) {
@@ -794,7 +794,7 @@ class _SocialWidgetState extends State<SocialWidget> {
                         ],
                       );
                     }).toList(),
-                    onChanged: (SocialItem item) {
+                    onChanged: (SocialItem? item) {
                       widget.controller!.socialItem = item;
                     },
                   ),

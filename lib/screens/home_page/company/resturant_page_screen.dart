@@ -13,7 +13,7 @@ import 'package:al_murafiq/widgets/show_close_reason_alert.dart';
 import 'package:al_murafiq/widgets/show_loading_alert.dart';
 import 'package:al_murafiq/widgets/show_loading_dialog.dart';
 import 'package:al_murafiq/widgets/social_circles.dart';
-import 'package:android_intent/android_intent.dart';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
@@ -161,88 +161,79 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                           StreamBuilder<String>(
                               //stream: Stream.fromFuture(getIsLogIn()),
                               builder: (context, snapshotToken) {
-                                if (snapshotToken.hasData) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Get.to(NotificationScreen());
-                                    },
-                                    child: Stack(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 8),
-                                          child: const Icon(
-                                            Icons.notifications,
-                                            size: 30,
-                                          ),
-                                        ),
-                                        StreamBuilder<int>(
-                                         //   stream: Stream.fromFuture(getNumberOfNotfiction()),
-                                            builder:
-                                                (context, snapshotNumNotif) {
-                                              if (snapshotNumNotif.hasData &&
-                                                  snapshotNumNotif.data != 0) {
-                                                return Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 0,
-                                                      vertical: 2),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.red
-                                                          .withOpacity(0.8),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50.0),
-                                                    ),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 3,
-                                                          vertical: 0),
-                                                      child: Text(
-                                                        '${snapshotNumNotif.data}',
-                                                        style: TextStyle(
-                                                            fontSize: 12),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 4),
-                                                child: Container(),
-                                              );
-                                            }),
-                                      ],
-                                    ),
-                                  );
-                                } else {
-                                  return GestureDetector(
-                                    onTap: () async {
-                                      await showModalBottomSheet<void>(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return ShowCheckLoginDialog();
-                                        },
-                                      );
-                                    },
-                                    child: const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 8),
-                                      child: Icon(
+                            if (snapshotToken.hasData) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.to(NotificationScreen());
+                                },
+                                child: Stack(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 8),
+                                      child: const Icon(
                                         Icons.notifications,
                                         size: 30,
                                       ),
                                     ),
+                                    StreamBuilder<int>(
+                                        //   stream: Stream.fromFuture(getNumberOfNotfiction()),
+                                        builder: (context, snapshotNumNotif) {
+                                      if (snapshotNumNotif.hasData &&
+                                          snapshotNumNotif.data != 0) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 0, vertical: 2),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.red.withOpacity(0.8),
+                                              borderRadius:
+                                                  BorderRadius.circular(50.0),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 3,
+                                                      vertical: 0),
+                                              child: Text(
+                                                '${snapshotNumNotif.data}',
+                                                style: TextStyle(fontSize: 12),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        child: Container(),
+                                      );
+                                    }),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return GestureDetector(
+                                onTap: () async {
+                                  await showModalBottomSheet<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ShowCheckLoginDialog();
+                                    },
                                   );
-                                }
-                              }),
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  child: Icon(
+                                    Icons.notifications,
+                                    size: 30,
+                                  ),
+                                ),
+                              );
+                            }
+                          }),
                         ],
                         elevation: 0,
                         flexibleSpace: Column(
@@ -465,12 +456,12 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                           BouncingScrollPhysics(),
                                                       child: Text(
                                                         // '${snapshot.data.visit_count}',
-                                                        snapshot.data
-                                                                    !.visit_count >
+                                                        snapshot.data!
+                                                                    .visit_count >
                                                                 999
                                                             ? '${snapshot.data!.visit_count / 1000}K'
-                                                            : snapshot.data
-                                                                        !.visit_count >
+                                                            : snapshot.data!
+                                                                        .visit_count >
                                                                     999999
                                                                 ? '${snapshot.data!.visit_count / 1000000}M'
                                                                 : '${snapshot.data!.visit_count}',
@@ -490,94 +481,89 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                     //stream: Stream.fromFuture( getIsLogIn()),
                                                     builder: (context,
                                                         snapshotToken) {
-                                                      if (snapshotToken
-                                                              .hasData &&
-                                                          snapshot.data !=
-                                                              null) {
-                                                        //  if(snapshot.data.fav == 0){
-                                                        //   return Icon(Icons.favorite,color: Colors.grey[600],);
-                                                        // }else if(snapshot.data.fav == 1){
-                                                        //   return Icon(Icons.favorite,color: Color(0xffEB1346),);
-                                                        // }
-                                                        return StreamBuilder<
-                                                                int>(
-                                                            stream: _bloc
-                                                                .favCompanySubject
-                                                                .stream,
-                                                            initialData: _bloc
-                                                                .dataOfProfileCompanySubject
-                                                                .value
-                                                                .fav,
-                                                            builder: (context,
-                                                                snapshotfav) {
-                                                              if (snapshotfav
-                                                                      .data ==
-                                                                  0) {
-                                                                return GestureDetector(
-                                                                    onTap:
-                                                                        () async {
-                                                                      await _bloc.favCompany(
-                                                                          snapshot
-                                                                              .data
-                                                                              !.id!,
-                                                                          context);
-                                                                    },
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .favorite_border_outlined,
-                                                                      color: Colors
-                                                                              .grey[
-                                                                          600],
-                                                                    ));
-                                                              } else if (snapshotfav
-                                                                      .data ==
-                                                                  1) {
-                                                                return GestureDetector(
-                                                                    onTap:
-                                                                        () async {
-                                                                      // LoadingView();
-                                                                      await _bloc.favDesCompany(
-                                                                          snapshot
-                                                                              .data
-                                                                             ! .id!,
-                                                                          context);
-                                                                    },
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .favorite,
-                                                                      color: Color(
-                                                                          0xffEB1346),
-                                                                    ));
-                                                              }
-                                                              return Icon(
-                                                                Icons
-                                                                    .favorite_border_outlined,
-                                                                color: Colors
-                                                                    .grey[600],
-                                                              );
-                                                            });
-                                                      } else {
-                                                        return GestureDetector(
-                                                          onTap: () async {
-                                                            await showModalBottomSheet<
-                                                                void>(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return ShowCheckLoginDialog();
-                                                              },
-                                                            );
-                                                          },
-                                                          child: Icon(
+                                                  if (snapshotToken.hasData &&
+                                                      snapshot.data != null) {
+                                                    //  if(snapshot.data.fav == 0){
+                                                    //   return Icon(Icons.favorite,color: Colors.grey[600],);
+                                                    // }else if(snapshot.data.fav == 1){
+                                                    //   return Icon(Icons.favorite,color: Color(0xffEB1346),);
+                                                    // }
+                                                    return StreamBuilder<int>(
+                                                        stream: _bloc
+                                                            .favCompanySubject
+                                                            .stream,
+                                                        initialData: _bloc
+                                                            .dataOfProfileCompanySubject
+                                                            .value
+                                                            .fav,
+                                                        builder: (context,
+                                                            snapshotfav) {
+                                                          if (snapshotfav
+                                                                  .data ==
+                                                              0) {
+                                                            return GestureDetector(
+                                                                onTap:
+                                                                    () async {
+                                                                  await _bloc.favCompany(
+                                                                      snapshot
+                                                                          .data!
+                                                                          .id!,
+                                                                      context);
+                                                                },
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .favorite_border_outlined,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      600],
+                                                                ));
+                                                          } else if (snapshotfav
+                                                                  .data ==
+                                                              1) {
+                                                            return GestureDetector(
+                                                                onTap:
+                                                                    () async {
+                                                                  // LoadingView();
+                                                                  await _bloc.favDesCompany(
+                                                                      snapshot
+                                                                          .data!
+                                                                          .id!,
+                                                                      context);
+                                                                },
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .favorite,
+                                                                  color: Color(
+                                                                      0xffEB1346),
+                                                                ));
+                                                          }
+                                                          return Icon(
                                                             Icons
                                                                 .favorite_border_outlined,
                                                             color: Colors
                                                                 .grey[600],
-                                                          ),
+                                                          );
+                                                        });
+                                                  } else {
+                                                    return GestureDetector(
+                                                      onTap: () async {
+                                                        await showModalBottomSheet<
+                                                            void>(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return ShowCheckLoginDialog();
+                                                          },
                                                         );
-                                                      }
-                                                    }),
+                                                      },
+                                                      child: Icon(
+                                                        Icons
+                                                            .favorite_border_outlined,
+                                                        color: Colors.grey[600],
+                                                      ),
+                                                    );
+                                                  }
+                                                }),
                                             ],
                                           ),
                                         ),
@@ -647,7 +633,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                         .add(
                                                                             null!);
                                                                     try {
-                                                                       FilePickerResult?
+                                                                      FilePickerResult?
                                                                           res =
                                                                           await FilePicker.platform.pickFiles(
                                                                               type: FileType.custom,
@@ -695,7 +681,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                         padding: EdgeInsets.all(8),
                                                                         child: Icon(
                                                                           MdiIcons
-                                                                              .filePdf,
+                                                                              .abacus,
                                                                           color:
                                                                               Colors.white,
                                                                           size:
@@ -737,7 +723,8 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                     child: GestureDetector(
                                                       onTap: () async {
                                                         try {
-                                                          FilePickerResult? res =
+                                                          FilePickerResult?
+                                                              res =
                                                               await FilePicker
                                                                   .platform
                                                                   .pickFiles(
@@ -758,15 +745,14 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                             _bloc.fileController
                                                                 .sink
                                                                 .add(pdfFile);
-                                                            await _bloc
-                                                                .uploadFile(
-                                                                    companyId:
-                                                                        snapshot
-                                                                            .data
-                                                                            !.id,
-                                                                    type: 'pdf',
-                                                                    context:
-                                                                        context);
+                                                            await _bloc.uploadFile(
+                                                                companyId:
+                                                                    snapshot
+                                                                        .data!
+                                                                        .id,
+                                                                type: 'pdf',
+                                                                context:
+                                                                    context);
                                                           }
                                                         } catch (e) {
                                                           print(e.toString());
@@ -793,7 +779,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                                         .all(8),
                                                                 child: Icon(
                                                                   MdiIcons
-                                                                      .filePdf,
+                                                                      .abTesting,
                                                                   color: Colors
                                                                       .white,
                                                                   size: 32,
@@ -1082,31 +1068,33 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                     child: GestureDetector(
                                                       onTap: () async {
                                                         try {
-                                                          FilePickerResult? res =
+                                                          FilePickerResult?
+                                                              res =
                                                               await FilePicker
                                                                   .platform
                                                                   .pickFiles(
                                                                       type: FileType
                                                                           .image);
-                                                          File? img = res != null
-                                                              ? File(res.files
-                                                                  .single.path!)
-                                                              : null;
+                                                          File? img =
+                                                              res != null
+                                                                  ? File(res
+                                                                      .files
+                                                                      .single
+                                                                      .path!)
+                                                                  : null;
 
                                                           if (img != null) {
                                                             _bloc.imgController
                                                                 .sink
                                                                 .add(img);
-                                                            await _bloc
-                                                                .uploadFile(
-                                                                    companyId:
-                                                                        snapshot
-                                                                            .data
-                                                                            !.id,
-                                                                    type:
-                                                                        'image',
-                                                                    context:
-                                                                        context);
+                                                            await _bloc.uploadFile(
+                                                                companyId:
+                                                                    snapshot
+                                                                        .data!
+                                                                        .id,
+                                                                type: 'image',
+                                                                context:
+                                                                    context);
                                                           }
                                                         } catch (e) {
                                                           print(e.toString());
@@ -1886,11 +1874,11 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                   textDirection: TextDirection.rtl,
                                   reviews: snapshot.data!.reviews![0],
                                   profileCompaineBloc: _bloc,
-                                  like_init:
-                                      snapshot.data!.reviews![0].comment_likes !=
-                                              null
-                                          ? 1
-                                          : 0,
+                                  like_init: snapshot.data!.reviews![0]
+                                              .comment_likes !=
+                                          null
+                                      ? 1
+                                      : 0,
                                   dis_like_init: snapshot.data!.reviews![0]
                                               .comment_dis_likes !=
                                           null
@@ -1908,11 +1896,11 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                   textDirection: TextDirection.rtl,
                                   reviews: snapshot.data!.reviews![1],
                                   profileCompaineBloc: _bloc,
-                                  like_init:
-                                      snapshot.data!.reviews![1].comment_likes !=
-                                              null
-                                          ? 1
-                                          : 0,
+                                  like_init: snapshot.data!.reviews![1]
+                                              .comment_likes !=
+                                          null
+                                      ? 1
+                                      : 0,
                                   dis_like_init: snapshot.data!.reviews![1]
                                               .comment_dis_likes !=
                                           null
@@ -1954,390 +1942,76 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                               StreamBuilder<String>(
                                   //stream: Stream.fromFuture(getIsLogIn()),
                                   builder: (context, snapshotToken) {
-                                    if (snapshotToken.hasData &&
-                                        snapshot.data != null) {
-                                      //  if(snapshot.data.fav == 0){
-                                      //   return Icon(Icons.favorite,color: Colors.grey[600],);
-                                      // }else if(snapshot.data.fav == 1){
-                                      //   return Icon(Icons.favorite,color: Color(0xffEB1346),);
-                                      // }
-                                      // FlatButton(
-                                      //
-                                      //     height: 50,
-                                      //     minWidth: Get.width/3,
-                                      //     child: Text(context.translate('bt_cancel'), style: kTextStyle.copyWith(fontSize: 18)),
-                                      //     color: Color(0xffd39e00),
-                                      //     textColor: Color(0xff000000),
-                                      //     onPressed: () async {
-                                      //       await Get.back();
-                                      //     },
-                                      //     shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0))
-                                      // )
-                                      print('Q ${snapshot.data!.closed_reason}');
-                                      print('Q ${snapshot.data!.is_review}');
-                                      if (widget.flagBranch!) {
-                                        return FlatButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
-                                          height: 50,
-                                          minWidth: Get.width,
-                                          color: Color(0xff2E5BFF)
-                                              .withOpacity(0.5),
-                                          child: Text(
-                                            'bt_leave_review'.tr,
-                                            style: TextStyle(
-                                                color: Color(0xffFFFFFF)),
-                                          ),
-                                          onPressed: () {},
-                                        );
-                                      } else if (snapshot.data!.closed_reason !=
-                                              null ||
-                                          snapshot.data!.is_review == 1) {
-                                        return FlatButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
-                                          height: 50,
-                                          minWidth: Get.width,
-                                          color: Color(0xff2E5BFF)
-                                              .withOpacity(0.5),
-                                          child: Text(
-                                            'bt_leave_review'.tr,
-                                            style: TextStyle(
-                                                color: Color(0xffFFFFFF)),
-                                          ),
-                                          onPressed: () {},
-                                        );
-                                      } else {
-                                        return StreamBuilder<bool>(
-                                            stream:
-                                                _bloc.showCommentSubject.stream,
-                                            initialData: false,
-                                            builder:
-                                                (context, snapshotShowComment) {
-                                              if (snapshotShowComment.hasData &&
-                                                  snapshotShowComment.data ==
-                                                      false) {
-                                                return Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
+                                if (snapshotToken.hasData &&
+                                    snapshot.data != null) {
+                                  //  if(snapshot.data.fav == 0){
+                                  //   return Icon(Icons.favorite,color: Colors.grey[600],);
+                                  // }else if(snapshot.data.fav == 1){
+                                  //   return Icon(Icons.favorite,color: Color(0xffEB1346),);
+                                  // }
+                                  // FlatButton(
+                                  //
+                                  //     height: 50,
+                                  //     minWidth: Get.width/3,
+                                  //     child: Text(context.translate('bt_cancel'), style: kTextStyle.copyWith(fontSize: 18)),
+                                  //     color: Color(0xffd39e00),
+                                  //     textColor: Color(0xff000000),
+                                  //     onPressed: () async {
+                                  //       await Get.back();
+                                  //     },
+                                  //     shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0))
+                                  // )
+                                  print('Q ${snapshot.data!.closed_reason}');
+                                  print('Q ${snapshot.data!.is_review}');
+                                  if (widget.flagBranch!) {
+                                    return FlatButton(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                      height: 50,
+                                      minWidth: Get.width,
+                                      color: Color(0xff2E5BFF).withOpacity(0.5),
+                                      child: Text(
+                                        'bt_leave_review'.tr,
+                                        style:
+                                            TextStyle(color: Color(0xffFFFFFF)),
+                                      ),
+                                      onPressed: () {},
+                                    );
+                                  } else if (snapshot.data!.closed_reason !=
+                                          null ||
+                                      snapshot.data!.is_review == 1) {
+                                    return FlatButton(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                      height: 50,
+                                      minWidth: Get.width,
+                                      color: Color(0xff2E5BFF).withOpacity(0.5),
+                                      child: Text(
+                                        'bt_leave_review'.tr,
+                                        style:
+                                            TextStyle(color: Color(0xffFFFFFF)),
+                                      ),
+                                      onPressed: () {},
+                                    );
+                                  } else {
+                                    return StreamBuilder<bool>(
+                                        stream: _bloc.showCommentSubject.stream,
+                                        initialData: false,
+                                        builder:
+                                            (context, snapshotShowComment) {
+                                          if (snapshotShowComment.hasData &&
+                                              snapshotShowComment.data ==
+                                                  false) {
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
                                                       horizontal: 3,
                                                       vertical: 2),
-                                                  child: FlatButton(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                    ),
-                                                    height: 50,
-                                                    minWidth: Get.width,
-                                                    color: Color(0xff2E5BFF),
-                                                    child: Text(
-                                                      'bt_leave_review'.tr,
-                                                      style: TextStyle(
-                                                          color: Color(
-                                                              0xffFFFFFF)),
-                                                    ),
-                                                    onPressed: () async {
-                                                      _bloc.commentController
-                                                          .text = '';
-                                                      await showModalBottomSheet<
-                                                          void>(
-                                                        context: context,
-                                                        isScrollControlled:
-                                                            true,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return Padding(
-                                                            padding:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .viewInsets,
-                                                            child: Container(
-                                                              height: 430,
-                                                              color: Color(
-                                                                  0xffFFFFFF),
-                                                              child: Center(
-                                                                child:
-                                                                    SingleChildScrollView(
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Padding(
-                                                                        padding: EdgeInsets.only(
-                                                                            left:
-                                                                                5,
-                                                                            right:
-                                                                                5),
-                                                                        child:
-                                                                            // Container(
-                                                                            //   width: 90,
-                                                                            //   height: 90,
-                                                                            //   child: CircleAvatar(
-                                                                            //     radius: 70,
-                                                                            //     backgroundImage: NetworkImage(
-                                                                            //       snapshot.data.image != null
-                                                                            //           ? '$ImgUrl${snapshot.data.image}'
-                                                                            //           : 'https://cdn.pixabay.com/photo/2016/11/20/09/06/bowl-1842294__480.jpg',
-                                                                            //     ),
-                                                                            //   ),
-                                                                            // ),
-                                                                            Container(
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            border:
-                                                                                Border.all(
-                                                                              color: Colors.grey.withOpacity(0.3),
-                                                                              width: 0.4,
-                                                                            ),
-                                                                            borderRadius:
-                                                                                BorderRadius.all(Radius.circular(50.0)),
-                                                                          ),
-                                                                          child:
-                                                                              ClipRRect(
-                                                                            borderRadius:
-                                                                                const BorderRadius.only(
-                                                                              topLeft: Radius.circular(50.0),
-                                                                              bottomRight: Radius.circular(50.0),
-                                                                              topRight: Radius.circular(50.0),
-                                                                              bottomLeft: Radius.circular(50.0),
-                                                                            ),
-                                                                            child:
-                                                                                Image.network(
-                                                                              snapshot.data!.image != null ? '$ImgUrl${snapshot.data!.image}' : defaultImgUrl,
-                                                                              fit: BoxFit.fitWidth,
-                                                                              width: 110,
-                                                                              height: 110,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      SingleChildScrollView(
-                                                                          scrollDirection: Axis
-                                                                              .horizontal,
-                                                                          physics:
-                                                                              BouncingScrollPhysics(),
-                                                                          child:
-                                                                              Text(
-                                                                            snapshot.data!.name!,
-                                                                            style:
-                                                                                TextStyle(fontSize: 22),
-                                                                          )),
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.symmetric(horizontal: 5),
-                                                                        child: SingleChildScrollView(
-                                                                            scrollDirection: Axis.horizontal,
-                                                                            physics: BouncingScrollPhysics(),
-                                                                            child: Text(
-                                                                              snapshot.data!.address!,
-                                                                              style: TextStyle(fontSize: 15),
-                                                                            )),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      StreamBuilder<
-                                                                              dynamic>(
-                                                                          stream: _bloc
-                                                                              .rateSubject
-                                                                              .stream,
-                                                                          builder:
-                                                                              (context, snapshot) {
-                                                                            return Directionality(
-                                                                              textDirection: TextDirection.ltr,
-                                                                              child: SmoothStarRating(
-                                                                                rating: 0,
-                                                                                
-                                                                                color: Color(0xffFFAC41),
-                                                                                borderColor: Colors.grey,
-                                                                                size: 40,
-                                                                                filledIconData: Icons.star,
-                                                                                halfFilledIconData: Icons.star_half,
-                                                                                defaultIconData: Icons.star_border,
-                                                                                starCount: 5,
-                                                                                allowHalfRating: true,
-                                                                                spacing: 2.0,
-                                                                                
-                                                                              ),
-                                                                            );
-                                                                          }),
-                                                                      const SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets.symmetric(
-                                                                            horizontal:
-                                                                                15,
-                                                                            vertical:
-                                                                                5),
-                                                                        child: StreamBuilder<
-                                                                                bool>(
-                                                                            stream: _bloc
-                                                                                .commentSubject.stream,
-                                                                            initialData:
-                                                                                true,
-                                                                            builder:
-                                                                                (context, snapshot) {
-                                                                              return TextField(
-                                                                                controller: _bloc.commentController,
-                                                                                onChanged: (val) => _bloc.changeComment(val),
-                                                                                style: TextStyle(fontSize: 18),
-                                                                                decoration: InputDecoration(
-                                                                                  filled: true,
-                                                                                  fillColor: Colors.white,
-                                                                                  focusedBorder: OutlineInputBorder(
-                                                                                    borderRadius: const BorderRadius.all(Radius.circular(6)),
-                                                                                    borderSide: BorderSide(width: 1, color: Colors.grey),
-                                                                                  ),
-                                                                                  disabledBorder: const OutlineInputBorder(
-                                                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                                    borderSide: BorderSide(width: 1, color: Colors.black54),
-                                                                                  ),
-                                                                                  enabledBorder: const OutlineInputBorder(
-                                                                                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                                                    borderSide: BorderSide(width: 1, color: Colors.grey),
-                                                                                  ),
-                                                                                  border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(6)), borderSide: BorderSide(width: 1, color: Colors.grey)),
-                                                                                  errorBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(6)), borderSide: BorderSide(width: 1, color: Colors.red)),
-                                                                                  focusedErrorBorder: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(6)), borderSide: BorderSide(width: 1, color: Colors.red.shade800)),
-                                                                                  hintText: 'bt_leave_review'.tr,
-
-                                                                                  errorText: snapshot.data! ? null : 'bt_leave_review_error'.tr,
-                                                                                  hintStyle: const TextStyle(fontSize: 16, color: Color(0xFF9797AD)),
-                                                                                  //errorText: snapshot.data ? null : 'name is not empty',
-                                                                                ),
-                                                                                keyboardType: TextInputType.text,
-                                                                                maxLines: 3,
-                                                                                //onChanged: (val) => widget.bloc.changeName(val),
-                                                                                //controller: widget.bloc.nameController,
-                                                                              );
-                                                                            }),
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        height:
-                                                                            5,
-                                                                      ),
-                                                                      Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.symmetric(horizontal: 15),
-                                                                        child: FlatButton(
-                                                                            shape: RoundedRectangleBorder(
-                                                                              borderRadius: BorderRadius.circular(5.0),
-                                                                            ),
-                                                                            height: 50,
-                                                                            minWidth: Get.width,
-                                                                            color: Color(0xff2E5BFF),
-                                                                            child: Text(
-                                                                              'bt_leave_review'.tr,
-                                                                              style: TextStyle(color: Colors.white),
-                                                                            ),
-                                                                            onPressed: () async {
-                                                                              bool co = await _bloc.commentToCompany(widget.compaine_id, context);
-                                                                              if (co) {
-                                                                                Get.back();
-                                                                                await _bloc.fetchDataProfileCompany(widget.compaine_id, widget.flagBranch!, widget.ad_id!, context);
-                                                                              }
-                                                                              // if (co) {
-                                                                              //   // await Get.back();
-                                                                              //   await showModalBottomSheet<
-                                                                              //       void>(
-                                                                              //     context:
-                                                                              //         context,
-                                                                              //     builder:
-                                                                              //         (BuildContext
-                                                                              //             context) {
-                                                                              //       return Container(
-                                                                              //         height:
-                                                                              //             400,
-                                                                              //         child:
-                                                                              //             Center(
-                                                                              //           child: SingleChildScrollView(
-                                                                              //             child: Column(
-                                                                              //               mainAxisAlignment: MainAxisAlignment.center,
-                                                                              //               mainAxisSize: MainAxisSize.min,
-                                                                              //               children: <Widget>[
-                                                                              //                 Padding(
-                                                                              //                   padding: EdgeInsets.only(left: 5, right: 5),
-                                                                              //                   child: Container(
-                                                                              //                       width: 100,
-                                                                              //                       height: 100,
-                                                                              //                       color: Colors.white,
-                                                                              //                       child: Image(
-                                                                              //                         image: AssetImage(
-                                                                              //                           'assets/images/checkDone.png',
-                                                                              //                         ),
-                                                                              //                       )),
-                                                                              //                 ),
-                                                                              //                 const SizedBox(
-                                                                              //                   height: 5,
-                                                                              //                 ),
-                                                                              //                 Text(
-                                                                              //                   context.translate('text_done_review'),
-                                                                              //                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                                                              //                 ),
-                                                                              //                 Text(
-                                                                              //                   context.translate('text_under_reiew'),
-                                                                              //                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                                                              //                 ),
-                                                                              //                 const SizedBox(
-                                                                              //                   height: 5,
-                                                                              //                 ),
-                                                                              //                 FlatButton(
-                                                                              //                   shape: RoundedRectangleBorder(
-                                                                              //                     borderRadius: BorderRadius.circular(5.0),
-                                                                              //                   ),
-                                                                              //                   height: 50,
-                                                                              //                   minWidth: Get.width,
-                                                                              //                   color: Color(0xff2E5BFF),
-                                                                              //                   child: Text(context.translate('bt_done')),
-                                                                              //                   onPressed: () {
-                                                                              //                     Get.back();
-                                                                              //                     Get.back();
-                                                                              //                   },
-                                                                              //                 )
-                                                                              //               ],
-                                                                              //             ),
-                                                                              //           ),
-                                                                              //         ),
-                                                                              //       );
-                                                                              //     },
-                                                                              //   );
-                                                                              // }
-                                                                            }),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-                                                      //await Get.back();
-                                                    },
-                                                  ),
-                                                );
-                                              }
-                                              return FlatButton(
+                                              child: FlatButton(
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -2345,39 +2019,392 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                                                 ),
                                                 height: 50,
                                                 minWidth: Get.width,
-                                                color: Color(0xff2E5BFF)
-                                                    .withOpacity(0.5),
+                                                color: Color(0xff2E5BFF),
                                                 child: Text(
                                                   'bt_leave_review'.tr,
                                                   style: TextStyle(
                                                       color: Color(0xffFFFFFF)),
                                                 ),
-                                                onPressed: () {},
-                                              );
-                                            });
-                                      }
-                                    } else {
-                                      return FlatButton(
-                                        height: 50,
-                                        minWidth: Get.width,
-                                        color: Color(0xff2E5BFF),
-                                        child: Text(
-                                          'bt_leave_review'.tr,
-                                          style: TextStyle(
-                                              color: Color(0xffFFFFFF)),
-                                        ),
-                                        onPressed: () async {
-                                          await showModalBottomSheet<void>(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return ShowCheckLoginDialog();
-                                            },
+                                                onPressed: () async {
+                                                  _bloc.commentController.text =
+                                                      '';
+                                                  await showModalBottomSheet<
+                                                      void>(
+                                                    context: context,
+                                                    isScrollControlled: true,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return Padding(
+                                                        padding: MediaQuery.of(
+                                                                context)
+                                                            .viewInsets,
+                                                        child: Container(
+                                                          height: 430,
+                                                          color:
+                                                              Color(0xffFFFFFF),
+                                                          child: Center(
+                                                            child:
+                                                                SingleChildScrollView(
+                                                              child: Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Padding(
+                                                                    padding: EdgeInsets.only(
+                                                                        left: 5,
+                                                                        right:
+                                                                            5),
+                                                                    child:
+                                                                        // Container(
+                                                                        //   width: 90,
+                                                                        //   height: 90,
+                                                                        //   child: CircleAvatar(
+                                                                        //     radius: 70,
+                                                                        //     backgroundImage: NetworkImage(
+                                                                        //       snapshot.data.image != null
+                                                                        //           ? '$ImgUrl${snapshot.data.image}'
+                                                                        //           : 'https://cdn.pixabay.com/photo/2016/11/20/09/06/bowl-1842294__480.jpg',
+                                                                        //     ),
+                                                                        //   ),
+                                                                        // ),
+                                                                        Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        border:
+                                                                            Border.all(
+                                                                          color: Colors
+                                                                              .grey
+                                                                              .withOpacity(0.3),
+                                                                          width:
+                                                                              0.4,
+                                                                        ),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(Radius.circular(50.0)),
+                                                                      ),
+                                                                      child:
+                                                                          ClipRRect(
+                                                                        borderRadius:
+                                                                            const BorderRadius.only(
+                                                                          topLeft:
+                                                                              Radius.circular(50.0),
+                                                                          bottomRight:
+                                                                              Radius.circular(50.0),
+                                                                          topRight:
+                                                                              Radius.circular(50.0),
+                                                                          bottomLeft:
+                                                                              Radius.circular(50.0),
+                                                                        ),
+                                                                        child: Image
+                                                                            .network(
+                                                                          snapshot.data!.image != null
+                                                                              ? '$ImgUrl${snapshot.data!.image}'
+                                                                              : defaultImgUrl,
+                                                                          fit: BoxFit
+                                                                              .fitWidth,
+                                                                          width:
+                                                                              110,
+                                                                          height:
+                                                                              110,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  SingleChildScrollView(
+                                                                      scrollDirection:
+                                                                          Axis
+                                                                              .horizontal,
+                                                                      physics:
+                                                                          BouncingScrollPhysics(),
+                                                                      child:
+                                                                          Text(
+                                                                        snapshot
+                                                                            .data!
+                                                                            .name!,
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                22),
+                                                                      )),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                        horizontal:
+                                                                            5),
+                                                                    child: SingleChildScrollView(
+                                                                        scrollDirection: Axis.horizontal,
+                                                                        physics: BouncingScrollPhysics(),
+                                                                        child: Text(
+                                                                          snapshot
+                                                                              .data!
+                                                                              .address!,
+                                                                          style:
+                                                                              TextStyle(fontSize: 15),
+                                                                        )),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  StreamBuilder<
+                                                                          dynamic>(
+                                                                      stream: _bloc
+                                                                          .rateSubject
+                                                                          .stream,
+                                                                      builder:
+                                                                          (context,
+                                                                              snapshot) {
+                                                                        return Directionality(
+                                                                          textDirection:
+                                                                              TextDirection.ltr,
+                                                                          child:
+                                                                              SmoothStarRating(
+                                                                            rating:
+                                                                                0,
+                                                                            color:
+                                                                                Color(0xffFFAC41),
+                                                                            borderColor:
+                                                                                Colors.grey,
+                                                                            size:
+                                                                                40,
+                                                                            filledIconData:
+                                                                                Icons.star,
+                                                                            halfFilledIconData:
+                                                                                Icons.star_half,
+                                                                            defaultIconData:
+                                                                                Icons.star_border,
+                                                                            starCount:
+                                                                                5,
+                                                                            allowHalfRating:
+                                                                                true,
+                                                                            spacing:
+                                                                                2.0,
+                                                                          ),
+                                                                        );
+                                                                      }),
+                                                                  const SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                        horizontal:
+                                                                            15,
+                                                                        vertical:
+                                                                            5),
+                                                                    child: StreamBuilder<
+                                                                            bool>(
+                                                                        stream: _bloc
+                                                                            .commentSubject
+                                                                            .stream,
+                                                                        initialData:
+                                                                            true,
+                                                                        builder:
+                                                                            (context,
+                                                                                snapshot) {
+                                                                          return TextField(
+                                                                            controller:
+                                                                                _bloc.commentController,
+                                                                            onChanged: (val) =>
+                                                                                _bloc.changeComment(val),
+                                                                            style:
+                                                                                TextStyle(fontSize: 18),
+                                                                            decoration:
+                                                                                InputDecoration(
+                                                                              filled: true,
+                                                                              fillColor: Colors.white,
+                                                                              focusedBorder: OutlineInputBorder(
+                                                                                borderRadius: const BorderRadius.all(Radius.circular(6)),
+                                                                                borderSide: BorderSide(width: 1, color: Colors.grey),
+                                                                              ),
+                                                                              disabledBorder: const OutlineInputBorder(
+                                                                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                                borderSide: BorderSide(width: 1, color: Colors.black54),
+                                                                              ),
+                                                                              enabledBorder: const OutlineInputBorder(
+                                                                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                                                borderSide: BorderSide(width: 1, color: Colors.grey),
+                                                                              ),
+                                                                              border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(6)), borderSide: BorderSide(width: 1, color: Colors.grey)),
+                                                                              errorBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(6)), borderSide: BorderSide(width: 1, color: Colors.red)),
+                                                                              focusedErrorBorder: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(6)), borderSide: BorderSide(width: 1, color: Colors.red.shade800)),
+                                                                              hintText: 'bt_leave_review'.tr,
+
+                                                                              errorText: snapshot.data! ? null : 'bt_leave_review_error'.tr,
+                                                                              hintStyle: const TextStyle(fontSize: 16, color: Color(0xFF9797AD)),
+                                                                              //errorText: snapshot.data ? null : 'name is not empty',
+                                                                            ),
+                                                                            keyboardType:
+                                                                                TextInputType.text,
+                                                                            maxLines:
+                                                                                3,
+                                                                            //onChanged: (val) => widget.bloc.changeName(val),
+                                                                            //controller: widget.bloc.nameController,
+                                                                          );
+                                                                        }),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 5,
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .symmetric(
+                                                                        horizontal:
+                                                                            15),
+                                                                    child: FlatButton(
+                                                                        shape: RoundedRectangleBorder(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(5.0),
+                                                                        ),
+                                                                        height: 50,
+                                                                        minWidth: Get.width,
+                                                                        color: Color(0xff2E5BFF),
+                                                                        child: Text(
+                                                                          'bt_leave_review'
+                                                                              .tr,
+                                                                          style:
+                                                                              TextStyle(color: Colors.white),
+                                                                        ),
+                                                                        onPressed: () async {
+                                                                          bool co = await _bloc.commentToCompany(
+                                                                              widget.compaine_id,
+                                                                              context);
+                                                                          if (co) {
+                                                                            Get.back();
+                                                                            await _bloc.fetchDataProfileCompany(
+                                                                                widget.compaine_id,
+                                                                                widget.flagBranch!,
+                                                                                widget.ad_id!,
+                                                                                context);
+                                                                          }
+                                                                          // if (co) {
+                                                                          //   // await Get.back();
+                                                                          //   await showModalBottomSheet<
+                                                                          //       void>(
+                                                                          //     context:
+                                                                          //         context,
+                                                                          //     builder:
+                                                                          //         (BuildContext
+                                                                          //             context) {
+                                                                          //       return Container(
+                                                                          //         height:
+                                                                          //             400,
+                                                                          //         child:
+                                                                          //             Center(
+                                                                          //           child: SingleChildScrollView(
+                                                                          //             child: Column(
+                                                                          //               mainAxisAlignment: MainAxisAlignment.center,
+                                                                          //               mainAxisSize: MainAxisSize.min,
+                                                                          //               children: <Widget>[
+                                                                          //                 Padding(
+                                                                          //                   padding: EdgeInsets.only(left: 5, right: 5),
+                                                                          //                   child: Container(
+                                                                          //                       width: 100,
+                                                                          //                       height: 100,
+                                                                          //                       color: Colors.white,
+                                                                          //                       child: Image(
+                                                                          //                         image: AssetImage(
+                                                                          //                           'assets/images/checkDone.png',
+                                                                          //                         ),
+                                                                          //                       )),
+                                                                          //                 ),
+                                                                          //                 const SizedBox(
+                                                                          //                   height: 5,
+                                                                          //                 ),
+                                                                          //                 Text(
+                                                                          //                   context.translate('text_done_review'),
+                                                                          //                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                                                          //                 ),
+                                                                          //                 Text(
+                                                                          //                   context.translate('text_under_reiew'),
+                                                                          //                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                                                          //                 ),
+                                                                          //                 const SizedBox(
+                                                                          //                   height: 5,
+                                                                          //                 ),
+                                                                          //                 FlatButton(
+                                                                          //                   shape: RoundedRectangleBorder(
+                                                                          //                     borderRadius: BorderRadius.circular(5.0),
+                                                                          //                   ),
+                                                                          //                   height: 50,
+                                                                          //                   minWidth: Get.width,
+                                                                          //                   color: Color(0xff2E5BFF),
+                                                                          //                   child: Text(context.translate('bt_done')),
+                                                                          //                   onPressed: () {
+                                                                          //                     Get.back();
+                                                                          //                     Get.back();
+                                                                          //                   },
+                                                                          //                 )
+                                                                          //               ],
+                                                                          //             ),
+                                                                          //           ),
+                                                                          //         ),
+                                                                          //       );
+                                                                          //     },
+                                                                          //   );
+                                                                          // }
+                                                                        }),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                  //await Get.back();
+                                                },
+                                              ),
+                                            );
+                                          }
+                                          return FlatButton(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                            ),
+                                            height: 50,
+                                            minWidth: Get.width,
+                                            color: Color(0xff2E5BFF)
+                                                .withOpacity(0.5),
+                                            child: Text(
+                                              'bt_leave_review'.tr,
+                                              style: TextStyle(
+                                                  color: Color(0xffFFFFFF)),
+                                            ),
+                                            onPressed: () {},
                                           );
-                                          //await Get.back();
+                                        });
+                                  }
+                                } else {
+                                  return FlatButton(
+                                    height: 50,
+                                    minWidth: Get.width,
+                                    color: Color(0xff2E5BFF),
+                                    child: Text(
+                                      'bt_leave_review'.tr,
+                                      style:
+                                          TextStyle(color: Color(0xffFFFFFF)),
+                                    ),
+                                    onPressed: () async {
+                                      await showModalBottomSheet<void>(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ShowCheckLoginDialog();
                                         },
                                       );
-                                    }
-                                  }),
+                                      //await Get.back();
+                                    },
+                                  );
+                                }
+                              }),
                             ],
                           )),
                     ),
@@ -2452,6 +2479,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
         // controller.drag(diff.dx, diff.dy);
       }
     }
+
     print('Location:Location:  $lat $lng');
     return GestureDetector(
       onDoubleTap: _onDoubleTap,
@@ -2565,76 +2593,74 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(15.0))),
                   StreamBuilder<String>(
-                     // stream: Stream.fromFuture(getIsLogIn()),
+                      // stream: Stream.fromFuture(getIsLogIn()),
                       builder: (context, snapshotToken) {
-                        print(snapshotToken.hasData);
-                        if (snapshotToken.hasData) {
-                          return FlatButton(
-                              height: 50,
-                              minWidth: Get.width / 3,
-                              child: Text('Download'.tr,
-                                  style: kTextStyle.copyWith(fontSize: 18)),
-                              color: Colors.blue.shade800,
-                              textColor: Color(0xffFFFFFF),
-                              onPressed: () async {
-                                print('$ImgUrl${UrlPdf}');
-                                await launch('$ImgUrl${UrlPdf}');
-                                // var dio = Dio();
-                                // // // await getPermission();
-                                // // await Permission.storage.request();
-                                // bool status = await Permission.storage.isGranted;
-                                // print(status);
-                                // if (!status) await Permission.storage.request();
-                                // // ProgressDialog progressDialog=ProgressDialog(context,type: ProgressDialogType.Download);
-                                // // progressDialog.style(message: 'Loading'.tr);
-                                // // progressDialog.show();
-                                // showAlertDialog(context);
-                                // String path = await ExtStorage
-                                //     .getExternalStoragePublicDirectory(
-                                //         ExtStorage.DIRECTORY_DOWNLOADS);
-                                // String fullPath = '$path/$namePdf.pdf';
-                                // print('path2 $fullPath');
-                                //
-                                // await download2(
-                                //     dio, '$ImgUrl${UrlPdf}', fullPath);
-                                //
-                                // // _requestDownload('$ImgUrl${UrlPdf}', fullPath);
-                                // Get.back();
-                                // progressDialog.hide();
+                    print(snapshotToken.hasData);
+                    if (snapshotToken.hasData) {
+                      return FlatButton(
+                          height: 50,
+                          minWidth: Get.width / 3,
+                          child: Text('Download'.tr,
+                              style: kTextStyle.copyWith(fontSize: 18)),
+                          color: Colors.blue.shade800,
+                          textColor: Color(0xffFFFFFF),
+                          onPressed: () async {
+                            print('$ImgUrl${UrlPdf}');
+                            await launch('$ImgUrl${UrlPdf}');
+                            // var dio = Dio();
+                            // // // await getPermission();
+                            // // await Permission.storage.request();
+                            // bool status = await Permission.storage.isGranted;
+                            // print(status);
+                            // if (!status) await Permission.storage.request();
+                            // // ProgressDialog progressDialog=ProgressDialog(context,type: ProgressDialogType.Download);
+                            // // progressDialog.style(message: 'Loading'.tr);
+                            // // progressDialog.show();
+                            // showAlertDialog(context);
+                            // String path = await ExtStorage
+                            //     .getExternalStoragePublicDirectory(
+                            //         ExtStorage.DIRECTORY_DOWNLOADS);
+                            // String fullPath = '$path/$namePdf.pdf';
+                            // print('path2 $fullPath');
+                            //
+                            // await download2(
+                            //     dio, '$ImgUrl${UrlPdf}', fullPath);
+                            //
+                            // // _requestDownload('$ImgUrl${UrlPdf}', fullPath);
+                            // Get.back();
+                            // progressDialog.hide();
 
-                                // Get.to(FileDownload());
-                                //    final taskId = await FlutterDownloader.enqueue(
-                                //    url: '$ImgUrl${UrlPdf}',
-                                //    savedDir: '$fullPath',
-                                //    showNotification: true, // show download progress in status bar (for Android)
-                                //    openFileFromNotification: true, // click on notification to open downloaded file (for Android)
-                                //  );
-                                //  print('download ${taskId}');
+                            // Get.to(FileDownload());
+                            //    final taskId = await FlutterDownloader.enqueue(
+                            //    url: '$ImgUrl${UrlPdf}',
+                            //    savedDir: '$fullPath',
+                            //    showNotification: true, // show download progress in status bar (for Android)
+                            //    openFileFromNotification: true, // click on notification to open downloaded file (for Android)
+                            //  );
+                            //  print('download ${taskId}');
+                          },
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(15.0)));
+                    } else {
+                      return FlatButton(
+                          height: 50,
+                          minWidth: Get.width / 3,
+                          child: Text('Download'.tr,
+                              style: kTextStyle.copyWith(fontSize: 18)),
+                          color: Colors.blue.shade800,
+                          textColor: Color(0xffFFFFFF),
+                          onPressed: () async {
+                            await showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ShowCheckLoginDialog();
                               },
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius:
-                                      new BorderRadius.circular(15.0)));
-                        } else {
-                          return FlatButton(
-                              height: 50,
-                              minWidth: Get.width / 3,
-                              child: Text('Download'.tr,
-                                  style: kTextStyle.copyWith(fontSize: 18)),
-                              color: Colors.blue.shade800,
-                              textColor: Color(0xffFFFFFF),
-                              onPressed: () async {
-                                await showModalBottomSheet<void>(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return ShowCheckLoginDialog();
-                                  },
-                                );
-                              },
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius:
-                                      new BorderRadius.circular(15.0)));
-                        }
-                      }),
+                            );
+                          },
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(15.0)));
+                    }
+                  }),
                 ],
               )
             ],
@@ -2662,7 +2688,7 @@ class _ResturantPageScreenState extends State<ResturantPageScreen> {
       url,
       onReceiveProgress: (count, total) {
         progress = (count / total * 100).toStringAsFixed(0) + "%";
-      //  progressDialog.update(message: "${'Download'.tr} $progress");
+        //  progressDialog.update(message: "${'Download'.tr} $progress");
       },
       // showDownloadProgress,
       //Received data with List<int>

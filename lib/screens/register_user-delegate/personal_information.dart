@@ -293,7 +293,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                                       width: 5,
                                                     ),
                                                     AutoSizeText(
-                                                      item.name,
+                                                      item.name!,
                                                       style:
                                                           kTextStyle.copyWith(
                                                               fontSize: 14),
@@ -372,7 +372,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                                             return DropdownMenuItem<CitiesData>(
                                                 value: item,
                                                 child: AutoSizeText(
-                                                  item.name,
+                                                  item.name!,
                                                   style: kTextStyle.copyWith(
                                                       fontSize: 14),
                                                   minFontSize: 12,

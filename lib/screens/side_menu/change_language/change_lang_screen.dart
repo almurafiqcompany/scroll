@@ -117,7 +117,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                                               width: 5,
                                                             ),
                                                             AutoSizeText(
-                                                              item.name,
+                                                              item.name!,
                                                               style: kTextStyle
                                                                   .copyWith(
                                                                       fontSize:
@@ -208,7 +208,7 @@ class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
                                                             Languages>(
                                                         value: item,
                                                         child: AutoSizeText(
-                                                          item.name,
+                                                          item.name!,
                                                           style: kTextStyle
                                                               .copyWith(
                                                                   fontSize: 18),
